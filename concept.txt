@@ -1,0 +1,73 @@
+## 🌿 Durban Horticulture Club: Concept & Vibe
+
+**Theme:**  
+Victorian Dark Academia meets botanical mischief. Think:  
+- Sepia-toned illustrations of ferns and fungi  
+- Wax-sealed club letters  
+- Latin plant names in ornate serif fonts  
+- A touch of mystery, like your club might also dabble in cryptobotany
+
+**Tone:**  
+Playful, erudite, slightly conspiratorial. You’re not just gardeners—you’re *keepers of the greenbelt arcana*.
+
+---
+
+## 🧭 Site Structure & Content Ideas
+
+### 🗓️ Seasonal Almanac
+- Weekly gardening tasks tailored to Durban’s climate  
+- What to sow, prune, harvest, and protect  
+- Pest alerts and moon-phase planting tips  
+- Pull from [Wonder’s gardening calendar](https://wonder.co.za/gardening-calendar/) and [Farmstead Garden’s seasonal checklist](https://thefarmsteadgarden.co.za/garden-checklist-south-africa/)
+
+### 🛍️ Plant Shop Directory
+- Map of local nurseries with reviews and specialties  
+- Online plant shops that deliver to Durban  
+- Highlight quirky spots like “Plants of the Gods” or “Earth Angels Garden Nursery”
+
+### 🌱 Event Calendar
+- Local gardening expos, workshops, and botanical garden events  
+- Include listings from [Durban Botanic Gardens](https://durbanbotanicgardens.org.za/events/) and [AllEvents Durban gardening page](https://allevents.in/durban/gardening)  
+- Add your own seasonal “Public Plant Appreciation Parties” (with a wink)
+
+### 📚 Club Lore & Membership
+- A faux-historical timeline of the club’s “founding” in 1883  
+- Member badges, titles (e.g. “Moss Procurer,” “Fern Archivist”)  
+- Secret handshake instructions (optional but encouraged)
+
+### 🧪 Experiments & Terrarium Diaries
+- Showcase your moss hunts and terrarium builds  
+- Tips on humidity control, substrate layering, and plant compatibility  
+- Invite members to submit their own builds
+
+### 🌤️ Seasonal Forecasts
+- Long-term weather predictions for gardeners  
+- Rainfall trends, frost warnings, humidity spikes  
+- Maybe even a “Mood of the Season” tarot-style forecast
+
+---
+
+## 🎨 Design & Art Assets
+
+### Fonts
+- **Header:** Elegant serif like *Cormorant Garamond* or *Playfair Display*  
+- **Body:** Readable serif or clean sans-serif like *Lora* or *Raleway*
+
+### Color Palette
+| Element        | Color Ideas                          |
+|----------------|--------------------------------------|
+| Background     | Antique parchment / muted moss green |
+| Accent         | Deep plum / rust / brass             |
+| Text           | Charcoal / sepia                     |
+| Hover Effects  | Botanical ink wash / subtle gold     |
+
+### Visuals
+- Hand-drawn botanical illustrations (ferns, spores, mushrooms)  
+- Victorian-style borders and flourishes  
+- Wax seal icons, old keys, terrarium silhouettes  
+- Seasonal header art (e.g. autumn leaves, spring blossoms)
+
+### UI Touches
+- Hover tooltips with Latin plant names  
+- Accordion-style collapsible sections for almanac entries  
+- A “Press to Appreciate” button that randomly displays a plant fact or image
