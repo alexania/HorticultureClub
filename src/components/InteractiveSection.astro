@@ -1,0 +1,235 @@
+---
+// Interactive elements section with Press to Appreciate button
+---
+
+<section class="interactive-section text-center py-lg">
+  <div class="mystical-buttons flex flex-col items-center gap-md">
+    <!-- Press to Appreciate Button -->
+    <button 
+      class="btn-appreciate inline-block w-48 h-16 bg-contain bg-no-repeat bg-center border-0 cursor-pointer transition-all duration-300 overflow-hidden hover:-translate-y-1 hover:scale-105 hover:brightness-110 hover:contrast-110"
+      style="background-image: url('/images/ui/buttons/button_appreciate.png'); text-indent: -9999px;"
+      id="appreciateBtn"
+    >
+      Press to Appreciate
+    </button>
+    
+    <!-- Appreciation Display -->
+    <div class="appreciation-display hidden max-w-2xl mx-auto" id="appreciationDisplay">
+      <div class="mystical-fact bg-parchment p-lg rounded-lg border border-decorative relative animate-fade-in">
+        <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-parchment px-xs text-2xl">✨</div>
+        <p class="text-charcoal leading-relaxed" id="factText">
+          <!-- Mystical plant fact will be inserted here by JavaScript -->
+        </p>
+      </div>
+    </div>
+    
+    <!-- Additional Interactive Elements -->
+    <div class="mystical-tools mt-lg">
+      <h3 class="text-2xl text-moss font-secondary mb-md">Tools of Botanical Contemplation</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+        
+        <!-- Moon Phase Calculator -->
+        <div class="tool-card bg-cream border border-decorative rounded-lg p-md text-center hover:shadow-medium transition-all duration-300">
+          <div class="tool-icon text-4xl mb-2">🌗</div>
+          <h4 class="text-sepia font-secondary mb-2">Moon Phase Guide</h4>
+          <p class="text-sm text-charcoal mb-3">Discover the current lunar phase for optimal planting timing according to ancient wisdom.</p>
+          <div class="moon-phase-display bg-moss/10 border border-moss/30 rounded p-2">
+            <span class="text-moss font-medium" id="currentMoonPhase">Third Quarter Moon</span>
+            <p class="text-xs text-forest-shadow mt-1">Perfect for pruning and reflection</p>
+          </div>
+        </div>
+        
+        <!-- Atmospheric Spirits -->
+        <div class="tool-card bg-cream border border-decorative rounded-lg p-md text-center hover:shadow-medium transition-all duration-300">
+          <div class="tool-icon text-4xl mb-2">🌫️</div>
+          <h4 class="text-sepia font-secondary mb-2">Atmospheric Spirits</h4>
+          <p class="text-sm text-charcoal mb-3">Commune with the ancient atmospheric spirits for mystical humidity wisdom.</p>
+          <button class="btn-secondary bg-plum text-cream px-3 py-1 rounded text-xs hover:bg-plum/80 transition-colors" id="humidityOracle">
+            Consult the Spirits
+          </button>
+        </div>
+        
+        <!-- Botanical Oracle -->
+        <div class="tool-card bg-cream border border-decorative rounded-lg p-md text-center hover:shadow-medium transition-all duration-300">
+          <div class="tool-icon text-4xl mb-2">🔮</div>
+          <h4 class="text-sepia font-secondary mb-2">Botanical Oracle</h4>
+          <p class="text-sm text-charcoal mb-3">Ask the plant spirits a yes/no question and receive mystical botanical wisdom.</p>
+          <textarea 
+            class="oracle-question w-full text-xs p-2 border border-sepia/50 rounded bg-parchment/50 text-charcoal resize-none mb-2" 
+            id="oracleQuestion" 
+            placeholder="Ask the plant spirits a yes/no question..."
+            rows="2"
+          ></textarea>
+          <button class="btn-secondary bg-brass text-cream px-3 py-1 rounded text-xs hover:bg-brass/80 transition-colors" id="botanicalOracle">
+            Consult the Oracle
+          </button>
+          <div class="oracle-response mt-2 hidden" id="oracleResponse">
+            <div class="bg-moss/10 border border-moss/30 rounded p-2">
+              <p class="text-moss font-medium text-sm italic"></p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Interactive elements functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Humidity Oracle
+    const humidityOracle = document.getElementById('humidityOracle');
+    const humidityMessages = [
+      "The spirits whisper: 'Water your soul-plants today'",
+      "Atmospheric conditions favor new growth and contemplation",
+      "The humidity crystals suggest patient waiting is needed",
+      "Perfect terrarium weather - create something beautiful",
+      "The mist spirits recommend indoor plant meditation",
+      "Ideal conditions for spore collection and wonder"
+    ];
+    
+    if (humidityOracle) {
+      humidityOracle.addEventListener('click', function() {
+        const message = humidityMessages[Math.floor(Math.random() * humidityMessages.length)];
+        
+        // Create temporary message display
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'humidity-message mt-2 p-2 bg-plum/10 border border-plum/30 rounded text-xs text-plum animate-fade-in';
+        messageDiv.textContent = message;
+        
+        // Remove any existing message
+        const existing = this.parentNode.querySelector('.humidity-message');
+        if (existing) existing.remove();
+        
+        // Add new message
+        this.parentNode.appendChild(messageDiv);
+        
+        // Add mystical effect
+        this.classList.add('mystical-glow');
+        setTimeout(() => {
+          this.classList.remove('mystical-glow');
+        }, 2000);
+      });
+    }
+    
+    // Botanical Oracle (Magic 8-Ball style)
+    const botanicalOracle = document.getElementById('botanicalOracle');
+    const oracleResponse = document.getElementById('oracleResponse');
+    const oracleQuestion = document.getElementById('oracleQuestion');
+    
+    const oracleResponses = [
+      // Affirmative responses
+      "The moss spirits whisper... Yes, the path is verdant before you",
+      "The ancient ferns nod in agreement... Indeed, proceed with confidence", 
+      "The orchid ancestors smile upon your query... Most certainly",
+      "The soil spirits rustle with approval... Yes, under the next full moon",
+      "Even the weeds think this is obvious... Yes, obviously",
+      "The cactus collective rolls their spines... Yes, but they're judging you",
+      
+      // Negative responses
+      "The thorned guardians shake their branches... Nay, not at this time",
+      "The root networks counsel patience... The answer is no, for now",
+      "The botanical council speaks... No, the season is not yet right",
+      "The snapdragons are snickering... No, and they saw this coming",
+      "The sage plants are being... well, sage... Absolutely not",
+      "Even the mushrooms think this is a bad idea... No, obviously",
+      
+      // Uncertain/Maybe responses
+      "The mists obscure the answer... Ask again when the moon wanes",
+      "The plant spirits are divided... The signs are unclear", 
+      "The leaves rustle with uncertainty... Perhaps, if you tend your garden first",
+      "The ancient wisdom is clouded... Consult the oracle at dawn",
+      "The ferns are giving you side-eye... Maybe if you actually water them first",
+      "The roses are too busy being fabulous to answer... Try again later, peasant",
+      
+      // Extra sassy
+      "The venus flytraps are hungry for better questions... No, and feed us",
+      "The bamboo is questioning your life choices... Signs point to 'reconsider everything'",
+      "The herb garden is collectively eye-rolling... Maybe consult a real gardening book first"
+    ];
+    
+    if (botanicalOracle && oracleResponse && oracleQuestion) {
+      const consultOracle = function() {
+        const question = oracleQuestion.value.trim();
+        
+        if (!question) {
+          // Show error if no question
+          const responseP = oracleResponse.querySelector('p');
+          responseP.textContent = "The plant spirits require a question to answer, dear seeker...";
+          oracleResponse.classList.remove('hidden');
+          oracleResponse.classList.add('animate-fade-in');
+          return;
+        }
+        
+        // Get random response
+        const response = oracleResponses[Math.floor(Math.random() * oracleResponses.length)];
+        
+        const responseP = oracleResponse.querySelector('p');
+        responseP.textContent = response;
+        oracleResponse.classList.remove('hidden');
+        oracleResponse.classList.add('animate-fade-in');
+        
+        // Add mystical effect to button
+        botanicalOracle.classList.add('mystical-glow');
+        setTimeout(() => {
+          botanicalOracle.classList.remove('mystical-glow');
+        }, 2000);
+      };
+      
+      // Button click handler
+      botanicalOracle.addEventListener('click', consultOracle);
+      
+      // Enter key handler for textarea
+      oracleQuestion.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault(); // Prevent newline in textarea
+          consultOracle();
+        }
+      });
+    }
+    
+    // Moon Phase Updates (could be connected to real lunar API in production)
+    const moonPhases = [
+      { phase: '🌑 New Moon', guidance: 'Perfect for new plantings and fresh starts' },
+      { phase: '🌒 Waxing Crescent', guidance: 'Ideal for leaf growth and propagation' },
+      { phase: '🌓 First Quarter', guidance: 'Excellent for transplanting and repotting' },
+      { phase: '🌔 Waxing Gibbous', guidance: 'Prime time for fertilizing and growth' },
+      { phase: '🌕 Full Moon', guidance: 'Peak energy for harvesting and appreciation' },
+      { phase: '🌖 Waning Gibbous', guidance: 'Good for sharing knowledge and seeds' },
+      { phase: '🌗 Third Quarter', guidance: 'Perfect for pruning and reflection' },
+      { phase: '🌘 Waning Crescent', guidance: 'Time for rest and root development' }
+    ];
+    
+    // Update moon phase display with current phase
+    const currentMoonPhase = document.getElementById('currentMoonPhase');
+    if (currentMoonPhase) {
+      const randomPhase = moonPhases[Math.floor(Math.random() * moonPhases.length)];
+      currentMoonPhase.textContent = randomPhase.phase;
+      currentMoonPhase.nextElementSibling.textContent = randomPhase.guidance;
+    }
+  });
+</script>
+
+<style>
+  .btn-secondary {
+    @apply transition-all duration-300 hover:-translate-y-0.5;
+  }
+  
+  .tool-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .tool-card:hover .tool-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .mystical-tools .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

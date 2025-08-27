@@ -1,0 +1,300 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  events: CollectionEntry<'events'>[];
+}
+
+const { events = [] } = Astro.props;
+
+// Mock events if no events provided
+const mockEvents = [
+  {
+    title: "September New Moon Propagation Ceremony",
+    date: new Date("2025-09-02T06:00:00"),
+    location: "Secret Garden Location",
+    description: "Join us for the monthly new moon ritual where we bless our propagation efforts and commune with the plant spirits for successful growth.",
+    type: "Society Ritual",
+    marker: "🗝️"
+  },
+  {
+    title: "Spring Orchid Show",
+    date: new Date("2025-09-15T09:00:00"),
+    location: "Durban Botanic Gardens",
+    description: "The annual orchid exhibition featuring rare specimens and cultivation workshops. Several Society members will be presenting.",
+    type: "Public Exhibition",
+    marker: "🌸"
+  },
+  {
+    title: "Urban Foraging & Plant Identification Walk",
+    date: new Date("2025-09-23T08:00:00"),
+    location: "Beachfront Indigenous Garden",
+    description: "Learn to identify edible and medicinal plants growing wild in Durban's urban spaces. Bring a notebook for sacred knowledge recording.",
+    type: "Educational Gathering",
+    marker: "🔍"
+  }
+];
+
+const displayEvents = events.length > 0 ? events : mockEvents;
+
+// Helper function to format dates
+function formatEventDate(date: Date) {
+  return date.toLocaleDateString('en-ZA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+function formatEventTime(date: Date) {
+  return date.toLocaleTimeString('en-ZA', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+---
+
+<div class="card-header">
+  <img src="/images/navigation/icons/icon_events.png" alt="Events" class="section-icon" />
+  <h2 class="text-2xl font-medium text-cream m-0">Upcoming Mystical Gatherings</h2>
+</div>
+
+<div class="card-content">
+  <div class="events-list flex flex-col gap-md">
+    {displayEvents.map((event) => (
+      <div class={`event-item flex gap-md p-md rounded-lg border border-decorative ${
+        event.type === 'Society Ritual' || event.marker === '🗝️' 
+          ? 'society-event bg-gradient-to-r from-moss/5 to-cream border-l-4 border-moss' 
+          : 'external-event bg-parchment border-l-4 border-sepia'
+      }`}>
+        <div class="event-marker text-4xl flex-shrink-0">
+          {event.marker || '📅'}
+        </div>
+        
+        <div class="event-details flex-1">
+          <h4 class="text-lg text-moss mb-2 font-secondary">
+            {typeof event === 'object' && 'data' in event ? event.data.title : event.title}
+          </h4>
+          
+          <p class="event-meta text-sepia text-sm mb-xs">
+            📅 {formatEventDate(typeof event === 'object' && 'data' in event ? event.data.date : event.date)}
+            • ⏰ {formatEventTime(typeof event === 'object' && 'data' in event ? event.data.date : event.date)}
+            • 📍 {typeof event === 'object' && 'data' in event ? event.data.location : event.location}
+          </p>
+          
+          <p class="event-desc mb-xs text-charcoal text-sm leading-relaxed">
+            {typeof event === 'object' && 'data' in event ? event.data.description : event.description}
+          </p>
+          
+          <span class={`event-type inline-block px-2 py-1 rounded-xl text-xs uppercase tracking-wide text-cream ${
+            event.type === 'Society Ritual' || event.marker === '🗝️'
+              ? 'bg-moss' 
+              : event.type === 'Public Exhibition' || event.marker === '🌸'
+              ? 'bg-plum'
+              : 'bg-brass'
+          }`}>
+            {typeof event === 'object' && 'data' in event ? event.data.category : event.type}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <!-- Calendar Features -->
+  <div class="calendar-features mt-lg">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+      <!-- Society Events -->
+      <div class="feature-card bg-moss/10 border border-moss/30 rounded-lg p-md">
+        <h4 class="text-moss font-secondary mb-2 flex items-center gap-2">
+          🗝️ Society Rituals
+        </h4>
+        <p class="text-sm text-forest-shadow mb-3">
+          Exclusive gatherings for initiated members featuring ancient botanical ceremonies, 
+          propagation rituals, and mystical plant communion sessions.
+        </p>
+        <div class="ritual-schedule text-xs text-moss/80">
+          <p>• New Moon Ceremonies (Monthly)</p>
+          <p>• Seasonal Transition Rituals (Quarterly)</p>
+          <p>• Spore Collection Expeditions (Bi-monthly)</p>
+        </div>
+      </div>
+      
+      <!-- Public Events -->
+      <div class="feature-card bg-plum/10 border border-plum/30 rounded-lg p-md">
+        <h4 class="text-plum font-secondary mb-2 flex items-center gap-2">
+          🌸 Public Exhibitions
+        </h4>
+        <p class="text-sm text-plum mb-3">
+          Open events where our Society shares botanical wisdom with the broader community. 
+          Perfect opportunities for prospective members to observe our traditions.
+        </p>
+        <div class="public-schedule text-xs text-plum/80">
+          <p>• Durban Botanic Gardens Collaborations</p>
+          <p>• Plant Fair Demonstrations</p>
+          <p>• Educational Workshop Series</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Event Subscription -->
+  <div class="event-subscription mt-lg p-md bg-autumn/10 border border-autumn/30 rounded-lg">
+    <h4 class="text-autumn font-secondary mb-2">Stay Connected to Our Gatherings</h4>
+    <p class="text-sm text-autumn mb-3">
+      Initiated members receive mystical notifications via our encrypted botanical network. 
+      Prospective members can request inclusion in our public event announcements.
+    </p>
+    <div class="subscription-methods flex flex-wrap gap-2">
+      <button class="subscription-btn bg-autumn text-cream px-3 py-1 rounded text-xs hover:bg-autumn/80 transition-colors">
+        🔮 Mystical Notifications
+      </button>
+      <button class="subscription-btn bg-sepia text-cream px-3 py-1 rounded text-xs hover:bg-sepia/80 transition-colors">
+        📧 Email Updates
+      </button>
+      <button class="subscription-btn bg-moss text-cream px-3 py-1 rounded text-xs hover:bg-moss/80 transition-colors">
+        📱 WhatsApp Circle
+      </button>
+    </div>
+  </div>
+  
+  <!-- Legend -->
+  <div class="event-legend mt-md p-sm bg-cream/50 rounded border border-decorative/50">
+    <h5 class="text-sepia font-secondary text-sm mb-2">Event Types:</h5>
+    <div class="legend-items flex flex-wrap gap-4 text-xs">
+      <div class="legend-item flex items-center gap-1">
+        <span class="w-3 h-3 bg-moss rounded"></span>
+        <span class="text-moss">Society Rituals</span>
+      </div>
+      <div class="legend-item flex items-center gap-1">
+        <span class="w-3 h-3 bg-plum rounded"></span>
+        <span class="text-plum">Public Exhibitions</span>
+      </div>
+      <div class="legend-item flex items-center gap-1">
+        <span class="w-3 h-3 bg-brass rounded"></span>
+        <span class="text-brass">Educational Gatherings</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Event interaction functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Subscription buttons
+    const subscriptionBtns = document.querySelectorAll('.subscription-btn');
+    subscriptionBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const method = this.textContent.trim();
+        
+        // Add visual feedback
+        this.classList.add('mystical-glow');
+        setTimeout(() => {
+          this.classList.remove('mystical-glow');
+        }, 2000);
+        
+        // Show notification
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-moss text-cream p-3 rounded-lg shadow-strong z-50 animate-fade-in';
+        notification.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span>✨</span>
+            <span>Subscription request noted for ${method}</span>
+          </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+        
+        console.log(`Subscription requested for: ${method}`);
+      });
+    });
+    
+    // Event item hover effects
+    const eventItems = document.querySelectorAll('.event-item');
+    eventItems.forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        const marker = this.querySelector('.event-marker');
+        if (marker) {
+          marker.classList.add('animate-floating');
+        }
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        const marker = this.querySelector('.event-marker');
+        if (marker) {
+          marker.classList.remove('animate-floating');
+        }
+      });
+    });
+    
+    // RSVP functionality (mock)
+    eventItems.forEach((item, index) => {
+      item.addEventListener('click', function() {
+        const title = this.querySelector('h4').textContent;
+        
+        const rsvpConfirm = confirm(`Would you like to express interest in attending:\n\n"${title}"\n\nThis will add the event to your mystical calendar.`);
+        
+        if (rsvpConfirm) {
+          // Add visual confirmation
+          const confirmation = document.createElement('div');
+          confirmation.className = 'absolute top-2 right-2 bg-moss text-cream text-xs px-2 py-1 rounded animate-fade-in';
+          confirmation.textContent = 'Interest Noted ✨';
+          
+          this.style.position = 'relative';
+          this.appendChild(confirmation);
+          
+          setTimeout(() => {
+            confirmation.remove();
+          }, 3000);
+          
+          console.log(`RSVP confirmed for: ${title}`);
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .event-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .event-item:hover {
+    transform: translateY(-2px);
+    box-shadow: theme('boxShadow.medium');
+  }
+  
+  .subscription-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .subscription-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .event-item {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .event-marker {
+      align-self: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .calendar-features .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .legend-items {
+      justify-content: center;
+    }
+  }
+</style>

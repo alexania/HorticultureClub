@@ -1,0 +1,149 @@
+---
+// Navigation menu items
+const navItems = [
+  {
+    href: "#almanac",
+    icon: "/images/navigation/icons/icon_almanac.png",
+    title: "Seasonal Almanac",
+    subtitle: "Sacred Garden Duties"
+  },
+  {
+    href: "#directory",
+    icon: "/images/navigation/icons/icon_directory.png",
+    title: "Plant Directory", 
+    subtitle: "Trusted Purveyors"
+  },
+  {
+    href: "#events",
+    icon: "/images/navigation/icons/icon_events.png",
+    title: "Event Calendar",
+    subtitle: "Mystical Gatherings"
+  },
+  {
+    href: "#portal",
+    icon: "/images/navigation/icons/icon_portal.png",
+    title: "Member Portal",
+    subtitle: "Society Mysteries"
+  },
+  {
+    href: "#diaries",
+    icon: "/images/navigation/icons/icon_diaries.png",
+    title: "Gathering Diaries",
+    subtitle: "Recent Expeditions"
+  },
+  {
+    href: "#forecast",
+    icon: "/images/navigation/icons/icon_forecast.png",
+    title: "Weather Mysteries",
+    subtitle: "Atmospheric Divination"
+  }
+];
+---
+
+<nav class="main-navigation relative z-10">
+  <div class="nav-frame bg-gradient-to-br from-cream to-parchment border border-decorative rounded-lg shadow-soft overflow-hidden">
+    <!-- Top Border Decoration -->
+    <div class="border-decoration flex justify-center my-sm">
+      <img 
+        src="/images/navigation/borders/border_spring.png" 
+        alt="" 
+        class="border-image h-10 opacity-70 object-cover w-full max-w-[800px]"
+        loading="lazy"
+      />
+    </div>
+    
+    <div class="nav-content p-md">
+      <!-- Society Proclamation -->
+      <div class="society-proclamation text-center mb-md py-sm border-b border-sepia opacity-80">
+        <p class="proclamation-text font-secondary text-plum text-lg italic m-0">
+          "Enter, Fellow Seekers of Botanical Wisdom"
+        </p>
+      </div>
+      
+      <!-- Navigation Menu -->
+      <ul class="nav-menu list-none grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-sm my-md">
+        {navItems.map((item) => (
+          <li>
+            <a 
+              href={item.href}
+              class="nav-link flex items-center gap-sm p-md no-underline text-charcoal font-ui font-normal tracking-wide
+                     bg-gradient-to-br from-cream to-white border border-decorative rounded-md 
+                     transition-all duration-300 relative overflow-hidden group
+                     hover:bg-gradient-to-br hover:from-moss hover:to-forest-shadow hover:text-cream 
+                     hover:-translate-y-1 hover:shadow-medium hover:border-brass"
+            >
+              <!-- Hover shimmer effect -->
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-moss to-transparent opacity-10 
+                          -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+              
+              <img 
+                src={item.icon}
+                alt={item.title}
+                class="w-8 h-8 object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert group-hover:scale-110"
+                loading="lazy"
+              />
+              
+              <div class="nav-text flex flex-col leading-tight">
+                <strong class="font-ui font-medium text-sm">{item.title}</strong>
+                <small class="font-body text-xs opacity-80 italic mt-0.5">{item.subtitle}</small>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    
+    <!-- Bottom Border Decoration -->
+    <div class="border-decoration flex justify-center my-sm">
+      <img 
+        src="/images/navigation/borders/border_autumn.png" 
+        alt="" 
+        class="border-image h-10 opacity-70 object-cover w-full max-w-[800px]"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Smooth scrolling and mystical effects for navigation
+  document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          // We're on the home page - smooth scroll to target
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          });
+          
+          // Add mystical glow effect to target section
+          targetElement.classList.add('mystical-glow');
+          setTimeout(() => {
+            targetElement.classList.remove('mystical-glow');
+          }, 2000);
+          
+          // Add floating effect to the clicked icon
+          const icon = this.querySelector('img');
+          if (icon) {
+            icon.classList.add('animate-floating');
+            setTimeout(() => {
+              icon.classList.remove('animate-floating');
+            }, 3000);
+          }
+        } else {
+          // We're not on the home page - navigate to home page with hash
+          window.location.href = '/' + this.getAttribute('href');
+        }
+      });
+    });
+  });
+</script>

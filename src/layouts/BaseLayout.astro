@@ -1,0 +1,118 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+  class?: string;
+}
+
+const { 
+  title, 
+  description = "Victorian Dark Academia botanical society preserving the mystical horticultural traditions of Durban since 1883",
+  image = "/images/heroes/hero.png",
+  noIndex = false,
+  class: className = ""
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+  
+  <!-- Primary Meta Tags -->
+  <title>{title} | Durban Horticulture Club</title>
+  <meta name="title" content={`${title} | Durban Horticulture Club`} />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={Astro.url} />
+  <meta property="og:title" content={`${title} | Durban Horticulture Club`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(image, Astro.url)} />
+  <meta property="og:site_name" content="Durban Horticulture Club" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={Astro.url} />
+  <meta property="twitter:title" content={`${title} | Durban Horticulture Club`} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={new URL(image, Astro.url)} />
+  
+  <!-- SEO -->
+  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow" />
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/images/brand/logo.png" />
+  <link rel="apple-touch-icon" href="/images/brand/logo.png" />
+  
+  <!-- Theme -->
+  <meta name="theme-color" content="#6b7c32" />
+  <meta name="color-scheme" content="light" />
+  
+  <!-- Fonts preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Structured Data for Organization -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Durban Horticulture Club",
+      "alternateName": "Custodes Arcana Viridis",
+      "url": "https://durbanhorticulture.club",
+      "logo": "https://durbanhorticulture.club/images/brand/logo.png",
+      "description": "Victorian Dark Academia botanical society preserving the mystical horticultural traditions of Durban since 1883",
+      "foundingDate": "1883",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Durban",
+        "addressCountry": "South Africa"
+      },
+      "sameAs": [
+        "https://facebook.com/durbanhorticulture",
+        "https://instagram.com/durbanhorticulture"
+      ]
+    }
+  </script>
+</head>
+
+<body class={`${className} transition-all duration-300`}>
+  <slot />
+  
+  <!-- Global Scripts -->
+  <script>
+    import '../scripts/global.js';
+  </script>
+  
+</body>
+</html>
+
+<style>
+  /* Global body styles for seasonal effects */
+  body.season-spring {
+    filter: saturate(1.1) brightness(1.05) hue-rotate(-5deg);
+  }
+  
+  body.season-summer {
+    filter: saturate(1.2) contrast(1.05);
+  }
+  
+  body.season-autumn {
+    filter: sepia(0.1) saturate(1.2) hue-rotate(10deg);
+  }
+  
+  body.season-winter {
+    filter: brightness(0.95) contrast(1.1) saturate(0.9);
+  }
+</style>

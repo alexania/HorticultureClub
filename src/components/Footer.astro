@@ -1,0 +1,98 @@
+---
+// Footer data
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer bg-gradient-to-br from-charcoal to-forest-shadow text-cream py-xl mt-xl relative">
+  <!-- Background overlay for mystical effect -->
+  <div class="absolute inset-0 bg-charcoal/85 backdrop-blur-light"></div>
+  
+  <div class="container">
+    <div class="footer-content relative z-5 grid grid-cols-[auto_1fr] gap-lg items-center mb-lg">
+      <!-- Footer Wax Seal -->
+      <div class="footer-seal">
+        <img 
+          src="/images/brand/wax-seal.png" 
+          alt="Official Society Wax Seal" 
+          class="footer-wax-seal w-30 h-30 object-contain opacity-90"
+          style="filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.5));"
+          loading="lazy"
+        />
+      </div>
+      
+      <!-- Footer Information -->
+      <div class="footer-info">
+        <!-- Society Motto -->
+        <div class="society-motto text-center mb-md">
+          <h3 class="text-2xl text-autumn mb-xs font-medium" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
+            <em>Custodes Arcana Viridis</em>
+          </h3>
+          <p class="text-cream">"Guardians of the Green Mysteries"</p>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="contact-info mb-md">
+          <p class="mb-xs text-cream font-normal" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+            For initiations and sacred correspondences:
+          </p>
+          <p class="mb-xs text-cream font-normal" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+            📧 keepers@durbanhorticulture.co.za
+          </p>
+          <p class="mb-xs text-cream font-normal" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+            📱 WhatsApp Circle: Join via initiation ceremony
+          </p>
+        </div>
+        
+        <!-- Footer Disclaimer -->
+        <div class="footer-disclaimer text-sm italic text-autumn leading-relaxed bg-moss/20 p-md rounded-lg border border-sage/30 opacity-90"
+             style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+          <p>
+            <em>The Durban Horticulture Club operates under the ancient bylaws established in 1883. 
+            All botanical knowledge shared is for educational and mystical purposes. 
+            Please garden responsibly and respect indigenous flora.</em>
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Border -->
+    <div class="footer-border relative z-5 text-center mt-lg">
+      <img 
+        src="/images/navigation/borders/border_winter.png" 
+        alt="" 
+        class="footer-border-image opacity-70 h-10 object-cover w-full max-w-[800px] mx-auto"
+        style="filter: brightness(1.2) contrast(1.1);"
+        loading="lazy"
+      />
+    </div>
+    
+    <!-- Copyright and Credits -->
+    <div class="footer-credits relative z-5 text-center mt-md pt-md border-t border-sepia/30">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-sm text-xs text-sage">
+        <p>&copy; {currentYear} Durban Horticulture Club. All mysteries reserved.</p>
+        <p class="flex items-center gap-2">
+          Built with botanical devotion using 
+          <a href="https://astro.build" class="text-autumn hover:text-cream transition-colors underline" target="_blank" rel="noopener">
+            Astro
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .footer-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    
+    .footer-wax-seal {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+  }
+</style>

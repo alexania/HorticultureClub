@@ -1,0 +1,73 @@
+---
+// Hero section component
+---
+
+<section class="hero-section relative h-[600px] overflow-hidden mb-xl">
+  <!-- Hero Background -->
+  <div class="hero-background absolute inset-0">
+    <img 
+      src="/images/heroes/hero.png" 
+      alt="Victorian Greenhouse Scene" 
+      class="hero-image w-full h-full object-cover object-center"
+      loading="eager"
+    />
+    <div class="hero-overlay absolute inset-0 bg-gradient-to-br from-charcoal/70 via-plum/60 to-moss/70"></div>
+  </div>
+  
+  <!-- Hero Content -->
+  <div class="hero-content relative z-10 h-full flex flex-col justify-center items-center text-center px-lg max-w-4xl mx-auto">
+    <h1 class="hero-title text-hero text-cream mb-sm text-shadow-strong">
+      Keepers of the Greenbelt Arcana
+    </h1>
+    <p class="hero-subtitle text-xl text-autumn mb-md italic text-shadow">
+      <em>Custodiamus Mysterium Botanicum Durbanensis</em>
+    </p>
+    <p class="hero-description text-lg text-cream mb-lg max-w-2xl text-shadow">
+      Welcome, fellow cultivator of the mystical arts. Since 1883, our Society has preserved 
+      the ancient knowledge of Durban's botanical mysteries. Join us in our sacred duty to 
+      commune with the verdant spirits of the subtropical realm.
+    </p>
+    <button 
+      class="btn-primary text-lg px-8 py-4 mystical-glow" 
+      id="joinSociety"
+    >
+      <span class="btn-icon text-2xl">🗝️</span>
+      <span class="btn-text">Join the Society</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      height: 500px;
+    }
+    
+    .hero-title {
+      font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+    
+    .hero-description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-section {
+      height: 400px;
+    }
+    
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 0.9rem;
+    }
+  }
+</style>

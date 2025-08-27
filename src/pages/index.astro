@@ -1,0 +1,92 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import AlmanacCard from '../components/AlmanacCard.astro';
+import GatheringCard from '../components/GatheringCard.astro';
+import MemberPortal from '../components/MemberPortal.astro';
+import WeatherForecast from '../components/WeatherForecast.astro';
+import NurseryDirectory from '../components/NurseryDirectory.astro';
+import EventCalendar from '../components/EventCalendar.astro';
+import InteractiveSection from '../components/InteractiveSection.astro';
+
+// Get latest content
+import { getCollection } from 'astro:content';
+
+const almanacEntries = await getCollection('almanac');
+const latestAlmanac = almanacEntries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0];
+
+const gatheringEntries = await getCollection('gatherings');
+const latestGathering = gatheringEntries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0];
+
+const eventEntries = await getCollection('events');
+const upcomingEvents = eventEntries
+  .filter(event => event.data.date >= new Date())
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 3);
+---
+
+<ContentLayout 
+  title="Home"
+  description="Victorian Dark Academia botanical society preserving the mystical horticultural traditions of Durban since 1883. Join our secret society of plant guardians and discover the botanical mysteries of KwaZulu-Natal."
+>
+  <!-- Hero Section -->
+  <HeroSection />
+
+  <!-- Main Content Grid -->
+  <main class="main-content">
+    <div class="container">
+      <div class="content-grid grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-lg section-spacing">
+        
+        <!-- Seasonal Almanac Section -->
+        <section class="card" id="almanac">
+          <AlmanacCard entry={latestAlmanac} />
+        </section>
+
+        <!-- Latest Gatherings -->
+        <section class="card" id="diaries">
+          <GatheringCard entry={latestGathering} />
+        </section>
+
+        <!-- Member Portal -->
+        <section class="card" id="portal">
+          <MemberPortal />
+        </section>
+
+      </div>
+      
+      <!-- Interactive Elements Section -->
+      <div class="section-spacing">
+        <InteractiveSection />
+      </div>
+      
+      <!-- Weather Forecast Section -->
+      <section class="card full-width section-spacing" id="forecast">
+        <WeatherForecast />
+      </section>
+      
+      <!-- Plant Directory Preview -->
+      <section class="card section-spacing" id="directory">
+        <NurseryDirectory />
+      </section>
+      
+      <!-- Events Calendar Preview -->
+      <section class="card" id="events">
+        <EventCalendar events={upcomingEvents} />
+      </section>
+    </div>
+  </main>
+</ContentLayout>
+
+<style>
+  .full-width {
+    grid-column: 1 / -1;
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

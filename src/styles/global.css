@@ -1,0 +1,222 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Raleway:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables for Legacy Support */
+:root {
+  --color-parchment: theme('colors.parchment');
+  --color-moss: theme('colors.moss');
+  --color-plum: theme('colors.plum');
+  --color-brass: theme('colors.brass');
+  --color-charcoal: theme('colors.charcoal');
+  --color-sepia: theme('colors.sepia');
+  --color-rust: theme('colors.rust');
+  --color-forest-shadow: theme('colors.forest-shadow');
+  --color-cream: theme('colors.cream');
+  --color-sage: theme('colors.sage');
+  
+  /* Seasonal */
+  --color-spring: theme('colors.spring');
+  --color-summer: theme('colors.summer');
+  --color-autumn: theme('colors.autumn');
+  --color-winter: theme('colors.winter');
+  
+  /* Typography */
+  --font-heading: theme('fontFamily.heading');
+  --font-secondary: theme('fontFamily.secondary');
+  --font-body: theme('fontFamily.body');
+  --font-ui: theme('fontFamily.ui');
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-parchment text-charcoal font-body;
+    background-image: theme('backgroundImage.parchment-texture');
+    background-attachment: fixed;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+  
+  h1 {
+    @apply text-title font-medium text-charcoal tracking-tight;
+  }
+  
+  h2 {
+    @apply text-4xl font-medium text-plum mb-md;
+  }
+  
+  h3 {
+    @apply text-3xl font-medium text-moss mb-sm;
+  }
+  
+  h4 {
+    @apply text-xl font-medium text-sepia mb-xs font-secondary;
+  }
+  
+  /* Latin plant names styling */
+  em {
+    @apply italic;
+  }
+  
+  /* Only apply tooltip styling to em elements with title attributes */
+  em[title] {
+    @apply relative cursor-help;
+  }
+  
+  em[title]::after {
+    content: attr(title);
+    @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1;
+    @apply bg-charcoal text-cream px-xs py-1 rounded text-xs whitespace-nowrap;
+    @apply opacity-0 invisible transition-all duration-300 z-50 pointer-events-none;
+  }
+  
+  em[title]:hover::after {
+    @apply opacity-100 visible;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-container mx-auto px-md;
+  }
+  
+  /* Section spacing utilities */
+  .section-spacing {
+    @apply mb-xl;
+  }
+  
+  .section-spacing-large {
+    @apply mb-xl;
+  }
+  
+  .mystical-glow {
+    @apply animate-mystical-glow;
+  }
+  
+  .floating {
+    @apply animate-floating;
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center gap-xs px-lg py-sm;
+    @apply bg-gradient-to-br from-brass to-rust text-cream;
+    @apply font-ui text-sm font-medium uppercase tracking-wider;
+    @apply border-0 rounded-md cursor-pointer transition-all duration-300;
+    @apply shadow-medium hover:shadow-strong;
+    @apply hover:-translate-y-1 hover:from-rust hover:to-brass;
+  }
+  
+  .btn-icon {
+    @apply text-xl;
+  }
+  
+  .card {
+    @apply bg-cream border border-decorative rounded-lg overflow-hidden;
+    @apply shadow-soft transition-all duration-300;
+  }
+  
+  /* Only apply hover effects to clickable cards */
+  .card.clickable,
+  .card-clickable {
+    @apply hover:shadow-medium hover:-translate-y-1;
+  }
+  
+  .card-header {
+    @apply bg-gradient-to-br from-moss to-forest-shadow text-cream;
+    @apply px-lg py-md flex items-center gap-sm;
+  }
+  
+  .card-content {
+    @apply p-lg;
+  }
+  
+  .section-icon {
+    @apply w-8 h-8 object-contain;
+    filter: brightness(0) invert(1);
+  }
+  
+  .mystical-list {
+    @apply list-none space-y-xs;
+  }
+  
+  .mystical-list li {
+    @apply flex items-start gap-xs;
+  }
+  
+  .bullet {
+    @apply text-xl flex-shrink-0;
+  }
+  
+  .ornamental-divider {
+    @apply text-center my-lg relative;
+  }
+  
+  .weather-interpretation {
+    @apply bg-parchment border border-decorative rounded p-md mt-md relative;
+  }
+  
+  .weather-interpretation::before {
+    content: '🔮';
+    @apply absolute -top-2 left-md bg-parchment px-xs text-2xl;
+  }
+  
+  /* Seasonal Effects */
+  .season-spring {
+    filter: saturate(1.1) brightness(1.05) hue-rotate(-5deg);
+  }
+  
+  .season-summer {
+    filter: saturate(1.2) contrast(1.05);
+  }
+  
+  .season-autumn {
+    filter: sepia(0.1) saturate(1.2) hue-rotate(10deg);
+  }
+  
+  .season-winter {
+    filter: brightness(0.95) contrast(1.1) saturate(0.9);
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-strong {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .backdrop-blur-light {
+    backdrop-filter: blur(1px);
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+  
+  .hero-section,
+  .interactive-section,
+  .site-footer,
+  .main-navigation {
+    @apply hidden;
+  }
+  
+  .card {
+    @apply border-black mb-4;
+    break-inside: avoid;
+  }
+}

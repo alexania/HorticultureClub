@@ -1,0 +1,68 @@
+---
+// Mock weather data - in production this would come from an API
+const currentWeather = {
+  description: "The greenhouse spirits dance in the mist",
+  humidity: "78% - Mystically Perfect",
+  moonPhase: "🌗 Third Quarter Moon",
+  interpretation: "Perfect conditions for terrarium communion and fern whispering"
+};
+---
+
+<div class="weather-frame bg-gradient-to-br from-cream to-parchment border-2 border-brass rounded-lg p-md shadow-medium relative min-w-[200px]">
+  <div class="absolute -inset-1 border border-sepia rounded-xl opacity-50"></div>
+  
+  <div class="weather-header flex items-center justify-center gap-xs mb-sm border-b border-sepia pb-xs">
+    <span class="weather-icon text-2xl">🔮</span>
+    <span class="weather-title font-secondary text-base text-plum font-medium">Atmospheric Mysteries</span>
+  </div>
+  
+  <div class="current-weather">
+    <div class="weather-info text-sm leading-relaxed text-center">
+      <p class="weather-desc italic text-moss mb-xs" id="weather-desc">{currentWeather.description}</p>
+      <p class="humidity text-sepia text-xs mb-xs" id="humidity">{currentWeather.humidity}</p>
+      <p class="moon-phase text-plum text-xs font-medium" id="moon-phase">{currentWeather.moonPhase}</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dynamic weather updates
+  const weatherInterpretations = [
+    "The spirits whisper of rain approaching",
+    "Humidity crystals show ancient activity", 
+    "The greenhouse guardians are particularly restless today",
+    "Perfect conditions for spore collection and communion",
+    "The mycorrhizal network pulses with mystical energy",
+    "Atmospheric pressure suggests deep root meditation time",
+    "The ancient water spirits are stirring in the mist",
+    "Terrarium weather has been activated by the cosmos"
+  ];
+  
+  const humidityLevels = [
+    "Humidity: 78% - Mystically perfect",
+    "Humidity: 82% - The plants are dancing", 
+    "Humidity: 71% - Spirits are gathering strength",
+    "Humidity: 85% - Terrarium weather fully activated",
+    "Humidity: 76% - The ferns approve of conditions",
+    "Humidity: 89% - Moss meditation weather achieved"
+  ];
+  
+  function updateWeather() {
+    const descElement = document.getElementById('weather-desc');
+    const humidityElement = document.getElementById('humidity');
+    
+    if (descElement && humidityElement) {
+      const randomDesc = weatherInterpretations[Math.floor(Math.random() * weatherInterpretations.length)];
+      const randomHumidity = humidityLevels[Math.floor(Math.random() * humidityLevels.length)];
+      
+      descElement.textContent = randomDesc;
+      humidityElement.textContent = randomHumidity;
+    }
+  }
+  
+  // Update weather every 30 minutes
+  setInterval(updateWeather, 1800000);
+  
+  // Optional: Update on page load with a small delay for mystical effect
+  setTimeout(updateWeather, 2000);
+</script>

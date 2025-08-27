@@ -1,0 +1,157 @@
+---
+// Weather forecast component with mystical interpretations
+---
+
+<div class="card-header">
+  <img src="/images/navigation/icons/icon_forecast.png" alt="Weather Forecast" class="section-icon" />
+  <h2 class="text-2xl font-medium text-cream m-0">Mystical Weather Interpretations</h2>
+</div>
+
+<div class="card-content">
+  <div class="weather-grid grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-lg">
+    
+    <!-- Today -->
+    <div class="weather-day bg-parchment p-md rounded-lg border border-decorative">
+      <h3 class="text-xl text-moss mb-sm">Today - The Awakening</h3>
+      <div class="weather-graphic text-center my-sm">
+        <img 
+          src="/images/content/weather-graphics/high-humidity.png" 
+          alt="High Humidity Spirits" 
+          class="weather-image w-37 h-37 object-contain object-center mx-auto rounded border border-decorative shadow-soft"
+          loading="lazy"
+        />
+      </div>
+      <p class="weather-mystical italic text-plum mb-sm border-l-4 border-plum pl-sm">
+        The greenhouse spirits dance joyfully in the 85% humidity. 
+        Perfect conditions for terrarium communion and fern whispering.
+      </p>
+      <div class="weather-practical bg-cream p-sm rounded text-sm text-sepia">
+        <p><strong>Practical Translation:</strong> Excellent day for propagation and seedling care. 
+        Avoid overwatering outdoor plants.</p>
+      </div>
+    </div>
+    
+    <!-- Tomorrow -->
+    <div class="weather-day bg-parchment p-md rounded-lg border border-decorative">
+      <h3 class="text-xl text-moss mb-sm">Tomorrow - The Blessing</h3>
+      <div class="weather-graphic text-center my-sm">
+        <img 
+          src="/images/content/weather-graphics/rain.png" 
+          alt="Rain Spirit Blessing" 
+          class="weather-image w-37 h-37 object-contain object-center mx-auto rounded border border-decorative shadow-soft"
+          loading="lazy"
+        />
+      </div>
+      <p class="weather-mystical italic text-plum mb-sm border-l-4 border-plum pl-sm">
+        The ancient water spirits answer our evening chants. 
+        A gentle 15mm blessing shall nourish the earth.
+      </p>
+      <div class="weather-practical bg-cream p-sm rounded text-sm text-sepia">
+        <p><strong>Practical Translation:</strong> Light rain expected. Perfect for transplanting 
+        and establishing new plants in the garden.</p>
+      </div>
+    </div>
+    
+    <!-- Day After Tomorrow -->
+    <div class="weather-day bg-parchment p-md rounded-lg border border-decorative">
+      <h3 class="text-xl text-moss mb-sm">Wednesday - The Meditation</h3>
+      <div class="weather-graphic text-center my-sm">
+        <img 
+          src="/images/content/weather-graphics/drought.png" 
+          alt="Plant Meditation" 
+          class="weather-image w-37 h-37 object-contain object-center mx-auto rounded border border-decorative shadow-soft"
+          loading="lazy"
+        />
+      </div>
+      <p class="weather-mystical italic text-plum mb-sm border-l-4 border-plum pl-sm">
+        The plants enter deep root meditation as moisture retreats. 
+        A time for reflection and soil preparation.
+      </p>
+      <div class="weather-practical bg-cream p-sm rounded text-sm text-sepia">
+        <p><strong>Practical Translation:</strong> Drying conditions. Good day for pruning, 
+        weeding, and soil cultivation work.</p>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- Weekly Mystical Forecast Summary -->
+  <div class="weekly-forecast mt-lg p-md bg-moss/10 border border-moss/30 rounded-lg">
+    <h4 class="text-moss font-secondary mb-sm">Weekly Atmospheric Wisdom</h4>
+    <p class="text-forest-shadow leading-relaxed">
+      The spirits counsel patience this week as the atmospheric energies shift between nurturing moisture 
+      and contemplative dryness. This cosmic balance creates ideal conditions for both active gardening 
+      and quiet botanical meditation. Pay special attention to your terrarium companions - they will 
+      reflect these energy changes in their growth patterns.
+    </p>
+    <div class="mystical-advice mt-sm p-sm bg-cream rounded border border-moss/20">
+      <p class="text-sm text-sepia">
+        <strong>Society Recommendation:</strong> Schedule your most important propagation work for Tuesday's 
+        rain blessing, then use Wednesday's meditative energy for planning future garden expansions.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dynamic weather image rotation
+  document.addEventListener('DOMContentLoaded', function() {
+    const weatherImages = document.querySelectorAll('.weather-image');
+    const availableWeatherGraphics = [
+      { 
+        src: '/images/content/weather-graphics/high-humidity.png', 
+        alt: 'High Humidity Spirits'
+      },
+      { 
+        src: '/images/content/weather-graphics/rain.png', 
+        alt: 'Rain Spirit Blessing'
+      },
+      { 
+        src: '/images/content/weather-graphics/drought.png', 
+        alt: 'Plant Meditation'
+      },
+      { 
+        src: '/images/content/weather-graphics/wind.png', 
+        alt: 'Wind Spirits Dancing'
+      },
+      { 
+        src: '/images/content/weather-graphics/storms.png', 
+        alt: 'Electric Storm Spirits'
+      },
+      { 
+        src: '/images/content/weather-graphics/sunshine.png', 
+        alt: 'Solar Blessing Energy'
+      }
+    ];
+    
+    // Randomly assign different weather graphics for variety
+    if (weatherImages.length > 0) {
+      weatherImages.forEach((img, index) => {
+        // Use different graphics for each day, but keep it consistent per session
+        const graphicIndex = (index + Math.floor(Date.now() / (1000 * 60 * 60 * 24))) % availableWeatherGraphics.length;
+        const weather = availableWeatherGraphics[graphicIndex];
+        img.src = weather.src;
+        img.alt = weather.alt;
+      });
+    }
+  });
+</script>
+
+<style>
+  .weather-grid {
+    gap: 2rem;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .weather-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .weather-image {
+      width: 120px;
+      height: 120px;
+    }
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+// Nursery directory preview component
+const nurseries = [
+  {
+    id: 'earth-angels',
+    name: 'Earth Angels Garden Nursery',
+    specialty: 'Specializes in indigenous Natal flora and medicinal herbs',
+    location: 'Chatsworth',
+    contact: 'Facebook Page',
+    marker: '🏛️'
+  },
+  {
+    id: 'succulent-sanctuary',
+    name: 'Succulent Sanctuary',
+    specialty: 'Rare succulents and drought-resistant mystical specimens',
+    location: 'Durban North',
+    contact: 'Website Available',
+    marker: '🌵'
+  },
+  {
+    id: 'butterfly-haven',
+    name: 'Butterfly Haven Nursery',
+    specialty: 'Native plants for pollinator gardens and ecosystem magic',
+    location: 'Kloof',
+    contact: 'Facebook Page',
+    marker: '🦋'
+  }
+];
+---
+
+<div class="card-header">
+  <img src="/images/navigation/icons/icon_directory.png" alt="Plant Directory" class="section-icon" />
+  <h2 class="text-2xl font-medium text-cream m-0">Sacred Plant Directory</h2>
+</div>
+
+<div class="card-content">
+  <div class="nursery-preview">
+    <h3 class="text-2xl text-moss mb-sm">Trusted Purveyors of Botanical Wonders</h3>
+    
+    <div class="nursery-grid grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-md my-md">
+      {nurseries.map((nursery) => (
+        <div class="nursery-card bg-parchment p-md rounded-lg border border-decorative text-center">
+          <div class="nursery-marker text-4xl mb-xs">{nursery.marker}</div>
+          <h4 class="text-lg text-moss mb-xs font-secondary">{nursery.name}</h4>
+          <p class="nursery-specialty italic text-sepia mb-xs text-sm">{nursery.specialty}</p>
+          <p class="nursery-location text-sm text-charcoal">
+            📍 {nursery.location} • 🌐 {nursery.contact}
+          </p>
+          
+          <!-- Society Rating -->
+          <div class="society-rating mt-sm pt-sm border-t border-decorative/50">
+            <div class="flex items-center justify-center gap-1 text-brass">
+              <span class="text-xs">Mystical Rating:</span>
+              <div class="flex">
+                {Array.from({length: 5}, (_, i) => (
+                  <span class={`text-sm ${i < 4 ? 'text-brass' : 'text-sepia/30'}`}>✨</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Directory Features -->
+    <div class="directory-features grid grid-cols-1 md:grid-cols-2 gap-md mt-lg">
+      <div class="feature bg-moss/10 border border-moss/30 rounded-lg p-md">
+        <h4 class="text-moss font-secondary mb-2 flex items-center gap-2">
+          🗺️ Interactive Map
+        </h4>
+        <p class="text-sm text-forest-shadow">
+          Our mystical map shows nursery locations with specialized markers. 
+          Filter by indigenous plants, rare specimens, or mystical properties.
+        </p>
+      </div>
+      
+      <div class="feature bg-plum/10 border border-plum/30 rounded-lg p-md">
+        <h4 class="text-plum font-secondary mb-2 flex items-center gap-2">
+          ⭐ Society Reviews
+        </h4>
+        <p class="text-sm text-plum">
+          Fellow members share their experiences and discoveries. 
+          Find hidden gems and botanical treasures through our collective wisdom.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Nursery Categories -->
+    <div class="nursery-categories mt-md">
+      <h4 class="text-sepia font-secondary mb-sm">Browse by Specialty:</h4>
+      <div class="flex flex-wrap gap-2">
+        <span class="category-tag bg-moss text-cream px-3 py-1 rounded-full text-xs uppercase tracking-wide cursor-pointer hover:bg-moss/80 transition-colors">
+          Indigenous Plants
+        </span>
+        <span class="category-tag bg-plum text-cream px-3 py-1 rounded-full text-xs uppercase tracking-wide cursor-pointer hover:bg-plum/80 transition-colors">
+          Rare Succulents
+        </span>
+        <span class="category-tag bg-brass text-cream px-3 py-1 rounded-full text-xs uppercase tracking-wide cursor-pointer hover:bg-brass/80 transition-colors">
+          Medicinal Herbs
+        </span>
+        <span class="category-tag bg-autumn text-cream px-3 py-1 rounded-full text-xs uppercase tracking-wide cursor-pointer hover:bg-autumn/80 transition-colors">
+          Pollinator Plants
+        </span>
+        <span class="category-tag bg-sage text-cream px-3 py-1 rounded-full text-xs uppercase tracking-wide cursor-pointer hover:bg-sage/80 transition-colors">
+          Terrarium Plants
+        </span>
+      </div>
+    </div>
+    
+    <!-- CTA Button -->
+    <div class="text-center mt-lg">
+      <button class="btn-primary">
+        <span class="btn-icon">🗺️</span>
+        <span class="btn-text">View Complete Directory & Map</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Category filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const categoryTags = document.querySelectorAll('.category-tag');
+    
+    categoryTags.forEach(tag => {
+      tag.addEventListener('click', function() {
+        // Remove active class from all tags
+        categoryTags.forEach(t => t.classList.remove('ring-2', 'ring-offset-2'));
+        
+        // Add active class to clicked tag
+        this.classList.add('ring-2', 'ring-offset-2');
+        
+        // In a full implementation, this would filter the nursery results
+        console.log(`Filtering by: ${this.textContent.trim()}`);
+        
+        // Add mystical glow effect
+        this.classList.add('mystical-glow');
+        setTimeout(() => {
+          this.classList.remove('mystical-glow');
+        }, 2000);
+      });
+    });
+    
+    // Nursery card hover effects
+    const nurseryCards = document.querySelectorAll('.nursery-card');
+    nurseryCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        const marker = this.querySelector('.nursery-marker');
+        if (marker) {
+          marker.classList.add('animate-floating');
+        }
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        const marker = this.querySelector('.nursery-marker');
+        if (marker) {
+          marker.classList.remove('animate-floating');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .category-tag {
+    transition: all 0.3s ease;
+  }
+  
+  .category-tag:hover {
+    transform: translateY(-2px);
+  }
+  
+  .nursery-card:hover .nursery-marker {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .nursery-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .directory-features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

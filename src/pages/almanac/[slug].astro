@@ -1,0 +1,260 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+// Generate all almanac pages
+export async function getStaticPaths() {
+  const almanacEntries = await getCollection('almanac');
+  return almanacEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Format date
+const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
+  year: 'numeric',
+  month: 'long', 
+  day: 'numeric'
+});
+---
+
+<ContentLayout 
+  title={entry.data.title}
+  description={`Seasonal gardening wisdom for ${entry.data.title} - mystical horticultural guidance from the Durban Horticulture Club archives.`}
+  image="/images/almanac/seasonal-header.jpg"
+>
+  <div class="container">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb mb-lg">
+      <div class="flex items-center gap-2 text-sm text-sepia">
+        <a href="/" class="hover:text-moss transition-colors">Home</a>
+        <span>→</span>
+        <a href="/#almanac" class="hover:text-moss transition-colors">Seasonal Almanac</a>
+        <span>→</span>
+        <span class="text-charcoal">{entry.data.title}</span>
+      </div>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="article-header mb-xl">
+      <div class="bg-gradient-to-br from-moss/10 to-cream border border-moss/30 rounded-lg p-lg">
+        <div class="flex items-center gap-sm mb-md">
+          <img src="/images/navigation/icons/icon_almanac.png" alt="Almanac" class="w-8 h-8 object-contain" />
+          <span class="text-moss font-ui text-sm uppercase tracking-wider">Seasonal Almanac</span>
+        </div>
+        
+        <h1 class="text-4xl font-heading text-charcoal mb-md text-shadow">
+          {entry.data.title}
+        </h1>
+        
+        <div class="article-meta flex flex-wrap gap-md text-sm text-sepia mb-md">
+          <div class="flex items-center gap-1">
+            📅 <span>{formattedDate}</span>
+          </div>
+          <div class="flex items-center gap-1">
+            🌿 <span class="capitalize">{entry.data.season} Season</span>
+          </div>
+          <div class="flex items-center gap-1">
+            📖 <span>Week {entry.data.week}</span>
+          </div>
+          {entry.data.difficulty && (
+            <div class="flex items-center gap-1">
+              ⭐ <span class="capitalize">{entry.data.difficulty} Level</span>
+            </div>
+          )}
+        </div>
+
+        {entry.data.moon_phase && (
+          <div class="moon-phase bg-parchment border-l-4 border-moss p-md rounded italic text-sepia mb-md">
+            <strong>{entry.data.moon_phase}</strong> - Optimal lunar timing for garden work
+          </div>
+        )}
+
+        <!-- Tags -->
+        {entry.data.tags && (
+          <div class="tags">
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.map(tag => (
+                <span class="inline-block bg-moss text-cream px-3 py-1 rounded-full text-xs uppercase tracking-wide">
+                  {tag.replace('-', ' ')}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <article class="almanac-content prose prose-lg max-w-none">
+      <div class="bg-cream border border-decorative rounded-lg p-lg shadow-soft">
+        <Content />
+      </div>
+    </article>
+
+    <!-- Featured Plants Sidebar (if present) -->
+    {entry.data.featured_plants && entry.data.featured_plants.length > 0 && (
+      <aside class="featured-plants mt-xl">
+        <div class="bg-plum/10 border border-plum/30 rounded-lg p-lg">
+          <h3 class="text-plum font-secondary mb-md flex items-center gap-2">
+            🌱 Featured Plants This Week
+          </h3>
+          <ul class="space-y-sm">
+            {entry.data.featured_plants.map(plant => (
+              <li class="flex items-start gap-sm">
+                <span class="text-plum text-sm mt-1">•</span>
+                <span class="italic text-plum">{plant}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    )}
+
+    <!-- Navigation to Other Entries -->
+    <nav class="entry-navigation mt-xl">
+      <div class="bg-parchment border border-decorative rounded-lg p-lg">
+        <h3 class="text-sepia font-secondary mb-md">More Seasonal Wisdom</h3>
+        <div class="flex justify-between items-center">
+          <a 
+            href="/#almanac" 
+            class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
+          >
+            ← Back to Almanac
+          </a>
+          <div class="text-center">
+            <p class="text-sm text-sepia italic">"Trust in the ancient rhythms of the seasons"</p>
+          </div>
+          <a 
+            href="/gatherings/" 
+            class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
+          >
+            View Gatherings →
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</ContentLayout>
+
+<style>
+  /* Prose styling for article content */
+  .almanac-content :global(h2) {
+    @apply text-2xl font-secondary text-moss mt-lg mb-md border-b border-moss/30 pb-sm;
+  }
+  
+  .almanac-content :global(h3) {
+    @apply text-xl font-secondary text-sepia mt-md mb-sm;
+  }
+  
+  .almanac-content :global(h4) {
+    @apply text-lg font-secondary text-sepia mt-md mb-xs;
+  }
+  
+  .almanac-content :global(h5) {
+    @apply text-base font-secondary text-moss mt-sm mb-xs font-medium;
+  }
+  
+  .almanac-content :global(p) {
+    @apply text-charcoal leading-relaxed mb-md;
+  }
+  
+  .almanac-content :global(ul) {
+    @apply list-none space-y-xs mb-md;
+  }
+  
+  .almanac-content :global(ul li) {
+    @apply flex items-start gap-xs;
+  }
+  
+  .almanac-content :global(ul li::before) {
+    content: '🌿';
+    @apply flex-shrink-0 text-moss;
+  }
+  
+  .almanac-content :global(ol) {
+    @apply list-decimal list-inside space-y-xs mb-md text-charcoal;
+  }
+  
+  .almanac-content :global(blockquote) {
+    @apply border-l-4 border-plum bg-plum/10 p-md my-md italic text-plum;
+  }
+  
+  .almanac-content :global(blockquote p) {
+    @apply mb-0;
+  }
+  
+  .almanac-content :global(em) {
+    @apply italic relative cursor-help;
+  }
+  
+  .almanac-content :global(strong) {
+    @apply font-medium text-moss;
+  }
+  
+  .almanac-content :global(hr) {
+    @apply border-moss/30 my-lg;
+  }
+  
+  /* Table styling for almanac content */
+  .almanac-content :global(table) {
+    @apply w-full border-collapse mb-md bg-cream border border-decorative rounded-lg overflow-hidden shadow-soft;
+  }
+  
+  .almanac-content :global(th) {
+    @apply bg-gradient-to-br from-moss to-forest-shadow text-cream px-md py-sm text-left font-ui font-medium text-sm uppercase tracking-wider;
+  }
+  
+  .almanac-content :global(td) {
+    @apply px-md py-sm text-charcoal border-b border-decorative/30 leading-relaxed;
+  }
+  
+  .almanac-content :global(tr:last-child td) {
+    @apply border-b-0;
+  }
+  
+  .almanac-content :global(tbody tr:nth-child(even)) {
+    @apply bg-parchment/50;
+  }
+  
+  .almanac-content :global(tbody tr:hover) {
+    @apply bg-moss/10 transition-colors duration-200;
+  }
+  
+  .almanac-content :global(table em) {
+    @apply text-plum font-medium;
+  }
+  
+  /* Responsive table wrapper */
+  .almanac-content :global(table) {
+    @apply min-w-full;
+  }
+  
+  @media (max-width: 768px) {
+    .almanac-content :global(table) {
+      @apply text-sm;
+    }
+    
+    .almanac-content :global(th),
+    .almanac-content :global(td) {
+      @apply px-sm py-xs;
+    }
+  }
+  
+  /* Special content blocks */
+  .almanac-content :global(.mystical-timing) {
+    @apply bg-brass/10 border border-brass/30 rounded p-md my-md;
+  }
+  
+  .almanac-content :global(.society-wisdom) {
+    @apply bg-moss/10 border border-moss/30 rounded p-md my-md;
+  }
+  
+  .almanac-content :global(.practical-translation) {
+    @apply bg-cream border border-decorative rounded p-md my-md;
+  }
+</style>

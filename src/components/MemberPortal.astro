@@ -1,0 +1,139 @@
+---
+// Member Portal component with localStorage-based membership system
+---
+
+<div class="card-header">
+  <img src="/images/navigation/icons/icon_portal.png" alt="Member Portal" class="section-icon" />
+  <h2 class="text-2xl font-medium text-cream m-0">Member Portal</h2>
+</div>
+
+<div class="card-content">
+  <!-- Member Profile (Hidden by default, shown when member is initiated) -->
+  <div class="member-profile hidden" id="memberProfile">
+    <div class="member-welcome mb-md">
+      <p class="member-greeting font-secondary text-2xl text-plum mb-xs">Welcome, Acolyte</p>
+      <p class="initiation-date text-sepia italic">Initiated: August 26, 2025</p>
+    </div>
+    
+    <!-- Member Progress -->
+    <div class="member-progress mb-md">
+      <h4 class="text-sepia font-secondary mb-xs">Society Advancement</h4>
+      <div class="progress-bar relative bg-parchment h-8 rounded-2xl border border-decorative my-sm overflow-hidden">
+        <div class="progress-fill h-full bg-gradient-to-r from-moss to-spring transition-all duration-500 rounded-2xl" style="width: 20%;"></div>
+        <div class="progress-markers absolute inset-0 flex justify-between items-center px-2">
+          <span class="marker active bg-moss text-cream border-2 border-forest-shadow rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-help" title="Acolyte - Newly initiated, still germinating">🌱</span>
+          <span class="marker bg-cream border-2 border-sepia rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-help" title="Cultivator - Has completed basic rituals">🌿</span>
+          <span class="marker bg-cream border-2 border-sepia rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-help" title="Keeper - Guardian of specific garden duties">🔍</span>
+          <span class="marker bg-cream border-2 border-sepia rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-help" title="Warden - Oversees sacred spaces or expeditions">💧</span>
+          <span class="marker bg-cream border-2 border-sepia rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-help" title="Master - Senior member, deeply rooted">🍄</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Badges Earned -->
+    <div class="badges-earned mb-md">
+      <h4 class="text-sepia font-secondary mb-xs">Badges Collected</h4>
+      <div class="badge-grid grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-sm my-sm">
+        <div class="badge earned text-center p-sm rounded-lg bg-spring text-cream transition-all duration-300">
+          <div class="badge-placeholder w-15 h-15 rounded-full bg-spring text-2xl flex items-center justify-center mx-auto mb-1 border-0">🌱</div>
+          <span class="badge-name text-xs font-medium block">First Sprout</span>
+        </div>
+        <div class="badge locked text-center p-sm rounded-lg bg-parchment text-sepia opacity-60 transition-all duration-300">
+          <div class="badge-placeholder w-15 h-15 rounded-full bg-parchment text-2xl flex items-center justify-center mx-auto mb-1 border-0">🔒</div>
+          <span class="badge-name text-xs font-medium block">Moss Whisperer</span>
+        </div>
+        <div class="badge locked text-center p-sm rounded-lg bg-parchment text-sepia opacity-60 transition-all duration-300">
+          <div class="badge-placeholder w-15 h-15 rounded-full bg-parchment text-2xl flex items-center justify-center mx-auto mb-1 border-0">🔒</div>
+          <span class="badge-name text-xs font-medium block">Humidity Master</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Ritual Tracker -->
+    <div class="ritual-tracker">
+      <h4 class="text-sepia font-secondary mb-xs">Ritual Completions</h4>
+      <ul class="ritual-checklist list-none my-sm">
+        <li class="completed py-xs border-b border-parchment flex items-center gap-xs text-moss">
+          ✅ Dawn Watering Ceremony
+        </li>
+        <li class="pending py-xs border-b border-parchment flex items-center gap-xs text-brass">
+          ⏳ Plant Communion Ritual (In Progress)
+        </li>
+        <li class="locked py-xs border-b border-parchment flex items-center gap-xs text-sepia opacity-60">
+          🔒 Sacred Grove Pilgrimage (Locked)
+        </li>
+        <li class="locked py-xs border-b border-parchment flex items-center gap-xs text-sepia opacity-60">
+          🔒 Mystical Name Blessing (Locked)
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Guest Welcome (Shown by default) -->
+  <div class="guest-welcome" id="guestWelcome">
+    <h3 class="text-2xl text-moss mb-sm">Seek Ye the Ancient Knowledge?</h3>
+    <p class="mb-md leading-relaxed">
+      The mysteries of the botanical realm await those who dare to join our hallowed ranks. 
+      Begin your initiation into the sacred arts of horticulture.
+    </p>
+    
+    <div class="initiation-requirements">
+      <h4 class="text-sepia font-secondary mb-xs">Path to Initiation:</h4>
+      <ol class="requirements-list bg-parchment p-md rounded border border-decorative my-sm">
+        <li class="mb-xs text-sepia">Complete the Sacred Oath of Plant Stewardship</li>
+        <li class="mb-xs text-sepia">Submit photographic evidence of your current garden domain</li>
+        <li class="mb-xs text-sepia">Demonstrate knowledge of three Durban native species</li>
+        <li class="mb-xs text-sepia">Pledge to attend monthly gathering rituals</li>
+      </ol>
+    </div>
+    
+    <!-- Secret Society Benefits Preview -->
+    <div class="society-benefits mt-md p-md bg-moss/10 border border-moss/30 rounded">
+      <h5 class="text-moss font-secondary mb-2">Society Member Benefits:</h5>
+      <ul class="text-sm text-forest-shadow space-y-1">
+        <li>• Access to rare plant cultivation secrets</li>
+        <li>• Monthly mystical plant appreciation gatherings</li>
+        <li>• Exclusive terrarium construction workshops</li>
+        <li>• Connection to the ancient botanical network</li>
+        <li>• Guidance from experienced plant whisperers</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Member portal functionality is handled in global.js
+  // This ensures the portal updates based on localStorage data
+</script>
+
+<style>
+  .marker.active {
+    background-color: theme('colors.moss');
+    border-color: theme('colors.forest-shadow');
+    color: theme('colors.cream');
+  }
+  
+  .badge.earned {
+    background-color: theme('colors.spring');
+    color: theme('colors.cream');
+  }
+  
+  .badge.locked {
+    background-color: theme('colors.parchment');
+    color: theme('colors.sepia');
+    opacity: 0.6;
+  }
+  
+  .ritual-checklist li.completed {
+    color: theme('colors.moss');
+  }
+  
+  .ritual-checklist li.pending {
+    color: theme('colors.brass');
+  }
+  
+  .ritual-checklist li.locked {
+    color: theme('colors.sepia');
+    opacity: 0.6;
+  }
+</style>

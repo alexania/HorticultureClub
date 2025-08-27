@@ -1,0 +1,101 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'gatherings'>;
+}
+
+const { entry } = Astro.props;
+
+// Format date
+const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<div class="card-header">
+  <img src="/images/navigation/icons/icon_diaries.png" alt="Gatherings" class="section-icon" />
+  <h2 class="text-2xl font-medium text-cream m-0">Latest Gatherings</h2>
+</div>
+
+<div class="card-content">
+  <article class="gathering-entry">
+    <h3 class="text-2xl text-moss mb-sm">{entry.data.title}</h3>
+    
+    <p class="gathering-meta text-sepia text-sm mb-sm italic">
+      📅 {formattedDate} • 
+      📍 {entry.data.location} • 
+      ✨ {entry.data.attendees} Members
+    </p>
+    
+    <!-- Gathering Images Placeholders -->
+    <div class="gathering-images flex gap-sm my-sm overflow-x-auto">
+      <div class="image-placeholder bg-gradient-to-br from-parchment to-sage border-2 border-dashed border-sepia flex items-center justify-center opacity-70 rounded min-w-[150px] h-[100px] text-xs text-sepia text-center">
+        Gathering Photo
+      </div>
+      <div class="image-placeholder bg-gradient-to-br from-parchment to-sage border-2 border-dashed border-sepia flex items-center justify-center opacity-70 rounded min-w-[150px] h-[100px] text-xs text-sepia text-center">
+        Rare Specimen
+      </div>
+    </div>
+    
+    <!-- Excerpt -->
+    <p class="mb-md text-charcoal leading-relaxed">
+      Under the watchful eyes of the river figs, our Society gathered to commune 
+      with the ancient moss colonies. Brother Fernsworth discovered a particularly 
+      luminous specimen of <em title="Silver Moss - Hardy cosmopolitan species">Bryum argenteum</em> 
+      growing in the sacred hollow...
+    </p>
+    
+    <!-- Activities/Rituals Performed -->
+    {entry.data.rituals_performed && (
+      <div class="activities-performed mt-md">
+        <h4 class="text-sepia font-secondary mb-xs">Rituals Performed:</h4>
+        <ul class="ritual-list list-none flex flex-wrap gap-sm">
+          {entry.data.rituals_performed.map(ritual => (
+            <li class="bg-parchment px-sm py-xs rounded-full text-sm border border-decorative">
+              🔬 {ritual}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    
+    <!-- Activities -->
+    {entry.data.activities && (
+      <div class="activities-performed mt-md">
+        <h4 class="text-sepia font-secondary mb-xs">Activities:</h4>
+        <ul class="ritual-list list-none flex flex-wrap gap-sm">
+          {entry.data.activities.map(activity => (
+            <li class="bg-sage/20 px-sm py-xs rounded-full text-sm border border-moss/30 capitalize">
+              {activity.replace('_', ' ')}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    
+    <!-- Weather Conditions -->
+    {entry.data.weather && (
+      <div class="weather-conditions mt-md p-sm bg-autumn/10 border border-autumn/30 rounded">
+        <p class="text-sm">
+          <strong>Atmospheric Conditions:</strong> {entry.data.weather}
+        </p>
+      </div>
+    )}
+    
+    <!-- Read More Link -->
+    <div class="mt-md">
+      <a 
+        href={`/gatherings/${entry.slug}/`}
+        class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
+      >
+        Read Full Expedition Report
+        <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+  </article>
+</div>
