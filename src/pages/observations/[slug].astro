@@ -1,0 +1,239 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const observations = await getCollection('observations');
+  return observations.map((observation) => ({
+    params: { slug: observation.slug },
+    props: { observation },
+  }));
+};
+
+const { observation } = Astro.props;
+const { Content } = await observation.render();
+
+// Category icons mapping
+const categoryIcons = {
+  'propagation': '🌱',
+  'terrarium': '🫙',
+  'field-study': '🔍',
+  'ritual': '🕯️',
+  'specimen-care': '🌿',
+  'mycology': '🍄',
+  'foraging': '🌾'
+};
+
+// Success rate colours
+const successRateColours = {
+  'mystical': 'text-purple-600',
+  'exceptional': 'text-green-600', 
+  'promising': 'text-blue-600',
+  'learning': 'text-yellow-600',
+  'experimental': 'text-orange-600'
+};
+---
+
+<ContentLayout 
+  title={observation.data.title}
+  description={`Member observation by ${observation.data.author.name} - ${observation.data.category} study documenting ${observation.data.plants_mentioned?.slice(0, 2).join(', ') || 'botanical specimens'}`}
+>
+  <main class="main-content">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb mb-lg">
+        <div class="flex items-center gap-sm text-sm text-sepia">
+          <a href="/" class="hover:text-moss transition-colors">Home</a>
+          <span>→</span>
+          <a href="/observations/" class="hover:text-moss transition-colors">Member Observations</a>
+          <span>→</span>
+          <span class="text-moss font-medium">{observation.data.title}</span>
+        </div>
+      </nav>
+
+      <!-- Observation Header -->
+      <header class="observation-header bg-parchment border border-decorative rounded-lg p-lg mb-lg">
+        <div class="flex items-start justify-between mb-md">
+          <div class="flex-1">
+            <h1 class="text-3xl font-bold text-moss mb-sm">{observation.data.title}</h1>
+            
+            <div class="author-info flex items-center gap-md mb-sm">
+              <div class="flex items-center gap-sm">
+                <span class="text-lg font-medium text-sepia">{observation.data.author.name}</span>
+                <span class="text-xs uppercase tracking-wide bg-moss text-cream px-3 py-1 rounded-full">
+                  {observation.data.author.rank}
+                </span>
+              </div>
+              
+              {observation.data.author.specialty && (
+                <div class="text-sm text-sepia italic">
+                  {observation.data.author.specialty}
+                </div>
+              )}
+            </div>
+            
+            <div class="metadata flex flex-wrap gap-md items-center text-sm text-sepia">
+              <time datetime={observation.data.date.toISOString()}>
+                {observation.data.date.toLocaleDateString('en-GB', { 
+                  day: 'numeric', 
+                  month: 'long', 
+                  year: 'numeric' 
+                })}
+              </time>
+              
+              {observation.data.location && (
+                <span class="flex items-center gap-1">
+                  📍 {observation.data.location}
+                </span>
+              )}
+              
+              <span class="flex items-center gap-1">
+                <span class="text-lg">{categoryIcons[observation.data.category]}</span>
+                {observation.data.category.replace('-', ' ').toUpperCase()}
+              </span>
+            </div>
+          </div>
+          
+          <div class="flex flex-col items-end gap-sm">
+            {observation.data.success_rate && (
+              <span class={`text-sm font-medium capitalize px-3 py-1 rounded-full bg-opacity-20 ${successRateColours[observation.data.success_rate]}`}>
+                {observation.data.success_rate} Results
+              </span>
+            )}
+            
+            {observation.data.experimental && (
+              <span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                Experimental Study
+              </span>
+            )}
+            
+            <span class="text-xs uppercase tracking-wide text-sepia bg-moss-light px-2 py-1 rounded">
+              Difficulty: {observation.data.difficulty}
+            </span>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="observation-stats grid grid-cols-1 md:grid-cols-3 gap-md">
+          {observation.data.plants_mentioned && observation.data.plants_mentioned.length > 0 && (
+            <div class="stat-card bg-cream p-md rounded border">
+              <h3 class="text-sm font-medium text-sepia mb-2">Specimens Studied</h3>
+              <div class="flex flex-wrap gap-1">
+                {observation.data.plants_mentioned.map((plant) => (
+                  <span class="text-xs italic text-moss bg-moss-light px-2 py-1 rounded">
+                    {plant}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {observation.data.materials && observation.data.materials.length > 0 && (
+            <div class="stat-card bg-cream p-md rounded border">
+              <h3 class="text-sm font-medium text-sepia mb-2">Sacred Materials</h3>
+              <div class="flex flex-wrap gap-1">
+                {observation.data.materials.map((material) => (
+                  <span class="text-xs text-sepia bg-parchment px-2 py-1 rounded">
+                    {material}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {observation.data.conditions && (
+            <div class="stat-card bg-cream p-md rounded border">
+              <h3 class="text-sm font-medium text-sepia mb-2">Mystical Conditions</h3>
+              <div class="space-y-1 text-xs text-sepia">
+                {observation.data.conditions.temperature && (
+                  <div><strong>Temperature:</strong> {observation.data.conditions.temperature}</div>
+                )}
+                {observation.data.conditions.humidity && (
+                  <div><strong>Humidity:</strong> {observation.data.conditions.humidity}</div>
+                )}
+                {observation.data.conditions.lighting && (
+                  <div><strong>Lighting:</strong> {observation.data.conditions.lighting}</div>
+                )}
+                {observation.data.conditions.moon_phase && (
+                  <div><strong>Moon Phase:</strong> {observation.data.conditions.moon_phase}</div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <!-- Observation Content -->
+      <article class="observation-content">
+        <div class="card">
+          <div class="card-content prose prose-sepia max-w-none">
+            <Content />
+          </div>
+        </div>
+      </article>
+
+      <!-- Tags -->
+      {observation.data.tags && observation.data.tags.length > 0 && (
+        <section class="tags-section mt-lg">
+          <div class="card">
+            <div class="card-content">
+              <h3 class="text-lg font-medium text-moss mb-md">Related Topics</h3>
+              <div class="flex flex-wrap gap-2">
+                {observation.data.tags.map((tag) => (
+                  <span class="inline-block bg-moss text-cream px-3 py-1 rounded-full text-sm uppercase tracking-wide">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- Navigation -->
+      <nav class="observation-nav mt-lg">
+        <div class="flex justify-between items-center">
+          <a 
+            href="/observations/"
+            class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
+          >
+            ← Back to All Observations
+          </a>
+          
+          <a 
+            href="/"
+            class="inline-flex items-center text-sepia hover:text-moss transition-colors"
+          >
+            Return to Garden Portal
+          </a>
+        </div>
+      </nav>
+    </div>
+  </main>
+</ContentLayout>
+
+<style>
+  .moss-light {
+    background-color: rgba(139, 164, 139, 0.2);
+  }
+  
+  .breadcrumb {
+    font-size: 0.875rem;
+  }
+  
+  .stat-card {
+    min-height: 100px;
+  }
+  
+  @media (max-width: 768px) {
+    .observation-stats {
+      grid-template-columns: 1fr;
+    }
+    
+    .observation-header .flex {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

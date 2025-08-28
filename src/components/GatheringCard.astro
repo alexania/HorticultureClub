@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
+const { Content } = await entry.render();
 
 // Format date
 const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
@@ -13,6 +14,22 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
   month: 'long',
   day: 'numeric'
 });
+
+// Create excerpt from content (first paragraph/sentence)
+const excerptLength = 200;
+const rawContent = entry.body || '';
+const cleanText = rawContent
+  .replace(/^---[\s\S]*?---/, '') // Remove frontmatter
+  .replace(/#{1,6}\s/g, '') // Remove markdown headers
+  .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+  .replace(/\*(.*?)\*/g, '$1') // Remove italic
+  .replace(/`(.*?)`/g, '$1') // Remove inline code
+  .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links but keep text
+  .trim();
+
+const excerpt = cleanText.length > excerptLength 
+  ? cleanText.substring(0, excerptLength).replace(/\s+\S*$/, '') + '...'
+  : cleanText;
 ---
 
 <div class="card-header">
@@ -22,7 +39,14 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
 
 <div class="card-content">
   <article class="gathering-entry">
-    <h3 class="text-2xl text-moss mb-sm">{entry.data.title}</h3>
+    <h3 class="mb-sm">
+      <a 
+        href={`./gatherings/${entry.slug}/`}
+        class="text-3xl font-medium text-moss hover:text-forest-shadow transition-colors"
+      >
+        {entry.data.title}
+      </a>
+    </h3>
     
     <p class="gathering-meta text-sepia text-sm mb-sm italic">
       📅 {formattedDate} • 
@@ -30,19 +54,31 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
       ✨ {entry.data.attendees} Members
     </p>
     
-    <!-- Gathering Images Placeholders -->
-    <div class="gathering-images flex gap-sm my-sm overflow-x-auto">
-      <div class="image-placeholder bg-gradient-to-br from-parchment to-sage border-2 border-dashed border-sepia flex items-center justify-center opacity-70 rounded min-w-[150px] h-[100px] text-xs text-sepia text-center">
-        Gathering Photo
+    <!-- Gathering Images -->
+    {entry.data.images && entry.data.images.length > 0 && (
+      <div class="gathering-images flex gap-sm my-sm overflow-x-auto">
+        {entry.data.images.slice(0, 2).map(image => {
+          const imageSrc = image.src;
+          const imageAlt = image.alt;
+          const imageUrl = `${import.meta.env.BASE_URL}images/content/gatherings/${entry.slug}/${imageSrc}`;
+          
+          return (
+            <div class="gathering-image-item flex-shrink-0 vintage-photo">
+              <img 
+                src={imageUrl}
+                alt={imageAlt}
+                class="w-[150px] h-[100px] object-cover object-[30%] border-4 border-parchment shadow-lg"
+                loading="lazy"
+              />
+            </div>
+          );
+        })}
       </div>
-      <div class="image-placeholder bg-gradient-to-br from-parchment to-sage border-2 border-dashed border-sepia flex items-center justify-center opacity-70 rounded min-w-[150px] h-[100px] text-xs text-sepia text-center">
-        Rare Specimen
-      </div>
-    </div>
+    )}
     
     <!-- Excerpt -->
     <p class="mb-md text-charcoal leading-relaxed">
-      On a morning veiled in mist and mystery, Custodians Ferngrove and Zephyrmire ventured into the Derivco Greenbelt in pursuit of terrarium-worthy moss colonies. Though the skies were gentle and the humidity ideal, the expedition was met with an unexpected...
+      {excerpt}
     </p>
     
     <!-- Activities/Rituals Performed -->

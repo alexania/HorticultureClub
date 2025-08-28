@@ -14,6 +14,11 @@ const almanacCollection = defineCollection({
     featured_plants: z.array(z.string()).optional(),
     difficulty: z.enum(['initiate', 'procurer', 'archivist', 'keeper', 'master']).default('initiate'),
     image: z.string().optional(),
+    featured_plant_image: z.string().optional(),
+    featured_plant_name: z.string().optional(),
+    featured_plant_scientific: z.string().optional(),
+    featured_plant_description: z.string().optional(),
+    featured_plant_properties: z.array(z.string()).optional(),
   })
 });
 
@@ -46,7 +51,13 @@ const gatheringsCollection = defineCollection({
     weather: z.string().optional(),
     specimens_collected: z.array(z.string()).optional(),
     rituals_performed: z.array(z.string()).optional(),
-    images: z.array(z.string()).optional(),
+    images: z.array(
+      z.object({   // New format: object with metadata
+          src: z.string(),
+          alt: z.string(),
+          caption: z.string().optional()
+        })
+      ).optional(),
     coordinates: z.object({
       lat: z.number(),
       lng: z.number()
@@ -78,6 +89,36 @@ const eventsCollection = defineCollection({
     member_only: z.boolean().default(false),
     featured: z.boolean().default(false),
     image: z.string().optional(),
+  })
+});
+
+// Member Observations Collection
+const observationsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    author: z.object({
+      name: z.string(),
+      rank: z.enum(['initiate', 'procurer', 'archivist', 'keeper', 'master']),
+      specialty: z.string().optional()
+    }),
+    category: z.enum(['propagation', 'terrarium', 'field-study', 'ritual', 'specimen-care', 'mycology', 'foraging']),
+    plants_mentioned: z.array(z.string()),
+    difficulty: z.enum(['initiate', 'procurer', 'archivist', 'keeper', 'master']).default('initiate'),
+    success_rate: z.enum(['mystical', 'exceptional', 'promising', 'learning', 'experimental']).optional(),
+    location: z.string().optional(),
+    materials: z.array(z.string()).optional(),
+    conditions: z.object({
+      temperature: z.string().optional(),
+      humidity: z.string().optional(),
+      lighting: z.string().optional(),
+      moon_phase: z.string().optional()
+    }).optional(),
+    images: z.array(z.string()).optional(),
+    featured: z.boolean().default(false),
+    experimental: z.boolean().default(false),
+    tags: z.array(z.string()).optional(),
   })
 });
 
@@ -125,5 +166,6 @@ export const collections = {
   lore: loreCollection,
   gatherings: gatheringsCollection,
   events: eventsCollection,
+  observations: observationsCollection,
   nurseries: nurseriesCollection,
 };

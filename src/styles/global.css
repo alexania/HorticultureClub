@@ -34,6 +34,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: light only;
   }
   
   body {
@@ -41,6 +42,9 @@
     background-image: theme('backgroundImage.parchment-texture');
     background-attachment: fixed;
     line-height: 1.6;
+    /* Force light mode colors and prevent browser dark mode override */
+    color: theme('colors.charcoal') !important;
+    background-color: theme('colors.parchment') !important;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -201,6 +205,100 @@
     backdrop-filter: blur(1px);
   }
 }
+
+/* Almanac Content Prose Styling */
+.almanac-content {
+  @apply text-sepia;
+  max-width: none;
+  font-size: inherit;
+}
+
+.almanac-content h1, 
+.almanac-content h2, 
+.almanac-content h3, 
+.almanac-content h4, 
+.almanac-content h5, 
+.almanac-content h6 {
+  @apply text-moss font-medium;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.almanac-content h2 {
+  @apply text-2xl;
+  border-bottom: 1px solid var(--decorative);
+  padding-bottom: 0.5rem;
+}
+
+.almanac-content h3 {
+  @apply text-xl;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.almanac-content h3:first-of-type {
+  margin-top: 1rem;
+}
+
+.almanac-content h4 {
+  @apply text-lg;
+}
+
+.almanac-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.almanac-content ul, 
+.almanac-content ol {
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+.almanac-content li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  list-style: none;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.almanac-content li:before {
+  content: "•";
+  color: var(--moss);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.almanac-content strong {
+  @apply text-moss font-semibold;
+}
+
+.almanac-content em {
+  @apply italic text-forest-shadow;
+}
+
+.almanac-content a {
+  @apply text-moss underline;
+  transition: color 0.2s ease;
+}
+
+.almanac-content a:hover {
+  @apply text-forest-shadow;
+}
+
+.almanac-content blockquote {
+  @apply border-l-4 border-moss bg-parchment p-4 italic;
+  margin: 1.5rem 0;
+}
+
+/* Featured Plant Section - Clean component-based approach */
+/* No special CSS needed - handled by FeaturedPlant.astro component */
 
 /* Print Styles */
 @media print {

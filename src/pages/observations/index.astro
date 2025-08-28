@@ -1,0 +1,244 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+// Get all observations
+const observations = await getCollection('observations');
+const sortedObservations = observations.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Category icons mapping
+const categoryIcons = {
+  'propagation': '🌱',
+  'terrarium': '🫙',
+  'field-study': '🔍',
+  'ritual': '🕯️',
+  'specimen-care': '🌿',
+  'mycology': '🍄',
+  'foraging': '🌾'
+};
+
+// Success rate colours
+const successRateColours = {
+  'mystical': 'text-purple-600',
+  'exceptional': 'text-green-600', 
+  'promising': 'text-blue-600',
+  'learning': 'text-yellow-600',
+  'experimental': 'text-orange-600'
+};
+---
+
+<ContentLayout 
+  title="Member Observations"
+  description="A complete archive of botanical discoveries, experiments, and mystical insights from our esteemed society members. Explore propagation techniques, terrarium studies, and field research from Durban's botanical guardians."
+>
+  <main class="main-content">
+    <div class="container">
+      <!-- Header -->
+      <header class="page-header mb-lg">
+        <div class="flex items-center gap-md mb-md">
+          <img src={`${import.meta.env.BASE_URL}images/navigation/icons/icon_diaries.png`} alt="Member Observations" class="w-12 h-12" />
+          <div>
+            <h1 class="text-4xl font-bold text-moss mb-sm">Member Observations</h1>
+            <p class="text-lg text-sepia italic">Sacred botanical discoveries from our brotherhood of plant guardians</p>
+          </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="breadcrumb">
+          <div class="flex items-center gap-sm text-sm text-sepia">
+            <a href="/" class="hover:text-moss transition-colors">Home</a>
+            <span>→</span>
+            <span class="text-moss font-medium">Member Observations</span>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Observations Grid -->
+      {sortedObservations.length > 0 ? (
+        <div class="observations-grid space-y-lg">
+          {sortedObservations.map((observation) => (
+            <article class="observation-card card">
+              <div class="card-content">
+                <div class="observation-header flex items-start justify-between mb-md">
+                  <div class="flex-1">
+                    <h2 class="text-2xl font-bold text-moss mb-sm">
+                      <a href={`/observations/${observation.slug}/`} class="hover:text-forest-shadow transition-colors">
+                        {observation.data.title}
+                      </a>
+                    </h2>
+                    
+                    <div class="author-info flex items-center gap-sm mb-sm">
+                      <span class="font-medium text-sepia">{observation.data.author.name}</span>
+                      <span class="text-xs uppercase tracking-wide bg-moss text-cream px-2 py-1 rounded-full">
+                        {observation.data.author.rank}
+                      </span>
+                    </div>
+                    
+                    {observation.data.author.specialty && (
+                      <p class="text-sm text-sepia italic mb-sm">
+                        {observation.data.author.specialty}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div class="flex items-center gap-sm">
+                    <span class="text-2xl">{categoryIcons[observation.data.category]}</span>
+                    <div class="text-right">
+                      <div class="text-xs text-sepia capitalize">{observation.data.category.replace('-', ' ')}</div>
+                      <time datetime={observation.data.date.toISOString()} class="text-xs text-sepia">
+                        {observation.data.date.toLocaleDateString('en-GB', { 
+                          day: 'numeric', 
+                          month: 'short', 
+                          year: 'numeric' 
+                        })}
+                      </time>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quick Overview -->
+                <div class="observation-overview mb-md">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-md text-sm">
+                    {observation.data.plants_mentioned && observation.data.plants_mentioned.length > 0 && (
+                      <div>
+                        <span class="font-medium text-sepia">Specimens: </span>
+                        <span class="italic text-sepia">
+                          {observation.data.plants_mentioned.slice(0, 2).join(', ')}
+                          {observation.data.plants_mentioned.length > 2 && ` +${observation.data.plants_mentioned.length - 2} more`}
+                        </span>
+                      </div>
+                    )}
+                    
+                    {observation.data.location && (
+                      <div class="flex items-center gap-1">
+                        <span class="font-medium text-sepia">Location:</span>
+                        <span class="text-sepia">📍 {observation.data.location}</span>
+                      </div>
+                    )}
+                    
+                    {observation.data.success_rate && (
+                      <div class="flex items-center gap-2">
+                        <span class="font-medium text-sepia">Results:</span>
+                        <span class={`text-xs font-medium capitalize px-2 py-1 rounded-full ${successRateColours[observation.data.success_rate]} bg-opacity-20`}>
+                          {observation.data.success_rate}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <!-- Materials Preview -->
+                {observation.data.materials && observation.data.materials.length > 0 && (
+                  <div class="materials-preview mb-md">
+                    <div class="text-xs font-medium text-sepia mb-2">Sacred Materials:</div>
+                    <div class="flex flex-wrap gap-1">
+                      {observation.data.materials.slice(0, 5).map((material) => (
+                        <span class="text-xs bg-moss-light text-moss px-2 py-1 rounded">
+                          {material}
+                        </span>
+                      ))}
+                      {observation.data.materials.length > 5 && (
+                        <span class="text-xs text-sepia italic">
+                          +{observation.data.materials.length - 5} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <!-- Tags -->
+                {observation.data.tags && observation.data.tags.length > 0 && (
+                  <div class="tags-preview mb-md">
+                    <div class="flex flex-wrap gap-1">
+                      {observation.data.tags.slice(0, 4).map((tag) => (
+                        <span class="text-xs bg-parchment text-sepia px-2 py-1 rounded border">
+                          {tag}
+                        </span>
+                      ))}
+                      {observation.data.tags.length > 4 && (
+                        <span class="text-xs text-sepia italic">
+                          +{observation.data.tags.length - 4} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <!-- Read More -->
+                <div class="observation-footer flex justify-between items-center pt-md border-t border-decorative">
+                  <div class="flex items-center gap-md">
+                    {observation.data.experimental && (
+                      <span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                        Experimental
+                      </span>
+                    )}
+                    
+                    <span class="text-xs uppercase tracking-wide text-sepia">
+                      Difficulty: {observation.data.difficulty}
+                    </span>
+                  </div>
+                  
+                  <a 
+                    href={`/observations/${observation.slug}/`}
+                    class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium text-sm"
+                  >
+                    Read Full Observation
+                    <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state text-center py-xl">
+          <div class="text-6xl text-sepia opacity-50 mb-md">🌿</div>
+          <h2 class="text-2xl text-moss mb-sm">No Observations Yet</h2>
+          <p class="text-sepia italic">The sacred journals await the first entries from our botanical brotherhood...</p>
+        </div>
+      )}
+
+      <!-- Return Navigation -->
+      <nav class="return-nav mt-xl pt-lg border-t border-decorative">
+        <div class="flex justify-center">
+          <a 
+            href="/"
+            class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
+          >
+            ← Return to Garden Portal
+          </a>
+        </div>
+      </nav>
+    </div>
+  </main>
+</ContentLayout>
+
+<style>
+  .moss-light {
+    background-color: rgba(139, 164, 139, 0.2);
+  }
+  
+  .observation-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .observation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .observation-overview .grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    
+    .observation-footer {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+  }
+</style>

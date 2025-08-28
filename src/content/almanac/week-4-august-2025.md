@@ -11,45 +11,53 @@ difficulty: "initiate"
 image: "/images/almanac/august-week4.jpg"
 ---
 
-As the winter solstice retreats into memory and the first whispers of spring begin to stir in the soil, this week marks a crucial turning point in our mystical gardening calendar. The ancient mycorrhizal networks beneath our feet pulse with renewed energy, and the greenhouse spirits grow increasingly restless.
+As the winter solstice retreats into memory and the first whispers of spring begin to stir in the soil, this week marks a crucial turning point in our mystical gardening calendar. The ancient mycorrhizal networks pulse with renewed energy beneath our feet.
 
 ## Sacred Garden Duties
 
-### 🌱 Prepare Propagation Chambers for Spring Awakening
-The *Third Quarter Moon* provides perfect conditions for preparing your sacred propagation spaces. Clean glass surfaces with reverence - each clear pane allows maximum light transmission for the coming awakening. Mix propagation medium with equal parts peat moss, vermiculite, and the blessed compost from your autumn ritual preparations.
+### 🌱 Seeds of Awakening
 
-**Mystical Timing**: Perform this task during the early morning hours (5:30-7:00 AM) when the dew spirits are most active.
+These hardy seeds can brave the final winter chills:
 
-### 🍂 Collect Winter Mulch from the Sacred Grove
-Venture forth to collect fallen leaves from indigenous trees, particularly the sacred *Ficus sycomorus* and coastal forest specimens. The winter mulch holds the concentrated essence of the tree's wisdom and will slowly release nutrients as spring approaches.
+- **Broad Beans** - Sow directly for early spring harvest
+- **Peas** - Snow peas and sugar snap varieties thrive in cooler conditions
+- **Lettuce** - Sow successive plantings for continuous harvest
+- **Spinach** - Plant in partially shaded areas for tender leaves
+- **Radishes** - Quick-growing varieties for spring salads
 
-**Society Wisdom**: Layer mulch in a clockwise spiral pattern around established plants, starting from the outer edge and working inward. This ancient technique honors the natural growth patterns observed by our founding members.
+### 🪴 Transplantation Rites
 
-### 💧 Perform the Morning Mist Ritual on Orchids
-Your indoor orchid companions require special attention during these final winter weeks. Create morning mist using rainwater collected during the last new moon, stored in glass vessels to preserve its mystical properties.
+Preparing for the great awakening:
 
-**Ritual Instructions**:
-1. Face east at dawn
-2. Whisper the plant's botanical name three times
-3. Mist in a figure-8 pattern to represent infinity
-4. Offer gratitude for the plant's patience through winter
+- **Bare-root Roses** - Plant dormant roses before spring growth begins
+- **Fruit Trees** - Last chance to plant citrus, deciduous fruit trees
+- **Strawberry Plants** - Establish new strawberry beds for summer berries
+- **Indigenous Bulbs** - Plant *Nerine* and *Amaryllis belladonna* for autumn blooms
+- **Cool-season Annuals** - Transplant pansies, violas, and primulas
 
-### 🔍 Survey for Early Signs of Mycorrhizal Activity
-Walk your garden domain with heightened awareness, searching for the subtle signs that the underground fungal network is stirring. Look for:
-- Slight swelling of dormant buds
-- Changes in soil color near tree bases
-- Early emerging shoots of spring bulbs
-- Increased bird activity (they sense the awakening too)
+### ✂️ The Art of Sacred Pruning
 
-## The Spirits Speak: Weather Interpretation
+- **Deciduous Fruit Trees** - Major structural pruning while dormant
+- **Grapevines** - Prune to 2-3 buds per cane for vigorous spring growth
+- **Roses** - Remove dead wood and shape for spring flush
+- **Hydrangeas** - Light pruning of spent flower heads only
+- **Winter Herbs** - Harvest and prune rosemary, thyme, and sage
 
-*"The humidity crystals in your terrarium suggest the ancient water spirits are stirring after their winter slumber. Perfect conditions for communing with the fern ancestors in the Durban Botanic Gardens. The atmospheric pressure indicates that root systems are beginning their spring preparations - an ideal time for transplanting hardy specimens and planning major garden renovations."*
+### 🌿 Nourishment Rituals
 
-### Practical Translation
-With humidity levels around 78% and stable temperatures, this week offers excellent conditions for:
-- **Transplanting**: Established shrubs and trees will experience minimal shock
-- **Pruning**: Clean cuts will heal quickly in the stable conditions  
-- **Planning**: Soil temperature is perfect for assessing winter damage and planning spring improvements
+- **Fruit Trees** - Apply organic compost and aged manure around root zones
+- **Roses** - Feed with slow-release fertiliser before spring growth
+- **Lawns** - Apply winter lawn fertiliser to kikuyu grass
+- **Camellias** - Feed acid-loving fertiliser after flowering
+- **Vegetable Beds** - Prepare with compost and green manure crops
+
+### 🏡 Grounds Keeping Mysteries
+
+- **Propagation Chamber Preparation** - Clean and prepare glass houses and cold frames
+- **Mulch Collection** - Gather fallen leaves for composting and mulching
+- **Tool Blessing** - Clean and sharpen all garden tools for spring work
+- **Soil Assessment** - Test pH levels and plan soil improvements
+- **Seed Inventory** - Sort through seed collection and plan spring sowings
 
 ## Featured Plant Wisdom: *Cyathea dregei* (Grassland Tree Fern)
 
@@ -65,29 +73,6 @@ This magnificent tree fern, sacred to our Society, demonstrates the perfect bala
 - Protect from cold winds with temporary screens
 - Begin light feeding with diluted liquid fertilizer
 - Clear debris from crown to prevent rot
-
-## Ritual for the Week: The Awakening Meditation
-
-**Required Materials**:
-- Small bowl of collected rainwater
-- Pinch of soil from your most productive garden bed
-- A single perfect leaf from any indigenous plant
-
-**Instructions**:
-1. At sunrise, sit quietly in your garden space
-2. Place the soil in your left palm, the leaf in your right
-3. Dip the leaf in rainwater and touch it to the soil
-4. Speak these words: *"As winter releases its grip, I prepare my heart and hands for the spring awakening. May my garden flourish in harmony with the ancient rhythms."*
-5. Bury the leaf and soil together at the base of your most beloved plant
-
-## Society Notes
-
-**Upcoming Events**:
-- September 2: New Moon Propagation Ceremony (6:00 AM, Secret Garden Location)
-- September 15-17: Spring Orchid Show (Durban Botanic Gardens)
-- September 23: Urban Foraging & Plant Identification Walk
-
-**Member Spotlight**: Sister Fernsworth's discovery of luminous *Bryum argenteum* moss specimens continues to generate excitement within our ranks. Her cultivation techniques will be demonstrated at the next gathering.
 
 ---
 

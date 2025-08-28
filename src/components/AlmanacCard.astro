@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import FeaturedPlant from './FeaturedPlant.astro';
 
 interface Props {
   entry: CollectionEntry<'almanac'>;
@@ -7,56 +8,38 @@ interface Props {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-
-// Extract the first few paragraphs for preview
-const previewLength = 300;
 ---
 
 <div class="card-header">
-  <img src={`${import.meta.env.BASE_URL}images/navigation/icons/icon_almanac.png`} alt="Almanac" class="section-icon" />
+  <img src={`${import.meta.env.BASE_URL || '/'}images/navigation/icons/icon_almanac.png`} alt="Almanac" class="section-icon" />
   <h2 class="text-2xl font-medium text-cream m-0">Seasonal Almanac</h2>
 </div>
 
 <div class="card-content">
   <div class="current-week">
-    <h3 class="text-2xl text-moss mb-sm">{entry.data.title}</h3>
+    <h3 class="text-3xl text-moss mb-sm font-medium">{entry.data.title}</h3>
     
     {entry.data.moon_phase && (
       <p class="moon-phase bg-parchment border-l-4 border-moss p-sm my-sm italic text-sepia">
-        {entry.data.moon_phase} - Time for pruning and reflection
+        {entry.data.moon_phase} - Time for reflection and growth
       </p>
     )}
     
-    <div class="weekly-tasks mb-md">
-      <h4 class="text-xl text-sepia font-secondary mb-xs">Sacred Garden Duties:</h4>
-      <ul class="mystical-list">
-        <li class="flex items-start gap-xs mb-xs">
-          <span class="bullet text-xl">🌱</span>
-          <span>Prepare propagation chambers for spring awakening</span>
-        </li>
-        <li class="flex items-start gap-xs mb-xs">
-          <span class="bullet text-xl">🍂</span>
-          <span>Collect winter mulch from the sacred grove</span>
-        </li>
-        <li class="flex items-start gap-xs mb-xs">
-          <span class="bullet text-xl">💧</span>
-          <span>Perform the morning mist ritual on orchids</span>
-        </li>
-        <li class="flex items-start gap-xs mb-xs">
-          <span class="bullet text-xl">🔍</span>
-          <span>Survey for early signs of mycorrhizal activity</span>
-        </li>
-      </ul>
+    <!-- Full Almanac Content -->
+    <div class="almanac-content">
+      <Content />
     </div>
-    
-    <div class="weather-interpretation bg-parchment border border-decorative rounded p-md mt-md relative">
-      <div class="absolute -top-2 left-md bg-parchment px-xs text-2xl">🔮</div>
-      <h4 class="text-sepia font-secondary mb-xs">The Spirits Speak:</h4>
-      <p class="italic">
-        "The humidity crystals suggest the ancient water spirits are stirring. 
-        Perfect conditions for communing with the fern ancestors in the Botanic Gardens."
-      </p>
-    </div>
+
+    <!-- Featured Plant Section with Dynamic Data -->
+    {entry.data.featured_plant_image && entry.data.featured_plant_name && (
+      <FeaturedPlant 
+        name={entry.data.featured_plant_name}
+        scientificName={entry.data.featured_plant_scientific}
+        image={entry.data.featured_plant_image}
+        description={entry.data.featured_plant_description || ""}
+        properties={entry.data.featured_plant_properties || []}
+      />
+    )}
     
     <!-- Tags -->
     {entry.data.tags && (
@@ -70,18 +53,5 @@ const previewLength = 300;
         </div>
       </div>
     )}
-    
-    <!-- Read More Link -->
-    <div class="mt-md">
-      <a 
-        href={`./almanac/${entry.slug}/`}
-        class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
-      >
-        Read Full Almanac Entry
-        <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-        </svg>
-      </a>
-    </div>
   </div>
 </div>

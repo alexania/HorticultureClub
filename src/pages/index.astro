@@ -2,6 +2,7 @@
 import ContentLayout from '../layouts/ContentLayout.astro';
 import HeroSection from '../components/HeroSection.astro';
 import AlmanacCard from '../components/AlmanacCard.astro';
+import MemberObservations from '../components/MemberObservations.astro';
 import GatheringCard from '../components/GatheringCard.astro';
 import MemberPortal from '../components/MemberPortal.astro';
 import WeatherForecast from '../components/WeatherForecast.astro';
@@ -35,15 +36,21 @@ const upcomingEvents = eventEntries
   <!-- Main Content Grid -->
   <main class="main-content">
     <div class="container">
+      
+      <!-- Full Width Seasonal Almanac Section -->
+      <section class="card full-width section-spacing" id="almanac">
+        <AlmanacCard entry={latestAlmanac} />
+      </section>
+
       <div class="content-grid grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-lg section-spacing">
         
-        <!-- Seasonal Almanac Section -->
-        <section class="card" id="almanac">
-          <AlmanacCard entry={latestAlmanac} />
+        <!-- Member Observations -->
+        <section class="card" id="observations">
+          <MemberObservations />
         </section>
 
         <!-- Latest Gatherings -->
-        <section class="card" id="diaries">
+        <section class="card" id="gatherings">
           <GatheringCard entry={latestGathering} />
         </section>
 

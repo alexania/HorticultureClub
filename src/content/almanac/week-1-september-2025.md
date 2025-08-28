@@ -6,89 +6,74 @@ week: 1
 tags: ["spring", "bulb-division", "terrarium-care", "naming-rites", "humidity-rituals"]
 weather_dependent: true
 moon_phase: "🌑 New Moon"
-featured_plants: ["Scadoxus multiflorus", "Hypnum sp.", "Albizia adianthifolia"]
+featured_plants: ["Scadoxus puniceus", "Hypnum sp.", "Albizia adianthifolia"]
 difficulty: "initiate"
 image: "/images/almanac/september-week1.jpg"
+featured_plant_image: "african_paintbrush_lily.png"
+featured_plant_name: "African Paintbrush Lily"
+featured_plant_scientific: "Scadoxus puniceus"
+featured_plant_description: "A fiery herald of spring, this bulbous plant blooms with red inflorescences that resemble aptly named paintbrushes."
+featured_plant_properties: [
+  "Symbol of renewal and bold intention",
+  "Said to glow faintly under moonlight when properly blessed",
+  "Used in the Society's Equinox rites"
+]
 ---
 
-As the veil of winter lifts, the first week of September marks the official beginning of spring in the Society’s calendar. The soil breathes again, mosses awaken, and the fern ancestors stir beneath the mulch. The New Moon offers potent energy for planting, propagation, and quiet ritual work.
+As the veil of winter lifts, the first week of September marks the official beginning of spring in the Society's calendar. The soil breathes again, and the fern ancestors stir beneath the mulch, whispering secrets of renewal.
 
 ## Sacred Garden Duties
 
-As the soil stirs and the fungal networks reawaken, members are called to enact the rites of renewal. Below are the recommended tasks for this week, drawn from both horticultural wisdom and the Society’s seasonal traditions:
+### 🌱 Seeds of Awakening
 
-### 🌸 Orchids (Indigenous & Tropical)
+The earth calls for these seeds to be planted directly into blessed soil:
 
-- **Repot if needed**: Spring is ideal for repotting orchids that have outgrown their vessels. Use fresh bark mix and offer a misted blessing.
-- **Increase watering**: Resume regular watering as temperatures rise, but avoid waterlogging. Mist daily if humidity drops below 60%.
-- **Feed lightly**: Apply a diluted orchid fertilizer to support new root and bud growth.
-- **Inspect for pests**: Look for mealybugs and scale—remove with a cotton swab dipped in spirit and recite the *Rite of Purification*.
+- **Beans** - Runner beans, climbing beans, dwarf French beans
+- **Sweetcorn** - Plant in blocks for mystical cross-pollination  
+- **Cucumbers** - Bush varieties for containers, climbing types for trellises
+- **Squash** - Butternut, gem squash, and pumpkins for autumn harvest
+- **Herbs** - Basil, coriander, dill, rocket - sow in succession for continuous harvest
 
-### 🥬 Vegetables (Warm-Season Crops)
+### 🪴 Transplantation Rites
 
-- **Sow directly**: Beans, tomatoes, cucumbers, squash, and sweetcorn can be sown now. Mark rows with ceremonial twigs.
-- **Prepare beds**: Enrich soil with compost and aged manure. Turn gently with a three-pronged fork while whispering intentions.
-- **Mulch lightly**: Use straw or leaf litter to retain moisture and suppress weeds.
-- **Start seedlings**: Begin capsicum, brinjal, and basil in trays under filtered light.
+Seedlings ready for sacred ground:
 
-### 🌹 Roses (Established Shrubs)
+- **Tomatoes** - Transplant hardened seedlings to prepared beds with deep watering rituals
+- **Capsicums** - Move from propagation chambers to warm, sheltered positions
+- **Brinjals** - Plant out when soil temperature reaches 18°C consistently
+- **Gladiolus bulbs** - Plant in ceremonial rows, 10cm deep
+- **Dahlia tubers** - Plant with crown just below soil surface
 
-- **Prune with purpose**: Remove dead wood and shape for airflow. Each cut should be made with reverence and a clean blade.
-- **Feed generously**: Apply a balanced rose fertilizer and water deeply.
-- **Mulch with compost**: Surround the base with organic mulch to awaken root systems.
-- **Inspect for black spot**: Treat early with neem oil and a protective incantation.
+### ✂️ The Art of Sacred Pruning
 
-### 🍊 Fruit Trees (Citrus, Fig, Guava)
+- **Roses** - Remove dead wood and weak growth with clean, sharp secateurs. Shape for airflow and future blooms
+- **Fruit Trees** - Thin excess blossoms on young citrus, guava, and fig trees to strengthen remaining fruit
+- **Ornamental Shrubs** - Light pruning of spent winter growth on gardenias and jasmine
+- **Herbs** - Pinch growing tips of basil to encourage bushy growth
 
-- **Thin blossoms**: On young trees, remove excess flowers to direct energy into fewer, stronger fruits.
-- **Feed with nitrogen**: Apply a slow-release fertilizer to support spring flush.
-- **Check irrigation**: Ensure deep watering reaches root zones. Adjust emitters if using drip systems.
-- **Inspect bark and branches**: Look for scale insects and fungal growth. Treat with horticultural oil and a bark blessing.
+### 🌿 Nourishment Rituals
 
-### 🌿 Sow & Plant This Week
+Weekly feeding schedule:
 
-| Category     | Recommended Crops & Plants                          |
-|--------------|-----------------------------------------------------|
-| Vegetables   | Beans, tomatoes, cucumbers, squash, sweetcorn       |
-| Herbs        | Basil, coriander, dill, chives                      |
-| Flowers      | Marigolds, zinnias, cosmos, nasturtiums             |
-| Bulbs        | Gladiolus, dahlias, blood lilies (*Scadoxus*)       |
-| Indigenous   | *Hypoxis hemerocallidea*, *Crinum macowanii*        |
-| Shrubs       | Hibiscus, plumbago, indigenous pelargoniums         |
+- **Roses** - Apply balanced fertiliser and deep watering ceremonies
+- **Fruit Trees** - Feed citrus with high-nitrogen fertiliser for spring flush
+- **Vegetables** - Side-dress tomatoes and beans with compost and aged manure
+- **Orchids** - Resume diluted liquid feeding as growth begins
+- **Lawns** - Apply slow-release fertiliser to kikuyu and buffalo grass
 
-## 🌫️ Rituals of the Week
+### 🏡 Grounds Keeping Mysteries
 
-### 🌑 New Moon Propagation Ceremony
-Performed at dawn in the Secret Garden. Members gathered to plant intentions alongside bulbs, invoking *Custodes Arcana Viridis* to bless the soil.
+Essential garden tasks:
 
-### 🧴 Terrarium Blessing
-Each moss-filled vessel was misted in a figure-eight pattern while reciting the Society’s seasonal invocation. A drop of rainwater and a pinch of sacred soil were added to seal the ritual.
+- **Mulch Application** - Spread organic mulch around fruit trees and vegetable beds
+- **Lawn Preparation** - Scarify and overseed thin areas in kikuyu lawns  
+- **Hanging Basket Revival** - Replant winter baskets with trailing nasturtiums and petunias
+- **Compost Activation** - Turn compost heaps and add green materials to awaken decomposition
 
-### 🎆 Naming of the Verdant Hollow
-A moss-rich alcove discovered during the Derivco expedition was formally named and consecrated. A wax-sealed scroll was buried beneath a cairn to mark the site.
-
-## 🧭 Atmospheric Interpretation
-
-Humidity levels remain ideal for transplanting and terrarium work. The air carries a subtle charge—interpreted by the Society’s barometric diviners as a sign of fungal network reactivation. Expect increased bird activity and spontaneous seed germination.
-
-## 🌿 Featured Plant Wisdom
-
-### *Scadoxus multiflorus* — African Blood Lily  
-A fiery herald of spring, this bulbous plant blooms with spherical red inflorescences that resemble botanical lanterns.  
-**Mystical Properties:**  
-- Symbol of renewal and bold intention  
-- Said to glow faintly under moonlight when properly blessed  
-- Used in the Society’s Equinox rites
 
 ## 🧘 Reflection from the Journals
 
 > “Spring does not arrive all at once—it unfurls like a fern, slowly, deliberately, with each frond a promise.”  
 > — *From the Field Notes of Custodian Kelpgrove*
-
-## 📣 Upcoming Events
-
-- **September 2** — New Moon Propagation Ceremony 
-- **September 15–17** — Spring Orchid Show (Durban Botanic Gardens)  
-- **September 23** — Urban Foraging & Plant Identification Walk
 
 Trust in the ancient rhythms. The soil remembers.

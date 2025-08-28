@@ -182,27 +182,51 @@ const formattedTime = entry.data.date.toLocaleTimeString('en-ZA', {
       </section>
     )}
 
-    <!-- Expedition Gallery Placeholder -->
+    <!-- Expedition Gallery -->
     {entry.data.images && entry.data.images.length > 0 && (
       <section class="expedition-gallery mt-xl">
         <h3 class="text-2xl font-secondary text-charcoal mb-lg text-center">
           Expedition Documentation
         </h3>
-        <div class="gallery-grid grid grid-cols-1 md:grid-cols-3 gap-md">
-          {entry.data.images.map((image, index) => (
-            <div class="image-placeholder bg-gradient-to-br from-parchment to-sage border-2 border-dashed border-sepia rounded-lg h-48 flex items-center justify-center opacity-70">
-              <div class="text-center">
-                <div class="text-sepia text-sm mb-1">📸</div>
-                <div class="text-sepia text-xs">
-                  {image.replace('.jpg', '').replace('-', ' ').replace('_', ' ')}
+        <div class="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+          {entry.data.images.map((image, index) => {
+            // Handle both old string format and new object format
+            const imageSrc = typeof image === 'string' ? image : image.src;
+            const imageAlt = typeof image === 'string' ? `Expedition image ${index + 1}` : image.alt;
+            const imageCaption = typeof image === 'string' ? null : image.caption;
+            const imageUrl = `${import.meta.env.BASE_URL}images/content/gatherings/${entry.slug}/${imageSrc}`;
+            
+            return (
+              <div class="gallery-item vintage-photo bg-parchment p-4 shadow-soft hover:shadow-medium transition-all duration-300">
+                <div class="image-container">
+                  <img 
+                    src={imageUrl}
+                    alt={imageAlt}
+                    class="w-full h-96 object-cover border-8 border-parchment shadow-lg"
+                    loading="lazy"
+                  />
                 </div>
+                {imageCaption && (
+                  <div class="image-caption mt-sm">
+                    <p class="text-sepia text-sm italic text-center leading-relaxed">
+                      {imageCaption}
+                    </p>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-        <p class="text-center text-sepia text-sm italic mt-md">
-          <em>Photographic documentation preserved in Society archives</em>
-        </p>
+        <div class="gallery-footer text-center mt-lg">
+          <p class="text-sepia text-sm italic">
+            <em>Photographic documentation preserved in the Society archives</em>
+          </p>
+          <div class="archive-seal mt-sm">
+            <span class="text-brass text-xs uppercase tracking-wide">
+              🔐 Authenticated by the Archive Keepers
+            </span>
+          </div>
+        </div>
       </section>
     )}
 
@@ -304,15 +328,37 @@ const formattedTime = entry.data.date.toLocaleTimeString('en-ZA', {
     @apply bg-brass/10 border border-brass/30 rounded p-md my-md;
   }
   
-  /* Gallery hover effects */
-  .image-placeholder {
+  /* Vintage Photo Gallery styling */
+  .vintage-photo {
     transition: all 0.3s ease;
   }
   
-  .image-placeholder:hover {
-    transform: translateY(-2px);
-    box-shadow: theme('boxShadow.medium');
-    opacity: 0.9;
+  .vintage-photo:hover {
+    transform: translateY(-3px);
+  }
+  
+  .vintage-photo img {
+    transition: all 0.3s ease;
+    /* Subtle sepia tone for vintage effect */
+    filter: sepia(0.1) contrast(1.05) brightness(0.98);
+  }
+  
+  .vintage-photo:hover img {
+    filter: sepia(0.05) contrast(1.02) brightness(1);
+    box-shadow: 0 12px 32px rgba(44, 44, 44, 0.25);
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  /* Vintage photo styling for summary cards */
+  .gathering-image-item.vintage-photo img {
+    display: block;
+  }
+  
+  .archive-seal {
+    opacity: 0.8;
   }
   
   /* Specimen cards */

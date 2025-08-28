@@ -28,8 +28,8 @@ export default {
         'ui': ['Raleway', 'sans-serif'],
       },
       fontSize: {
-        'hero': ['3.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'title': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'hero': ['3.5rem', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+        'title': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
       },
       spacing: {
         'xs': '0.5rem',

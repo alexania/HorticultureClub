@@ -13,6 +13,16 @@ export default defineConfig({
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.gif']
   },
   
+  // Markdown configuration
+  markdown: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+    shikiConfig: {
+      theme: 'github-light',
+      wrap: true
+    }
+  },
+  
   // Content collections
   content: {
     collections: {

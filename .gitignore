@@ -1,7 +1,7 @@
 # Build outputs
 dist/
 .output/
-mock/
+ignore_this_is_just_poc/
 
 # Generated files
 .astro/

@@ -5,15 +5,31 @@ location: "Derivco Greenbelt"
 attendees: 2
 activities: ["moss scouting", "terrarium planning", "ritual appreciation", "botanical identification"]
 weather: "overcast, perfect humidity 85%"
-specimens_collected: ["Leucobryum sp.", "Hypnum sp.", "Scadoxus multiflorus"]
+specimens_collected: ["Leucobryum sp.", "Hypnum sp.", "Scadoxus puniceus"]
 rituals_performed: ["Botanical Bonding Incident", "Humidity Appreciation Walk"]
-images: ["custodians-in-the-field.jpg", "greenbelt-specimens.jpg", "moss-installation.jpg"]
+images: [
+  {
+    src: "custodians-in-the-field.png",
+    alt: "Custodians Kelpgrove and Zephyrmire examining moss specimens in the Derivco Greenbelt",
+    caption: "The expedition team conducting field research despite atmospheric challenges"
+  },
+  {
+    src: "greenbelt-specimens.png", 
+    alt: "Collection of botanical specimens including moss colonies and African Paintbrush Lily bulbs",
+    caption: "Specimens collected during the expedition: moss colonies and Scadoxus puniceus bulbs"
+  },
+  {
+    src: "moss-installation.png",
+    alt: "Terrarium installation featuring the collected moss specimens in glass vessels",
+    caption: "The collected moss specimens thriving in their new terrarium sanctuary"
+  }
+]
 coordinates:
   lat: -29.8492
   lng: 30.9801
 featured: true
 member_reflections:
-  - author: "Custodian Ferngrove"
+  - author: "Custodian Kelpgrove"
     rank: "Keeper"
     reflection: "Despite the miasma, the moss endured—and so did we. The cushion colonies were a quiet triumph."
   - author: "Custodian Zephyrmire"
@@ -21,7 +37,7 @@ member_reflections:
     reflection: "The blood lilies burned like lanterns in the undergrowth. I left with moss in my pockets and mystery in my heart."
 ---
 
-On a morning veiled in mist and mystery, Custodians Ferngrove and Zephyrmire ventured into the Derivco Greenbelt in pursuit of terrarium-worthy moss colonies. Though the skies were gentle and the humidity ideal, the expedition was met with an unexpected and most foul miasma—an emanation from the nearby sewage station, whose treated effluent had been released into the creek. The air was thick, the spirits... conflicted.
+On a morning veiled in mist and mystery, Custodians Kelpgrove and Zephyrmire ventured into the Derivco Greenbelt in pursuit of terrarium-worthy moss colonies. Though the skies were gentle and the humidity ideal, the expedition was met with an unexpected and most foul miasma—an emanation from the nearby sewage station, whose treated effluent had been released into the creek. The air was thick, the spirits... conflicted.
 
 Undeterred, the Custodians pressed deeper into the greenbelt, guided by instinct and the promise of botanical communion.
 
@@ -36,18 +52,18 @@ Undeterred, the Custodians pressed deeper into the greenbelt, guided by instinct
 - **Unidentified Large Fern:** Taller specimen with finely divided fronds—possibly *Blechnum tabulare* or a local *Cyathea* species.
 
 **Flowering Plants:**
-- **African Blood Lily** (*Scadoxus multiflorus*): Numerous specimens in bloom, their spherical red inflorescences glowing like botanical lanterns.
+- **African Paintbrush Lily** (*Scadoxus puniceus*): Numerous specimens in bloom, their spherical red inflorescences glowing like botanical lanterns.
 - **Thorny Lacefern-like Plant:** Likely *Asparagus falcatus*—notable for its underground runners and defensive spines.
 - **Mimosa-like Tree:** Resembled *Mimosa pudica* but lacked nyctinastic movement; possibly *Albizia adianthifolia*.
 - **Possible Bromeliad:** Rosette-forming plant with stiff, strap-like leaves—potentially *Aechmea* or *Tillandsia* genus.
 
 ## 🌺 Propagation Efforts
 
-In addition to moss collection, the Custodians undertook a delicate propagation effort involving several juvenile specimens of *Scadoxus multiflorus* (African Blood Lily). Using improvised tools—namely plastic knives and fingernails—they carefully unearthed a few bulbs nestled beneath leaf litter and damp soil.
+In addition to moss collection, the Custodians undertook a delicate propagation effort involving several juvenile specimens of *Scadoxus puniceus* (African Paintbrush Lily). Using improvised tools—namely plastic knives and fingernails—they carefully unearthed a few bulbs nestled beneath leaf litter and damp soil.
 
 The bulbs, though small, displayed healthy root systems and vibrant coloration. Cuttings were also taken from nearby foliage for observational study and potential rooting trials. These specimens have since been transferred to the Society’s propagation chambers, where they will be monitored for growth and bloom viability.
 
-> “The lilies did not resist our presence. If anything, they offered themselves willingly.” — Custodian Ferngrove
+> “The lilies did not resist our presence. If anything, they offered themselves willingly.” — Custodian Kelpgrove
 
 ## 🩸 Ceremonies Performed
 
@@ -71,10 +87,10 @@ Upon discovering a particularly moss-rich alcove beneath a fig-root arch, the Cu
 ## 🌗 Member Reflections
 
 > “The moss was resilient, even in the shadow of the miasma. I believe it chose us. The blood pact was unintended—but perhaps necessary.”  
-> — *Custodian Ferngrove, Keeper*
+> — *Custodian Kelpgrove, Master*
 
 > “I saw the fern fronds bow slightly as we passed. Whether wind or welcome, I accepted it as a sign. The Greenbelt remembers.”  
-> — *Custodian Zephyrmire, Keeper*
+> — *Custodian Zephyrmire, Master*
 
 ## 🌗 Closing Reflection
 
