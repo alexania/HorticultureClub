@@ -3,7 +3,7 @@
 ---
 
 <div class="card-header">
-  <img src="/images/navigation/icons/icon_forecast.png" alt="Weather Forecast" class="section-icon" />
+  <img src={`${import.meta.env.BASE_URL}images/navigation/icons/icon_forecast.png`} alt="Weather Forecast" class="section-icon" />
   <h2 class="text-2xl font-medium text-cream m-0">Mystical Weather Interpretations</h2>
 </div>
 
@@ -15,7 +15,7 @@
       <h3 class="text-xl text-moss mb-sm">Today - The Awakening</h3>
       <div class="weather-graphic text-center my-sm">
         <img 
-          src="/images/content/weather-graphics/high-humidity.png" 
+          src={`${import.meta.env.BASE_URL}images/content/weather-graphics/high-humidity.png`} 
           alt="High Humidity Spirits" 
           class="weather-image w-37 h-37 object-contain object-center mx-auto rounded border border-decorative shadow-soft"
           loading="lazy"
@@ -36,7 +36,7 @@
       <h3 class="text-xl text-moss mb-sm">Tomorrow - The Blessing</h3>
       <div class="weather-graphic text-center my-sm">
         <img 
-          src="/images/content/weather-graphics/rain.png" 
+          src={`${import.meta.env.BASE_URL}images/content/weather-graphics/rain.png`} 
           alt="Rain Spirit Blessing" 
           class="weather-image w-37 h-37 object-contain object-center mx-auto rounded border border-decorative shadow-soft"
           loading="lazy"
@@ -57,7 +57,7 @@
       <h3 class="text-xl text-moss mb-sm">Wednesday - The Meditation</h3>
       <div class="weather-graphic text-center my-sm">
         <img 
-          src="/images/content/weather-graphics/drought.png" 
+          src={`${import.meta.env.BASE_URL}images/content/weather-graphics/drought.png`} 
           alt="Plant Meditation" 
           class="weather-image w-37 h-37 object-contain object-center mx-auto rounded border border-decorative shadow-soft"
           loading="lazy"
@@ -99,27 +99,27 @@
     const weatherImages = document.querySelectorAll('.weather-image');
     const availableWeatherGraphics = [
       { 
-        src: '/images/content/weather-graphics/high-humidity.png', 
+        src: `${import.meta.env.BASE_URL}images/content/weather-graphics/high-humidity.png`, 
         alt: 'High Humidity Spirits'
       },
       { 
-        src: '/images/content/weather-graphics/rain.png', 
+        src: `${import.meta.env.BASE_URL}images/content/weather-graphics/rain.png`, 
         alt: 'Rain Spirit Blessing'
       },
       { 
-        src: '/images/content/weather-graphics/drought.png', 
+        src: `${import.meta.env.BASE_URL}images/content/weather-graphics/drought.png`, 
         alt: 'Plant Meditation'
       },
       { 
-        src: '/images/content/weather-graphics/wind.png', 
+        src: `${import.meta.env.BASE_URL}images/content/weather-graphics/wind.png`, 
         alt: 'Wind Spirits Dancing'
       },
       { 
-        src: '/images/content/weather-graphics/storms.png', 
+        src: `${import.meta.env.BASE_URL}images/content/weather-graphics/storms.png`, 
         alt: 'Electric Storm Spirits'
       },
       { 
-        src: '/images/content/weather-graphics/sunshine.png', 
+        src: `${import.meta.env.BASE_URL}images/content/weather-graphics/sunshine.png`, 
         alt: 'Solar Blessing Energy'
       }
     ];

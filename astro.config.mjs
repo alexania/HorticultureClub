@@ -6,6 +6,7 @@ export default defineConfig({
   site: 'https://alexania.github.io',
   base: '/HorticultureClub', // Replace with your repository name if different
   output: 'static',
+  trailingSlash: 'always',
   
   // Asset handling
   vite: {

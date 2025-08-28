@@ -25,7 +25,7 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
 <ContentLayout 
   title={entry.data.title}
   description={`Seasonal gardening wisdom for ${entry.data.title} - mystical horticultural guidance from the Durban Horticulture Club archives.`}
-  image="/images/almanac/seasonal-header.jpg"
+  image={`${import.meta.env.BASE_URL}images/almanac/seasonal-header.jpg`}
 >
   <div class="container">
     <!-- Breadcrumb Navigation -->
@@ -43,7 +43,7 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
     <header class="article-header mb-xl">
       <div class="bg-gradient-to-br from-moss/10 to-cream border border-moss/30 rounded-lg p-lg">
         <div class="flex items-center gap-sm mb-md">
-          <img src="/images/navigation/icons/icon_almanac.png" alt="Almanac" class="w-8 h-8 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}images/navigation/icons/icon_almanac.png`} alt="Almanac" class="w-8 h-8 object-contain" />
           <span class="text-moss font-ui text-sm uppercase tracking-wider">Seasonal Almanac</span>
         </div>
         

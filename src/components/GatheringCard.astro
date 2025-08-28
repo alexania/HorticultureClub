@@ -16,7 +16,7 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
 ---
 
 <div class="card-header">
-  <img src="/images/navigation/icons/icon_diaries.png" alt="Gatherings" class="section-icon" />
+  <img src={`${import.meta.env.BASE_URL}images/navigation/icons/icon_diaries.png`} alt="Gatherings" class="section-icon" />
   <h2 class="text-2xl font-medium text-cream m-0">Latest Gatherings</h2>
 </div>
 
@@ -88,7 +88,7 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
     <!-- Read More Link -->
     <div class="mt-md">
       <a 
-        href={`/gatherings/${entry.slug}/`}
+        href={`./gatherings/${entry.slug}/`}
         class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
       >
         Read Full Expedition Report

@@ -3,37 +3,37 @@
 const navItems = [
   {
     href: "#almanac",
-    icon: "/images/navigation/icons/icon_almanac.png",
+    icon: `${import.meta.env.BASE_URL}images/navigation/icons/icon_almanac.png`,
     title: "Seasonal Almanac",
     subtitle: "Sacred Garden Duties"
   },
   {
     href: "#directory",
-    icon: "/images/navigation/icons/icon_directory.png",
+    icon: `${import.meta.env.BASE_URL}images/navigation/icons/icon_directory.png`,
     title: "Plant Directory", 
     subtitle: "Trusted Purveyors"
   },
   {
     href: "#events",
-    icon: "/images/navigation/icons/icon_events.png",
+    icon: `${import.meta.env.BASE_URL}images/navigation/icons/icon_events.png`,
     title: "Event Calendar",
     subtitle: "Mystical Gatherings"
   },
   {
     href: "#portal",
-    icon: "/images/navigation/icons/icon_portal.png",
+    icon: `${import.meta.env.BASE_URL}images/navigation/icons/icon_portal.png`,
     title: "Member Portal",
     subtitle: "Society Mysteries"
   },
   {
     href: "#diaries",
-    icon: "/images/navigation/icons/icon_diaries.png",
+    icon: `${import.meta.env.BASE_URL}images/navigation/icons/icon_diaries.png`,
     title: "Gathering Diaries",
     subtitle: "Recent Expeditions"
   },
   {
     href: "#forecast",
-    icon: "/images/navigation/icons/icon_forecast.png",
+    icon: `${import.meta.env.BASE_URL}images/navigation/icons/icon_forecast.png`,
     title: "Weather Mysteries",
     subtitle: "Atmospheric Divination"
   }
@@ -45,7 +45,7 @@ const navItems = [
     <!-- Top Border Decoration -->
     <div class="border-decoration flex justify-center my-sm">
       <img 
-        src="/images/navigation/borders/border_spring.png" 
+        src={`${import.meta.env.BASE_URL}images/navigation/borders/border_spring.png`} 
         alt="" 
         class="border-image h-10 opacity-70 object-cover w-full max-w-[800px]"
         loading="lazy"
@@ -96,7 +96,7 @@ const navItems = [
     <!-- Bottom Border Decoration -->
     <div class="border-decoration flex justify-center my-sm">
       <img 
-        src="/images/navigation/borders/border_autumn.png" 
+        src={`${import.meta.env.BASE_URL}images/navigation/borders/border_autumn.png`} 
         alt="" 
         class="border-image h-10 opacity-70 object-cover w-full max-w-[800px]"
         loading="lazy"
@@ -141,7 +141,7 @@ const navItems = [
           }
         } else {
           // We're not on the home page - navigate to home page with hash
-          window.location.href = '/' + this.getAttribute('href');
+          window.location.href = `${import.meta.env.BASE_URL}` + this.getAttribute('href');
         }
       });
     });
