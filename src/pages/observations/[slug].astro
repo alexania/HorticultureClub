@@ -97,7 +97,7 @@ const successRateColours = {
           
           <div class="flex flex-col items-end gap-sm">
             {observation.data.success_rate && (
-              <span class={`text-sm font-medium capitalize px-3 py-1 rounded-full bg-opacity-20 ${successRateColours[observation.data.success_rate]}`}>
+              <span class={`text-sm font-medium capitalize px-3 py-1 rounded-full success-${observation.data.success_rate}`}>
                 {observation.data.success_rate} Results
               </span>
             )}
@@ -167,7 +167,7 @@ const successRateColours = {
       <!-- Observation Content -->
       <article class="observation-content">
         <div class="card">
-          <div class="card-content prose prose-sepia max-w-none">
+          <div class="card-content observation-prose max-w-none">
             <Content />
           </div>
         </div>
@@ -215,7 +215,7 @@ const successRateColours = {
 
 <style>
   .moss-light {
-    background-color: rgba(139, 164, 139, 0.2);
+    background-color: rgba(107, 124, 50, 0.15);
   }
   
   .breadcrumb {
@@ -224,6 +224,117 @@ const successRateColours = {
   
   .stat-card {
     min-height: 100px;
+  }
+  
+  .success-mystical {
+    background-color: rgba(147, 51, 234, 0.1);
+    color: #7c3aed;
+  }
+  
+  .success-exceptional {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+  
+  .success-promising {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+  }
+  
+  .success-learning {
+    background-color: rgba(251, 191, 36, 0.1);
+    color: #d97706;
+  }
+  
+  .success-experimental {
+    background-color: rgba(249, 115, 22, 0.1);
+    color: #ea580c;
+  }
+  
+  .observation-prose {
+    @apply text-sepia;
+    line-height: 1.7;
+  }
+  
+  .observation-prose h1,
+  .observation-prose h2,
+  .observation-prose h3,
+  .observation-prose h4,
+  .observation-prose h5,
+  .observation-prose h6 {
+    @apply text-moss font-medium;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .observation-prose h2 {
+    @apply text-2xl;
+    border-bottom: 1px solid #704214;
+    padding-bottom: 0.5rem;
+  }
+  
+  .observation-prose h3 {
+    @apply text-xl;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .observation-prose h3:first-of-type {
+    margin-top: 1rem;
+  }
+  
+  .observation-prose h4 {
+    @apply text-lg;
+  }
+  
+  .observation-prose p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+  
+  .observation-prose ul,
+  .observation-prose ol {
+    margin-bottom: 1rem;
+    padding-left: 0;
+  }
+  
+  .observation-prose li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    list-style: none;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .observation-prose li:before {
+    content: "•";
+    color: #6b7c32;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+  
+  .observation-prose strong {
+    @apply text-moss font-semibold;
+  }
+  
+  .observation-prose em {
+    @apply italic text-forest-shadow;
+  }
+  
+  .observation-prose a {
+    @apply text-moss underline;
+    transition: color 0.2s ease;
+  }
+  
+  .observation-prose a:hover {
+    @apply text-forest-shadow;
+  }
+  
+  .observation-prose blockquote {
+    @apply border-l-4 border-moss bg-parchment p-4 italic;
+    margin: 1.5rem 0;
   }
   
   @media (max-width: 768px) {

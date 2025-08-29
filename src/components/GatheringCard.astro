@@ -58,7 +58,7 @@ const excerpt = cleanText.length > excerptLength
     {entry.data.images && entry.data.images.length > 0 && (
       <div class="gathering-images flex gap-sm my-sm overflow-x-auto">
         {entry.data.images.slice(0, 2).map(image => {
-          const imageSrc = image.src;
+          const imageSrc = image.src.replace(".png", "_small.png");
           const imageAlt = image.alt;
           const imageUrl = `${import.meta.env.BASE_URL}images/content/gatherings/${entry.slug}/${imageSrc}`;
           

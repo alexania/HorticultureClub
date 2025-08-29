@@ -119,7 +119,7 @@ const successRateColours = {
                     {observation.data.success_rate && (
                       <div class="flex items-center gap-2">
                         <span class="font-medium text-sepia">Results:</span>
-                        <span class={`text-xs font-medium capitalize px-2 py-1 rounded-full ${successRateColours[observation.data.success_rate]} bg-opacity-20`}>
+                        <span class={`text-xs font-medium capitalize px-2 py-1 rounded-full ${successRateColours[observation.data.success_rate]} bg-${observation.data.success_rate === 'mystical' ? 'purple' : observation.data.success_rate === 'exceptional' ? 'green' : observation.data.success_rate === 'promising' ? 'blue' : observation.data.success_rate === 'learning' ? 'yellow' : 'orange'}-100`}>
                           {observation.data.success_rate}
                         </span>
                       </div>
@@ -217,16 +217,42 @@ const successRateColours = {
 
 <style>
   .moss-light {
-    background-color: rgba(139, 164, 139, 0.2);
+    background-color: rgba(107, 124, 50, 0.15);
   }
   
   .observation-card {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #704214;
   }
   
   .observation-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(107, 124, 50, 0.2);
+  }
+  
+  .success-mystical {
+    background-color: rgba(147, 51, 234, 0.1);
+    color: #7c3aed;
+  }
+  
+  .success-exceptional {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+  
+  .success-promising {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+  }
+  
+  .success-learning {
+    background-color: rgba(251, 191, 36, 0.1);
+    color: #d97706;
+  }
+  
+  .success-experimental {
+    background-color: rgba(249, 115, 22, 0.1);
+    color: #ea580c;
   }
   
   @media (max-width: 768px) {

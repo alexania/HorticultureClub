@@ -36,11 +36,6 @@ const upcomingEvents = eventEntries
   <!-- Main Content Grid -->
   <main class="main-content">
     <div class="container">
-      
-      <!-- Full Width Seasonal Almanac Section -->
-      <section class="card full-width section-spacing" id="almanac">
-        <AlmanacCard entry={latestAlmanac} />
-      </section>
 
       <div class="content-grid grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-lg section-spacing">
         
@@ -60,6 +55,11 @@ const upcomingEvents = eventEntries
         </section>
 
       </div>
+      
+      <!-- Full Width Seasonal Almanac Section -->
+      <section class="card full-width section-spacing" id="almanac">
+        <AlmanacCard entry={latestAlmanac} />
+      </section>
       
       <!-- Interactive Elements Section -->
       <div class="section-spacing">

@@ -300,6 +300,98 @@
 /* Featured Plant Section - Clean component-based approach */
 /* No special CSS needed - handled by FeaturedPlant.astro component */
 
+/* Observation-specific prose styling */
+.observation-prose {
+  @apply text-sepia;
+  line-height: 1.7;
+  max-width: none;
+}
+
+.observation-prose h1,
+.observation-prose h2,
+.observation-prose h3,
+.observation-prose h4,
+.observation-prose h5,
+.observation-prose h6 {
+  @apply text-moss font-medium;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.observation-prose h2 {
+  @apply text-2xl;
+  border-bottom: 1px solid theme('colors.sepia');
+  padding-bottom: 0.5rem;
+}
+
+.observation-prose h3 {
+  @apply text-xl;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.observation-prose h3:first-of-type {
+  margin-top: 1rem;
+}
+
+.observation-prose h4 {
+  @apply text-lg;
+}
+
+.observation-prose p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.observation-prose ul,
+.observation-prose ol {
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+.observation-prose li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  list-style: none;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.observation-prose li:before {
+  content: "•";
+  color: theme('colors.moss');
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.observation-prose strong {
+  @apply text-moss font-semibold;
+}
+
+.observation-prose em {
+  @apply italic text-forest-shadow;
+}
+
+.observation-prose a {
+  @apply text-moss underline;
+  transition: color 0.2s ease;
+}
+
+.observation-prose a:hover {
+  @apply text-forest-shadow;
+}
+
+.observation-prose blockquote {
+  @apply border-l-4 border-moss bg-parchment p-4 italic;
+  margin: 1.5rem 0;
+}
+
+.observation-prose hr {
+  @apply border-sepia my-6;
+}
+
 /* Print Styles */
 @media print {
   body {

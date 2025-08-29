@@ -5,7 +5,11 @@
       "Bash(npm create:*)",
       "Bash(npm install)",
       "Bash(npm run dev:*)",
-      "Bash(move:*)"
+      "Bash(move:*)",
+      "git commit",
+      "git push",
+      "git",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
