@@ -44,9 +44,9 @@ const successRateColours = {
       <!-- Breadcrumb Navigation -->
       <nav class="breadcrumb mb-lg">
         <div class="flex items-center gap-sm text-sm text-sepia">
-          <a href="/" class="hover:text-moss transition-colors">Home</a>
+          <a href={import.meta.env.BASE_URL} class="hover:text-moss transition-colors">Home</a>
           <span>→</span>
-          <a href="/observations/" class="hover:text-moss transition-colors">Member Observations</a>
+          <a href={`${import.meta.env.BASE_URL}observations/`} class="hover:text-moss transition-colors">Member Observations</a>
           <span>→</span>
           <span class="text-moss font-medium">{observation.data.title}</span>
         </div>
@@ -195,14 +195,14 @@ const successRateColours = {
       <nav class="observation-nav mt-lg">
         <div class="flex justify-between items-center">
           <a 
-            href="/observations/"
+            href={`${import.meta.env.BASE_URL}observations/`}
             class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
           >
             ← Back to All Observations
           </a>
           
           <a 
-            href="/"
+            href={import.meta.env.BASE_URL}
             class="inline-flex items-center text-sepia hover:text-moss transition-colors"
           >
             Return to Garden Portal

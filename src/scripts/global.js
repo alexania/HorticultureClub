@@ -789,6 +789,10 @@ window.DHC_Debug = {
 
 console.log('🔮 Mystical debugging tools available at window.DHC_Debug');
 
+// Make functions available globally for other components
+window.generateMysticalName = generateMysticalName;
+window.nameGenerator = nameGenerator;
+
 // Add CSS for dynamic animations
 const dynamicStyles = document.createElement('style');
 dynamicStyles.textContent = `

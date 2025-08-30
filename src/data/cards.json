@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "name": "The Sporecaller",
+    "visual": "A cloaked figure kneels in a misty glade, whispering to glowing mushrooms. Spores drift upward like stars.",
+    "upright": "Hidden potential, quiet influence, the beginning of unseen growth.",
+    "reversed": "Stagnation, ignored intuition, overreliance on external signs.",
+    "uprightInterpretation": "You enter quietly, but your influence will spread. You are a seed of unseen change.",
+    "reversedInterpretation": "You may feel overlooked or uncertain—trust that your presence is already shaping the mycelial web.",
+    "imagePath": "/images/cards/1_the_sporecaller.png"
+  },
+  {
+    "id": 2,
+    "name": "The Rootwarden",
+    "visual": "A gnarled hand emerges from the soil, grasping a twisted root. Vines coil around the wrist like bracelets.",
+    "upright": "Stability, ancestral wisdom, grounding in tradition.",
+    "reversed": "Entanglement, resistance to change, buried truths.",
+    "uprightInterpretation": "You are called to anchor the Society. Your roots will stabilize others.",
+    "reversedInterpretation": "You may resist the rituals or feel tangled in tradition—patience will reveal your place.",
+    "imagePath": "/images/cards/2_the_rootwarden.png"
+  },
+  {
+    "id": 3,
+    "name": "The Bloomwright",
+    "visual": "A masked gardener stands in a greenhouse of impossible flowers—some blooming midair, others glowing faintly.",
+    "upright": "Creative expression, peak vitality, the joy of cultivation.",
+    "reversed": "Burnout, vanity, blooms without roots.",
+    "uprightInterpretation": "Your creativity will flourish here. You are invited to shape the aesthetic of the arcana.",
+    "reversedInterpretation": "You may struggle to express yourself—let the greenhouse of the Society coax your bloom.",
+    "imagePath": "/images/cards/3_the_bloomwright.png"
+  },
+  {
+    "id": 4,
+    "name": "The Thornmage",
+    "visual": "A figure in ceremonial robes holds a thorned staff. Behind them, a hedge maze pulses with red light.",
+    "upright": "Protection, boundaries, sacred defense.",
+    "reversed": "Isolation, defensiveness, fear of vulnerability.",
+    "uprightInterpretation": "You are a protector of the sacred. Your boundaries will help others grow.",
+    "reversedInterpretation": "You may feel defensive or wary—open slowly, like a rose with thorns.",
+    "imagePath": "/images/cards/4_the_thornmage.png"
+  },
+  {
+    "id": 5,
+    "name": "The Dewseer",
+    "visual": "A silver bowl catches morning dew beneath a fig tree. Reflections in the water show shifting visions.",
+    "upright": "Clarity, subtle insight, atmospheric awareness.",
+    "reversed": "Delusion, emotional fog, misread signs.",
+    "uprightInterpretation": "You perceive what others miss. Your insight will guide rituals and readings.",
+    "reversedInterpretation": "You may misread signs or doubt your intuition—trust the mist, not the mirror.",
+    "imagePath": "/images/cards/5_the_dewseer.png"
+  },
+  {
+    "id": 6,
+    "name": "The Custodian",
+    "visual": "A moss-covered figure stands before a locked greenhouse door, holding a ring of rusted keys.",
+    "upright": "Stewardship, legacy, guardianship of sacred knowledge.",
+    "reversed": "Gatekeeping, fear of succession, hoarding wisdom.",
+    "uprightInterpretation": "You are entrusted with lore. You will help preserve and pass on the mysteries.",
+    "reversedInterpretation": "You may hoard knowledge or fear sharing—remember, moss grows best in community.",
+    "imagePath": "/images/cards/6_the_custodian.png"
+  },
+  {
+    "id": 7,
+    "name": "The Germinator",
+    "visual": "A cracked seed glows in the palm of a hand. Tiny roots reach downward, a shoot curls upward.",
+    "upright": "New beginnings, potential, initiation.",
+    "reversed": "False starts, hesitation, fear of growth.",
+    "uprightInterpretation": "You are the beginning of something vital. Your ideas will sprout quickly.",
+    "reversedInterpretation": "You may hesitate to commit—plant yourself fully and watch what grows.",
+    "imagePath": "/images/cards/7_the_germinator.png"
+  },
+  {
+    "id": 8,
+    "name": "The Mulchmother",
+    "visual": "A robed figure scatters compost over a grave of wilted plants. Worms and fungi bloom in the soil.",
+    "upright": "Transformation, nourishment through decay, cyclical wisdom.",
+    "reversed": "Refusal to let go, stagnation, clinging to the past.",
+    "uprightInterpretation": "You bring wisdom from endings. You will help others compost their past.",
+    "reversedInterpretation": "You may cling to old roles—release what no longer serves and nourish the new.",
+    "imagePath": "/images/cards/8_the_mulchmother.png"
+  },
+  {
+    "id": 9,
+    "name": "The Canopy",
+    "visual": "A vast overhead tangle of leaves and branches filters golden light. A hidden bird watches from above.",
+    "upright": "Shelter, perspective, interconnectedness.",
+    "reversed": "Obscured vision, overprotection, fear of exposure.",
+    "uprightInterpretation": "You offer shelter and perspective. Others will gather beneath your shade.",
+    "reversedInterpretation": "You may feel hidden or disconnected—step into the light and let your branches stretch.",
+    "imagePath": "/images/cards/9_the_canopy.png"
+  },
+  {
+    "id": 10,
+    "name": "The Greenbelt",
+    "visual": "A winding path through dense foliage, marked with glowing glyphs and moss-covered stones.",
+    "upright": "Journey, exploration, sacred terrain.",
+    "reversed": "Disorientation, lost purpose, straying from the path.",
+    "uprightInterpretation": "You are a wanderer with purpose. The Society is your map and your mystery.",
+    "reversedInterpretation": "You may feel lost or unsure—follow the moss, not the path.",
+    "imagePath": "/images/cards/10_the_greenbelt.png"
+  },
+  {
+    "id": 11,
+    "name": "The Pollinator",
+    "visual": "A bee cloaked in ceremonial gold dust hovers over a blooming flower. Pollen trails sparkle in the air.",
+    "upright": "Connection, reciprocity, fruitful exchange.",
+    "reversed": "Exploitation, imbalance, missed opportunities.",
+    "uprightInterpretation": "You connect members and ideas. Your presence brings fruitful exchange.",
+    "reversedInterpretation": "You may overextend or feel drained—pollinate with intention, not obligation.",
+    "imagePath": "/images/cards/11_the_pollinator.png"
+  },
+  {
+    "id": 12,
+    "name": "The Terrarium",
+    "visual": "A sealed glass vessel holds a miniature forest, glowing faintly with internal mist.",
+    "upright": "Containment, harmony, microcosmic insight.",
+    "reversed": "Confinement, artificiality, fear of the outside world.",
+    "uprightInterpretation": "You thrive in contained rituals. You will create microcosms of magic.",
+    "reversedInterpretation": "You may feel confined—break the glass when needed, and breathe the wild air.",
+    "imagePath": "/images/cards/12_the_terrarium.png"
+  },
+  {
+    "id": 13,
+    "name": "The Pruner",
+    "visual": "A masked figure with golden shears trims a dying branch. Petals fall like snow.",
+    "upright": "Necessary endings, refinement, clarity through removal.",
+    "reversed": "Avoidance, overattachment, fear of loss.",
+    "uprightInterpretation": "You will help refine the Society. Your discernment is a gift.",
+    "reversedInterpretation": "You may fear letting go—remember, pruning is an act of love.",
+    "imagePath": "/images/cards/13_the_pruner.png"
+  },
+  {
+    "id": 14,
+    "name": "The Humidity Keeper",
+    "visual": "A robed figure fans mist over a bed of moss. Their breath forms glyphs in the air.",
+    "upright": "Balance, gentle care, atmospheric attunement.",
+    "reversed": "Overwatering, emotional overwhelm, lack of boundaries.",
+    "uprightInterpretation": "You regulate the emotional climate. Your presence brings balance.",
+    "reversedInterpretation": "You may absorb too much—release the mist, and let others carry the rain.",
+    "imagePath": "/images/cards/14_the_humidity_keeper.png"
+  },
+  {
+    "id": 15,
+    "name": "The Seedfather",
+    "visual": "A cloaked elder plants a glowing seed beneath moonlight. Roots spread beneath their feet.",
+    "upright": "Legacy, intention, long-term vision.",
+    "reversed": "Abandonment, forgotten lineage, wasted potential.",
+    "uprightInterpretation": "You are a legacy bearer. Your joining echoes through generations.",
+    "reversedInterpretation": "You may feel disconnected from the past—plant your own myth and let it root.",
+    "imagePath": "/images/cards/15_the_seedfather.png"
+  },
+  {
+    "id": 16,
+    "name": "The Bloomveil",
+    "visual": "A curtain of petals falls across a hidden doorway. Light flickers behind it.",
+    "upright": "Revelation, beauty as threshold, mystery unfolding.",
+    "reversed": "Illusion, distraction, fear of truth.",
+    "uprightInterpretation": "You are drawn to mystery. Your curiosity will open hidden doors.",
+    "reversedInterpretation": "You may be dazzled by illusion—seek the soil beneath the petals.",
+    "imagePath": "/images/cards/16_the_bloomveil.png"
+  },
+  {
+    "id": 17,
+    "name": "The Mycelium",
+    "visual": "A network of glowing fungal threads spreads beneath the soil, connecting distant plants.",
+    "upright": "Hidden support, underground wisdom, collective strength.",
+    "reversed": "Paranoia, severed ties, unseen sabotage.",
+    "uprightInterpretation": "You are already connected. Your joining activates unseen networks.",
+    "reversedInterpretation": "You may feel isolated—reach out, the fungal threads are waiting.",
+    "imagePath": "/images/cards/17_the_mycelium.png"
+  },
+  {
+    "id": 18,
+    "name": "The Rainbringer",
+    "visual": "A figure dances in a storm, arms raised as lightning strikes a flowering tree.",
+    "upright": "Renewal, emotional release, cleansing.",
+    "reversed": "Flooding, emotional chaos, destructive cycles.",
+    "uprightInterpretation": "You bring emotional renewal. Your presence is a cleansing force.",
+    "reversedInterpretation": "You may stir storms—learn to channel your downpour into growth.",
+    "imagePath": "/images/cards/18_the_rainbringer.png"
+  },
+  {
+    "id": 19,
+    "name": "The Solar Bloom",
+    "visual": "A radiant flower opens toward the sun, petals shimmering like stained glass.",
+    "upright": "Joy, vitality, illumination.",
+    "reversed": "Burnout, overexposure, false optimism.",
+    "uprightInterpretation": "You radiate joy. Your arrival energizes the Society.",
+    "reversedInterpretation": "You may burn too brightly—pace your bloom, and protect your roots.",
+    "imagePath": "/images/cards/19_the_solar_bloom.png"
+  },
+  {
+    "id": 20,
+    "name": "The Archive",
+    "visual": "A moss-covered library with scrolls bound in bark and pressed leaves. A lantern glows green.",
+    "upright": "Memory, study, ancestral knowledge.",
+    "reversed": "Forgotten lore, misinterpretation, lost records.",
+    "uprightInterpretation": "You are a keeper of memory. Your contributions will be etched in moss.",
+    "reversedInterpretation": "You may fear being forgotten—write your name in spores and stories.",
+    "imagePath": "/images/cards/20_the_archive.png"
+  },
+  {
+    "id": 21,
+    "name": "The Grove",
+    "visual": "A circle of ancient trees surrounds a pool of still water. Reflections show alternate realities.",
+    "upright": "Wholeness, unity, sacred culmination.",
+    "reversed": "Fragmentation, disconnection, fear of completion.",
+    "uprightInterpretation": "You complete a cycle. Your joining brings unity.",
+    "reversedInterpretation": "You may feel fragmented—trust that the trees will welcome you.",
+    "imagePath": "/images/cards/21_the_grove.png"
+  },
+  {
+    "id": 22,
+    "name": "The Wildling",
+    "visual": "A barefoot figure runs through untamed undergrowth, trailing vines and laughter.",
+    "upright": "Freedom, instinct, joyful rebellion.",
+    "reversed": "Chaos, recklessness, fear of structure.",
+    "uprightInterpretation": "You are untamed magic. Your energy will refresh the rituals.",
+    "reversedInterpretation": "You may resist structure—find freedom within the form.",
+    "imagePath": "/images/cards/22_the_wildling.png"
+  }
+]

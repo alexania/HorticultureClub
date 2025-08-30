@@ -31,9 +31,9 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
     <!-- Breadcrumb Navigation -->
     <nav class="breadcrumb mb-lg">
       <div class="flex items-center gap-2 text-sm text-sepia">
-        <a href="/" class="hover:text-moss transition-colors">Home</a>
+        <a href={import.meta.env.BASE_URL} class="hover:text-moss transition-colors">Home</a>
         <span>→</span>
-        <a href="/#almanac" class="hover:text-moss transition-colors">Seasonal Almanac</a>
+        <a href={`${import.meta.env.BASE_URL}#almanac`} class="hover:text-moss transition-colors">Seasonal Almanac</a>
         <span>→</span>
         <span class="text-charcoal">{entry.data.title}</span>
       </div>
@@ -121,7 +121,7 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
         <h3 class="text-sepia font-secondary mb-md">More Seasonal Wisdom</h3>
         <div class="flex justify-between items-center">
           <a 
-            href="/#almanac" 
+            href={`${import.meta.env.BASE_URL}#almanac`}
             class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
           >
             ← Back to Almanac
@@ -130,7 +130,7 @@ const formattedDate = entry.data.date.toLocaleDateString('en-ZA', {
             <p class="text-sm text-sepia italic">"Trust in the ancient rhythms of the seasons"</p>
           </div>
           <a 
-            href="/gatherings/" 
+            href={`${import.meta.env.BASE_URL}gatherings/`}
             class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium"
           >
             View Gatherings →

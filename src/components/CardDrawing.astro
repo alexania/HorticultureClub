@@ -1,0 +1,421 @@
+---
+// Plant Drawing component with orientation and duplication prevention
+import plantsData from '../data/plants.json';
+---
+
+<div class="card-drawing-container">
+  <!-- Initial and Month Selection -->
+  <div class="selection-phase" id="selectionPhase">
+    <div class="card-header mb-md">
+      <h2 class="text-2xl font-medium text-cream m-0">Begin Your Initiation</h2>
+    </div>
+    
+    <div class="form-group mb-md">
+      <label for="initialSelect" class="block text-sepia font-secondary mb-xs">Choose Your Initial:</label>
+      <select id="initialSelect" class="w-full p-sm border border-sepia rounded bg-parchment text-charcoal">
+        <option value="">Select Initial</option>
+        {Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)).map(letter => (
+          <option value={letter}>{letter}</option>
+        ))}
+      </select>
+    </div>
+    
+    <div class="form-group mb-md">
+      <label for="monthSelect" class="block text-sepia font-secondary mb-xs">Choose Your Birth Month:</label>
+      <select id="monthSelect" class="w-full p-sm border border-sepia rounded bg-parchment text-charcoal">
+        <option value="">Select Month</option>
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+      </select>
+    </div>
+    
+    <button id="checkAvailabilityBtn" class="btn-primary w-full py-md px-lg text-lg font-medium rounded transition-all duration-300 disabled:opacity-50" disabled>
+      Check the Cards
+    </button>
+    
+    <div id="availabilityStatus" class="mt-md text-center"></div>
+  </div>
+  
+  <!-- Card Drawing Phase -->
+  <div class="drawing-phase hidden" id="drawingPhase">
+    <div class="card-header mb-md">
+      <h2 class="text-2xl font-medium text-cream m-0">Draw Your Botanical Companion</h2>
+      <p class="text-cream mt-xs italic text-shadow">The botanical spirits have chosen your plant companion...</p>
+    </div>
+    
+    <div class="card-deck mb-lg">
+      <div class="card-back" id="cardDeck" role="button" tabindex="0">
+        <img src={`${import.meta.env.BASE_URL}images/plants/back.png`} alt="Botanical Companion" class="w-full h-full object-cover" />
+        <div class="card-back-text">Draw Your Companion</div>
+      </div>
+    </div>
+    
+    <button id="drawCardBtn" class="btn-primary w-full py-md px-lg text-lg font-medium rounded transition-all duration-300">
+      Draw Your Botanical Companion
+    </button>
+  </div>
+  
+  <!-- Card Reveal Phase -->
+  <div class="reveal-phase hidden" id="revealPhase">
+    <div class="card-header mb-md">
+      <h2 class="text-2xl font-medium text-cream m-0">Your Botanical Companion</h2>
+    </div>
+    
+    <div class="drawn-card mb-lg" id="drawnCard">
+      <!-- Card will be populated by JavaScript -->
+    </div>
+    
+    <div class="card-interpretation p-md bg-moss/10 border border-moss/30 rounded mb-lg" id="cardInterpretation">
+      <!-- Interpretation will be populated by JavaScript -->
+    </div>
+    
+    <button id="confirmRegistrationBtn" class="btn-primary w-full py-md px-lg text-lg font-medium rounded transition-all duration-300">
+      Complete Initiation
+    </button>
+    
+    <button id="redrawBtn" class="btn-secondary w-full py-sm px-lg mt-sm text-sm rounded transition-all duration-300">
+      Draw Different Companion
+    </button>
+  </div>
+  
+  <!-- Loading State -->
+  <div class="loading-state hidden" id="loadingState">
+    <div class="text-center py-lg">
+      <div class="loading-spinner mb-md"></div>
+      <p class="text-sepia">Consulting the botanical spirits...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getAvailableCards } from '../lib/firebase.js';
+  import plantsData from '../data/plants.json';
+  
+  class CardDrawing {
+    constructor() {
+      this.selectedInitial = '';
+      this.selectedMonth = '';
+      this.availableCards = [];
+      this.drawnCard = null;
+      this.orientation = '';
+      
+      this.initializeEventListeners();
+    }
+    
+    initializeEventListeners() {
+      const initialSelect = document.getElementById('initialSelect');
+      const monthSelect = document.getElementById('monthSelect');
+      const checkAvailabilityBtn = document.getElementById('checkAvailabilityBtn');
+      const drawCardBtn = document.getElementById('drawCardBtn');
+      const confirmBtn = document.getElementById('confirmRegistrationBtn');
+      const redrawBtn = document.getElementById('redrawBtn');
+      
+      // Enable check availability button when both fields are selected
+      const checkFormComplete = () => {
+        const isComplete = initialSelect.value && monthSelect.value;
+        checkAvailabilityBtn.disabled = !isComplete;
+      };
+      
+      initialSelect.addEventListener('change', checkFormComplete);
+      monthSelect.addEventListener('change', checkFormComplete);
+      
+      checkAvailabilityBtn.addEventListener('click', () => this.checkAvailableCards());
+      drawCardBtn.addEventListener('click', () => this.drawCard());
+      confirmBtn.addEventListener('click', () => this.confirmRegistration());
+      redrawBtn.addEventListener('click', () => this.redrawCard());
+      
+      // Make card back clickable
+      const cardBack = document.getElementById('cardDeck');
+      cardBack.addEventListener('click', () => this.drawCard());
+      cardBack.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.drawCard();
+        }
+      });
+    }
+    
+    async checkAvailableCards() {
+      this.selectedInitial = document.getElementById('initialSelect').value;
+      this.selectedMonth = document.getElementById('monthSelect').value;
+      
+      this.showLoading();
+      
+      try {
+        this.availableCards = await getAvailableCards(this.selectedInitial, this.selectedMonth, plantsData);
+        
+        if (this.availableCards.length === 0) {
+          this.showError('All botanical companions have been assigned for this initial and month combination. Please try a different combination.');
+          return;
+        }
+        
+        this.showDrawingPhase();
+      } catch (error) {
+        console.error('Error checking availability:', error);
+        this.showError('Error checking plant availability. Please check your Firebase configuration.');
+      }
+    }
+    
+    drawCard() {
+      if (this.availableCards.length === 0) return;
+      
+      // Add drawing animation
+      const cardBack = document.getElementById('cardDeck');
+      const drawButton = document.getElementById('drawCardBtn');
+      
+      // Disable interactions during animation
+      cardBack.style.pointerEvents = 'none';
+      drawButton.disabled = true;
+      
+      // Card flip animation
+      cardBack.style.transform = 'scale(1.1) rotateY(90deg)';
+      cardBack.style.transition = 'transform 0.6s ease-in-out';
+      
+      setTimeout(() => {
+        // Randomly select a plant from available plants
+        const randomIndex = Math.floor(Math.random() * this.availableCards.length);
+        this.drawnCard = this.availableCards[randomIndex];
+        
+        // Complete the flip and show reveal
+        setTimeout(() => {
+          this.showCardReveal();
+        }, 300);
+      }, 300);
+    }
+    
+    redrawCard() {
+      // Remove the current card from available cards and draw again
+      this.availableCards = this.availableCards.filter(card => card.id !== this.drawnCard.id);
+      
+      if (this.availableCards.length === 0) {
+        this.showError('No more botanical companions available to draw.');
+        return;
+      }
+      
+      this.drawCard();
+    }
+    
+    confirmRegistration() {
+      // Emit custom event with registration data
+      const registrationData = {
+        initial: this.selectedInitial,
+        month: this.selectedMonth,
+        plantName: this.drawnCard.name, // Scientific name
+        commonName: this.drawnCard.commonName,
+        plantId: this.drawnCard.id
+      };
+      
+      const event = new CustomEvent('cardDrawingComplete', { detail: registrationData });
+      document.dispatchEvent(event);
+    }
+    
+    showLoading() {
+      document.getElementById('selectionPhase').classList.add('hidden');
+      document.getElementById('drawingPhase').classList.add('hidden');
+      document.getElementById('revealPhase').classList.add('hidden');
+      document.getElementById('loadingState').classList.remove('hidden');
+    }
+    
+    showDrawingPhase() {
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('selectionPhase').classList.add('hidden');
+      document.getElementById('drawingPhase').classList.remove('hidden');
+    }
+    
+    showCardReveal() {
+      const drawingPhase = document.getElementById('drawingPhase');
+      const revealPhase = document.getElementById('revealPhase');
+      
+      // Fade out drawing phase
+      drawingPhase.style.opacity = '0';
+      drawingPhase.style.transition = 'opacity 0.3s ease-out';
+      
+      setTimeout(() => {
+        drawingPhase.classList.add('hidden');
+        revealPhase.classList.remove('hidden');
+        
+        // Fade in reveal phase
+        revealPhase.style.opacity = '0';
+        setTimeout(() => {
+          revealPhase.style.opacity = '1';
+          revealPhase.style.transition = 'opacity 0.4s ease-in';
+        }, 50);
+      }, 300);
+      
+      // Populate plant display
+      const cardElement = document.getElementById('drawnCard');
+      
+      cardElement.innerHTML = `
+        <div class="plant-display">
+          <img src="${import.meta.env.BASE_URL}${this.drawnCard.imagePath}" alt="${this.drawnCard.commonName}" class="plant-image w-full max-w-xs mx-auto rounded-lg shadow-lg" />
+          <h3 class="plant-common-name text-2xl font-secondary text-moss mt-md text-center">${this.drawnCard.commonName}</h3>
+          <p class="plant-scientific-name text-sepia text-center mt-xs italic">${this.drawnCard.name}</p>
+          <p class="plant-element text-center mt-xs mb-sm">
+            <span class="element-badge inline-block px-md py-sm rounded-full text-sm font-medium ${this.getElementTheme(this.drawnCard.element)}">${this.getElementIcon(this.drawnCard.element)} ${this.drawnCard.element}</span>
+          </p>
+          <p class="plant-difficulty text-center mt-xs">
+            <span class="difficulty-badge inline-block px-sm py-xs rounded text-xs font-medium ${this.drawnCard.difficulty.toLowerCase() === 'easy' || this.drawnCard.difficulty.toLowerCase() === 'very easy' ? 'bg-spring text-cream' : this.drawnCard.difficulty.toLowerCase() === 'intermediate' ? 'bg-brass text-cream' : 'bg-rust text-cream'}">${this.drawnCard.difficulty}</span>
+            ${this.drawnCard.indigenous ? '<span class="indigenous-badge inline-block px-sm py-xs ml-xs rounded text-xs font-medium bg-moss text-cream">Indigenous</span>' : ''}
+          </p>
+        </div>
+      `;
+      
+      // Hide interpretation during drawing - it will be revealed on the success screen
+      const interpretationElement = document.getElementById('cardInterpretation');
+      interpretationElement.innerHTML = `
+        <div class="text-center py-md">
+          <p class="text-sepia italic">Your botanical companion's mysteries will be revealed upon completing your initiation...</p>
+        </div>
+      `;
+    }
+    
+    getElementTheme(element) {
+      const themes = {
+        'earth': 'bg-amber-600 text-cream',
+        'water': 'bg-blue-600 text-cream',
+        'fire': 'bg-red-600 text-cream',
+        'air': 'bg-gray-400 text-charcoal'
+      };
+      return themes[element.toLowerCase()] || 'bg-sepia text-cream';
+    }
+    
+    getElementIcon(element) {
+      const icons = {
+        'earth': '🌍',
+        'water': '💧',
+        'fire': '🔥',
+        'air': '🌪️'
+      };
+      return icons[element.toLowerCase()] || '🌿';
+    }
+    
+    showError(message) {
+      document.getElementById('loadingState').classList.add('hidden');
+      const statusElement = document.getElementById('availabilityStatus');
+      statusElement.innerHTML = `<p class="text-rust font-medium">${message}</p>`;
+      document.getElementById('selectionPhase').classList.remove('hidden');
+    }
+  }
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new CardDrawing();
+  });
+</script>
+
+<style>
+  .card-drawing-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: theme('spacing.lg');
+  }
+  
+  .drawing-phase, .reveal-phase, .selection-phase {
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .card-deck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+  }
+  
+  .card-back {
+    width: 200px;
+    height: 300px;
+    border-radius: theme('borderRadius.lg');
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid theme('colors.brass');
+    box-shadow: 0 0 20px rgba(107, 124, 50, 0.4), 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card-back:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 0 30px rgba(107, 124, 50, 0.6), 0 12px 35px rgba(0, 0, 0, 0.4);
+  }
+  
+  .card-back-text {
+    position: absolute;
+    bottom: theme('spacing.xs');
+    color: rgba(255, 255, 255, 0.9);
+    font-family: theme('fontFamily.secondary');
+    text-align: center;
+    font-size: theme('fontSize.xs');
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.3);
+    padding: theme('spacing.xs') theme('spacing.sm');
+    border-radius: theme('borderRadius.sm');
+    backdrop-filter: blur(2px);
+  }
+  
+  .card-image {
+    max-width: 300px;
+    transition: transform 0.5s ease;
+  }
+  
+  .card-display.reversed .card-image {
+    transform: rotate(180deg);
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid theme('colors.parchment');
+    border-top: 3px solid theme('colors.moss');
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, theme('colors.moss') 0%, theme('colors.forest-shadow') 100%);
+    color: theme('colors.cream');
+    border: none;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, theme('colors.forest-shadow') 0%, theme('colors.moss') 100%);
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    color: theme('colors.sepia');
+    border: 1px solid theme('colors.sepia');
+  }
+  
+  .btn-secondary:hover {
+    background: theme('colors.sepia');
+    color: theme('colors.parchment');
+  }
+  
+  .hidden {
+    display: none;
+  }
+</style>

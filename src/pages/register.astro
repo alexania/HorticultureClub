@@ -1,0 +1,446 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CardDrawing from '../components/CardDrawing.astro';
+---
+
+<BaseLayout title="Join the Horticultural Society - Registration">
+  <!-- Hero Background Section -->
+  <section class="registration-hero relative min-h-screen overflow-hidden">
+    <!-- Hero Background -->
+    <div class="hero-background absolute inset-0">
+      <img 
+        src={`${import.meta.env.BASE_URL}images/heroes/hero.png`} 
+        alt="Victorian Greenhouse - Initiation Ceremony" 
+        class="hero-image w-full h-full object-cover object-center"
+        loading="eager"
+      />
+      <div class="hero-overlay absolute inset-0 bg-gradient-to-br from-charcoal/80 via-plum/70 to-moss/80"></div>
+    </div>
+
+    <!-- Registration Content -->
+    <div class="registration-content relative z-10 min-h-screen flex flex-col">
+      <main class="container mx-auto px-md py-lg flex-1">
+        <!-- Page Header -->
+        <div class="text-center mb-xl">
+          <h1 class="text-5xl font-secondary text-cream mb-md text-shadow-strong">Sacred Initiation</h1>
+          <p class="text-xl text-autumn max-w-2xl mx-auto leading-relaxed text-shadow italic">
+            Welcome, seeker of botanical mysteries. Your journey into the ancient arts begins with the selection of your botanical companion.
+            This botanical companion will become part of your horticultural identity within our order.
+          </p>
+        </div>
+    
+    <!-- Registration Process -->
+    <div class="max-w-4xl mx-auto">
+      <!-- Step Indicator -->
+      <div class="step-indicator mb-xl">
+        <div class="flex justify-center items-center space-x-md">
+          <div class="step active" id="step1">
+            <div class="step-number">1</div>
+            <div class="step-label">Personal Details</div>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step" id="step2">
+            <div class="step-number">2</div>
+            <div class="step-label">Select Companion</div>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step" id="step3">
+            <div class="step-number">3</div>
+            <div class="step-label">Complete</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Registration Form -->
+      <div class="registration-card bg-parchment/95 backdrop-blur-sm border border-sepia/50 rounded-lg shadow-2xl p-xl mystical-glow-subtle">
+        <!-- Plant Selection Component -->
+        <CardDrawing />
+        
+        <!-- Registration Success -->
+        <div class="registration-success hidden" id="registrationSuccess">
+          <div class="member-credentials p-md bg-moss/10 border border-moss/30 rounded mb-lg" id="memberCredentials">
+            <!-- Credentials will be populated by JavaScript -->
+          </div>
+        </div>
+        
+        <!-- Registration Error -->
+        <div class="registration-error hidden" id="registrationError">
+          <div class="text-center py-xl">
+            <div class="error-icon mb-md">🌧️</div>
+            <h2 class="text-2xl font-secondary text-rust mb-md">Initiation Incomplete</h2>
+            <p class="text-sepia mb-lg" id="errorMessage">
+              The botanical spirits encountered an obstacle during your initiation.
+            </p>
+            <button id="retryRegistration" class="btn-primary py-md px-lg text-lg font-medium rounded transition-all duration-300">
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+      
+        </div>
+      </main>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { registerMember } from '../lib/firebase.js';
+  import plantsData from '../data/plants.json';
+  
+  class RegistrationHandler {
+    constructor() {
+      this.registrationData = null;
+      this.initializeEventListeners();
+    }
+    
+    initializeEventListeners() {
+      // Listen for plant selection completion
+      document.addEventListener('cardDrawingComplete', (event) => {
+        this.handlePlantSelectionComplete(event.detail);
+      });
+      
+      // Retry registration
+      const retryBtn = document.getElementById('retryRegistration');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', () => this.retryRegistration());
+      }
+    }
+    
+    async handlePlantSelectionComplete(data) {
+      this.registrationData = data;
+      this.updateStepIndicator(3);
+      
+      try {
+        const result = await registerMember(
+          data.initial,
+          data.month,
+          data.plantName, // Scientific name
+          data.commonName,
+          data.plantId
+        );
+        
+        if (result.success) {
+          // User is now logged in automatically, set session storage and redirect
+          const memberData = {
+            initial: data.initial,
+            month: data.month,
+            plantName: data.plantName,
+            commonName: data.commonName,
+            plantId: data.plantId,
+            email: result.email,
+            joinDate: new Date().toISOString()
+          };
+          
+          sessionStorage.setItem('memberData', JSON.stringify(memberData));
+          sessionStorage.setItem('isLoggedIn', 'true');
+          
+          // Show brief success message then redirect
+          this.showAutoLoginSuccess();
+        } else {
+          throw new Error('Registration failed');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        
+        let errorMessage = error.message;
+        
+        // Provide helpful messaging for ad blocker issues
+        if (error.code === 'adblocker-interference') {
+          errorMessage = `
+            Registration may be blocked by an ad blocker or browser extension. 
+            
+            Please try:
+            1. Disabling your ad blocker for this site
+            2. Or the registration may have actually succeeded - try logging in with your credentials
+            
+            If you continue having issues, try using an incognito/private browser window.
+          `;
+        }
+        
+        this.showRegistrationError(errorMessage);
+      }
+    }
+    
+    showAutoLoginSuccess() {
+      // Hide plant selection component
+      document.querySelector('.card-drawing-container').classList.add('hidden');
+      
+      // Show success message with auto-redirect
+      const successElement = document.getElementById('registrationSuccess');
+      successElement.classList.remove('hidden');
+      
+      // Populate with brief success message and countdown
+      const credentialsElement = document.getElementById('memberCredentials');
+      credentialsElement.innerHTML = `
+        <div class="auto-login-message text-center py-lg">
+          <div class="success-animation mb-lg">
+            <div class="mystical-glow text-6xl mb-md">✨</div>
+            <h3 class="text-2xl font-secondary text-moss mb-md">Initiation Complete!</h3>
+            <p class="text-sepia mb-lg">You have been automatically logged into the botanical sanctuary.</p>
+          </div>
+          
+          <div class="mystical-name-display mb-lg p-md bg-plum/10 border border-plum/30 rounded">
+            <h5 class="text-plum font-secondary mb-sm">Welcome to the Society:</h5>
+            <div class="mystical-name text-3xl font-secondary text-forest-shadow font-bold">${(() => {
+              const monthMap = {
+                'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+                'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
+              };
+              const monthNumber = monthMap[this.registrationData.month] || 1;
+              return window.generateMysticalName(this.registrationData.initial, monthNumber);
+            })()}</div>
+          </div>
+          
+          <div class="member-credentials p-md bg-moss/10 border border-moss/30 rounded mb-lg">
+            <h4 class="text-moss font-secondary mb-sm">Your Member Credentials:</h4>
+            <div class="credentials-grid grid grid-cols-1 md:grid-cols-3 gap-md text-center">
+              <div class="credential">
+                <div class="credential-label text-sepia text-sm">Initial</div>
+                <div class="credential-value text-forest-shadow font-medium text-lg">${this.registrationData.initial}</div>
+              </div>
+              <div class="credential">
+                <div class="credential-label text-sepia text-sm">Birth Month</div>
+                <div class="credential-value text-forest-shadow font-medium text-lg">${this.registrationData.month}</div>
+              </div>
+              <div class="credential">
+                <div class="credential-label text-sepia text-sm">Botanical Companion</div>
+                <div class="credential-value text-forest-shadow font-medium text-lg">${this.registrationData.commonName}</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="plant-interpretation-reveal p-md bg-plum/10 border border-plum/30 rounded mb-lg">
+            <h4 class="text-plum font-secondary mb-sm text-center">Your Botanical Companion's Sacred Wisdom:</h4>
+            <div class="plant-info mb-md text-center">
+              <p class="plant-common-name text-xl font-secondary text-forest-shadow mb-xs">${this.registrationData.commonName}</p>
+              <p class="plant-scientific-name text-md text-sepia italic mb-sm">${this.registrationData.plantName}</p>
+            </div>
+            <div class="botanical-interpretation">
+              ${(() => {
+                // Get the plant data to show interpretation and task
+                const plant = plantsData.find(p => p.id === this.registrationData.plantId);
+                if (plant) {
+                  return `
+                    <div class="interpretation-section mb-md">
+                      <p class="text-forest-shadow mb-md italic text-center">"${plant.botanicalInterpretation}"</p>
+                    </div>
+                    <div class="personality-section p-sm bg-moss/10 border border-moss/30 rounded mb-md">
+                      <h5 class="text-moss font-secondary mb-sm text-center">Botanical Companion Personality:</h5>
+                      <p class="text-sepia text-sm text-center italic">${plant.personality}</p>
+                    </div>
+                    <div class="care-instructions-section">
+                      <h6 class="text-sepia font-secondary mb-xs text-center">Botanical Care:</h6>
+                      <p class="text-sepia text-xs text-center">${plant.careInstructions}</p>
+                    </div>
+                  `;
+                }
+                return '<p class="text-sepia text-center">Your botanical companion awaits discovery...</p>';
+              })()}
+            </div>
+          </div>
+          
+          <div class="next-steps">
+            <p class="text-sepia mb-md text-center">
+              <strong>Remember your credentials:</strong> You can now access the member portal with your unique botanical identity.
+            </p>
+            
+            <div class="action-buttons space-x-md text-center">
+              <button id="returnToSanctuaryBtn" class="btn-primary inline-block py-md px-lg text-lg font-medium rounded transition-all duration-300">
+                Return to Sanctuary
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Add button click handler for return to sanctuary
+      const returnBtn = document.getElementById('returnToSanctuaryBtn');
+      if (returnBtn) {
+        returnBtn.addEventListener('click', () => {
+          window.location.href = `${import.meta.env.BASE_URL}`;
+        });
+      }
+    }
+    
+    
+    showRegistrationError(errorMessage) {
+      // Hide plant selection component
+      document.querySelector('.card-drawing-container').classList.add('hidden');
+      
+      // Show error message
+      const errorElement = document.getElementById('registrationError');
+      const messageElement = document.getElementById('errorMessage');
+      
+      errorElement.classList.remove('hidden');
+      messageElement.textContent = errorMessage;
+    }
+    
+    retryRegistration() {
+      // Hide error message
+      document.getElementById('registrationError').classList.add('hidden');
+      
+      // Show plant selection component
+      document.querySelector('.card-drawing-container').classList.remove('hidden');
+      
+      // Reset step indicator
+      this.updateStepIndicator(1);
+      
+      // Reload the page to reset the plant selection component
+      window.location.reload();
+    }
+    
+    
+    updateStepIndicator(currentStep) {
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((step, index) => {
+        if (index + 1 <= currentStep) {
+          step.classList.add('active');
+        } else {
+          step.classList.remove('active');
+        }
+      });
+    }
+  }
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new RegistrationHandler();
+  });
+</script>
+
+<style>
+  .registration-hero {
+    min-height: 100vh;
+  }
+  
+  .hero-image {
+    filter: sepia(20%) saturate(120%) contrast(110%);
+  }
+  
+  .mystical-glow-subtle {
+    box-shadow: 0 0 30px rgba(107, 124, 50, 0.3), 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  .step-indicator {
+    margin-bottom: theme('spacing.xl');
+  }
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: theme('colors.parchment');
+    border: 2px solid theme('colors.sepia');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: theme('colors.sepia');
+    transition: all 0.3s ease;
+  }
+  
+  .step.active .step-number {
+    background: theme('colors.moss');
+    border-color: theme('colors.moss');
+    color: theme('colors.cream');
+  }
+  
+  .step-label {
+    margin-top: theme('spacing.xs');
+    font-size: theme('fontSize.sm');
+    color: theme('colors.autumn');
+    font-family: theme('fontFamily.secondary');
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .step.active .step-label {
+    color: theme('colors.cream');
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .step-connector {
+    width: 100px;
+    height: 2px;
+    background: theme('colors.sepia');
+    margin: 0 theme('spacing.md');
+    align-self: flex-start;
+    margin-top: 19px; /* Center with step numbers */
+  }
+  
+  .registration-card {
+    background: theme('colors.parchment');
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .success-icon, .error-icon {
+    font-size: 4rem;
+    margin-bottom: theme('spacing.md');
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, theme('colors.moss') 0%, theme('colors.forest-shadow') 100%);
+    color: theme('colors.cream');
+    border: none;
+    text-decoration: none;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, theme('colors.forest-shadow') 0%, theme('colors.moss') 100%);
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    color: theme('colors.sepia');
+    border: 1px solid theme('colors.sepia');
+    text-decoration: none;
+  }
+  
+  .btn-secondary:hover {
+    background: theme('colors.sepia');
+    color: theme('colors.parchment');
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .credentials-grid {
+    background: theme('colors.cream');
+    padding: theme('spacing.md');
+    border-radius: theme('borderRadius.DEFAULT');
+  }
+  
+  .setup-instructions {
+    font-family: theme('fontFamily.mono');
+  }
+  
+  .setup-instructions code {
+    font-family: inherit;
+  }
+  
+  .mystical-glow {
+    text-shadow: 0 0 20px rgba(238, 181, 136, 0.8);
+    animation: mystical-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes mystical-pulse {
+    0%, 100% { 
+      text-shadow: 0 0 20px rgba(238, 181, 136, 0.8);
+      transform: scale(1);
+    }
+    50% { 
+      text-shadow: 0 0 30px rgba(238, 181, 136, 1);
+      transform: scale(1.05);
+    }
+  }
+</style>

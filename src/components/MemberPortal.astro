@@ -1,5 +1,6 @@
 ---
-// Member Portal component with localStorage-based membership system
+// Member Portal component with Firebase-based membership system
+import cardsData from '../data/cards.json';
 ---
 
 <div class="card-header">
@@ -11,8 +12,16 @@
   <!-- Member Profile (Hidden by default, shown when member is initiated) -->
   <div class="member-profile hidden" id="memberProfile">
     <div class="member-welcome mb-md">
-      <p class="member-greeting font-secondary text-2xl text-plum mb-xs">Welcome, Acolyte</p>
-      <p class="initiation-date text-sepia italic">Initiated: August 26, 2025</p>
+      <p class="member-greeting font-secondary text-2xl text-plum mb-xs" id="memberGreeting">Welcome, Acolyte</p>
+      <p class="initiation-date text-sepia italic" id="initiationDate">Initiated: August 26, 2025</p>
+    </div>
+    
+    <!-- Member's Botanical Companion -->
+    <div class="initiation-card mb-lg p-md bg-moss/10 border border-moss/30 rounded" id="initiationCard">
+      <h4 class="text-moss font-secondary mb-sm">Your Botanical Companion</h4>
+      <div class="plant-display flex items-center gap-md">
+        <!-- Plant will be populated by JavaScript -->
+      </div>
     </div>
     
     <!-- Member Progress -->
@@ -77,13 +86,24 @@
       Begin your initiation into the sacred arts of horticulture.
     </p>
     
+    <div class="member-actions mb-lg">
+      <div class="flex flex-col sm:flex-row gap-md">
+        <a href={`${import.meta.env.BASE_URL}register/`} class="btn-primary flex-1 text-center py-md px-lg font-medium rounded transition-all duration-300 no-underline">
+          Begin Initiation
+        </a>
+        <a href={`${import.meta.env.BASE_URL}login/`} class="btn-secondary flex-1 text-center py-md px-lg font-medium rounded transition-all duration-300 no-underline">
+          Member Login
+        </a>
+      </div>
+    </div>
+    
     <div class="initiation-requirements">
-      <h4 class="text-sepia font-secondary mb-xs">Path to Initiation:</h4>
+      <h4 class="text-sepia font-secondary mb-xs">Initiation Process:</h4>
       <ol class="requirements-list bg-parchment p-md rounded border border-decorative my-sm">
-        <li class="mb-xs text-sepia">Complete the Sacred Oath of Plant Stewardship</li>
-        <li class="mb-xs text-sepia">Submit photographic evidence of your current garden domain</li>
-        <li class="mb-xs text-sepia">Demonstrate knowledge of three Durban native species</li>
-        <li class="mb-xs text-sepia">Pledge to attend monthly gathering rituals</li>
+        <li class="mb-xs text-sepia">Choose your mystical initial and birth month</li>
+        <li class="mb-xs text-sepia">Draw your botanical companion from the Plant Collection</li>
+        <li class="mb-xs text-sepia">Receive your companion's botanical wisdom and personality</li>
+        <li class="mb-xs text-sepia">Access the member sanctuary with your unique botanical identity</li>
       </ol>
     </div>
     
@@ -99,11 +119,277 @@
       </ul>
     </div>
   </div>
+  
+  <!-- Logout Section (Hidden, shown when member is logged in) -->
+  <div class="member-actions hidden" id="memberActions">
+    <div class="flex justify-between items-center pt-md border-t border-sepia/30">
+      <p class="text-sepia text-sm">Connected to the botanical network</p>
+      <button id="logoutButton" class="btn-logout text-sm py-sm px-md rounded transition-all duration-300">
+        Leave Sanctuary
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
-  // Member portal functionality is handled in global.js
-  // This ensures the portal updates based on localStorage data
+  import { onAuthChange, getCurrentMemberData, logoutMember } from '../lib/firebase.js';
+  import plantsData from '../data/plants.json';
+  
+  class MemberPortal {
+    constructor() {
+      this.memberData = null;
+      this.currentCard = null;
+      this.initializePortal();
+    }
+    
+    async initializePortal() {
+      // Check if user is logged in via session storage (for immediate UI update)
+      const sessionMemberData = sessionStorage.getItem('memberData');
+      const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+      
+      console.log('Portal init - sessionStorage login status:', isLoggedIn);
+      console.log('Portal init - sessionStorage memberData:', !!sessionMemberData);
+      
+      if (isLoggedIn && sessionMemberData) {
+        this.memberData = JSON.parse(sessionMemberData);
+        console.log('Portal init - showing member profile from session');
+        this.showMemberProfile();
+      } else {
+        console.log('Portal init - showing guest welcome');
+        this.showGuestWelcome();
+      }
+      
+      // Set up Firebase auth listener
+      onAuthChange(async (user) => {
+        console.log('Auth state changed, user:', !!user);
+        if (user) {
+          try {
+            this.memberData = await getCurrentMemberData();
+            if (this.memberData) {
+              sessionStorage.setItem('memberData', JSON.stringify(this.memberData));
+              sessionStorage.setItem('isLoggedIn', 'true');
+              console.log('Auth change - showing member profile');
+              this.showMemberProfile();
+            }
+          } catch (error) {
+            console.error('Error loading member data:', error);
+            console.log('Auth change - showing guest welcome due to error');
+            this.showGuestWelcome();
+          }
+        } else {
+          sessionStorage.removeItem('memberData');
+          sessionStorage.removeItem('isLoggedIn');
+          console.log('Auth change - user logged out, showing guest welcome');
+          this.showGuestWelcome();
+        }
+      });
+      
+      // Set up logout button
+      const logoutButton = document.getElementById('logoutButton');
+      if (logoutButton) {
+        logoutButton.addEventListener('click', () => this.handleLogout());
+      }
+    }
+    
+    showMemberProfile() {
+      console.log('showMemberProfile called');
+      // Hide guest welcome, show member profile
+      const guestWelcome = document.getElementById('guestWelcome');
+      const memberProfile = document.getElementById('memberProfile');
+      const memberActions = document.getElementById('memberActions');
+      
+      console.log('DOM elements found:', {
+        guestWelcome: !!guestWelcome,
+        memberProfile: !!memberProfile,
+        memberActions: !!memberActions
+      });
+      
+      if (guestWelcome) guestWelcome.classList.add('hidden');
+      if (memberProfile) memberProfile.classList.remove('hidden');
+      if (memberActions) memberActions.classList.remove('hidden');
+      
+      console.log('After showMemberProfile - Element visibility:', {
+        guestHidden: guestWelcome?.classList.contains('hidden'),
+        profileVisible: !memberProfile?.classList.contains('hidden'),
+        actionsVisible: !memberActions?.classList.contains('hidden')
+      });
+      
+      // Check if memberProfile content is actually visible
+      if (memberProfile) {
+        const computedStyle = window.getComputedStyle(memberProfile);
+        console.log('memberProfile computed styles:', {
+          display: computedStyle.display,
+          visibility: computedStyle.visibility,
+          opacity: computedStyle.opacity,
+          height: computedStyle.height
+        });
+      }
+      
+      // Update member greeting with mystical name
+      const greetingElement = document.getElementById('memberGreeting');
+      let mysticalName;
+      
+      try {
+        if (typeof window.generateMysticalName === 'function') {
+          // Convert month name to number for the name generator
+          const monthMap = {
+            'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+            'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
+          };
+          const monthNumber = monthMap[this.memberData.month] || 1;
+          mysticalName = window.generateMysticalName(this.memberData.initial, monthNumber);
+        } else {
+          // Fallback if global function isn't available yet
+          mysticalName = `${this.memberData.initial}-Acolyte`;
+          console.warn('generateMysticalName not available, using fallback');
+        }
+      } catch (error) {
+        console.error('Error generating mystical name:', error);
+        mysticalName = `${this.memberData.initial}-Acolyte`;
+      }
+      
+      greetingElement.textContent = `Welcome, ${mysticalName}`;
+      
+      // Update initiation date
+      const dateElement = document.getElementById('initiationDate');
+      const joinDate = new Date(this.memberData.joinDate);
+      dateElement.textContent = `Initiated: ${joinDate.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      })}`;
+      
+      // Display member's botanical companion
+      this.displayPlantAlly();
+    }
+    
+    showGuestWelcome() {
+      console.log('showGuestWelcome called');
+      // Show guest welcome, hide member profile
+      const guestWelcome = document.getElementById('guestWelcome');
+      const memberProfile = document.getElementById('memberProfile');
+      const memberActions = document.getElementById('memberActions');
+      
+      console.log('showGuestWelcome - DOM elements found:', {
+        guestWelcome: !!guestWelcome,
+        memberProfile: !!memberProfile,
+        memberActions: !!memberActions
+      });
+      
+      if (guestWelcome) guestWelcome.classList.remove('hidden');
+      if (memberProfile) memberProfile.classList.add('hidden');
+      if (memberActions) memberActions.classList.add('hidden');
+      
+      console.log('After showGuestWelcome - Element visibility:', {
+        guestVisible: !guestWelcome?.classList.contains('hidden'),
+        profileHidden: memberProfile?.classList.contains('hidden'),
+        actionsHidden: memberActions?.classList.contains('hidden')
+      });
+    }
+    
+    displayPlantAlly() {
+      console.log('displayPlantAlly called');
+      console.log('Member data:', this.memberData);
+      
+      const cardElement = document.getElementById('initiationCard');
+      console.log('Plant element found:', !!cardElement);
+      
+      // Find the plant data - try both plantName and cardName for backward compatibility
+      const plantName = this.memberData.plantName || this.memberData.cardName;
+      console.log('Looking for plant:', plantName);
+      console.log('Available plants:', plantsData.length);
+      
+      this.currentPlant = plantsData.find(plant => plant.name === plantName || plant.commonName === plantName);
+      console.log('Plant found:', !!this.currentPlant);
+      if (!this.currentPlant) {
+        console.error('Plant not found:', plantName);
+        // Fallback to first plant if not found
+        this.currentPlant = plantsData[0];
+      }
+      
+      const plantDisplay = cardElement.querySelector('.plant-display');
+      console.log('Plant display element found:', !!plantDisplay);
+      
+      if (!plantDisplay) {
+        console.error('Plant display element not found');
+        return;
+      }
+      
+      plantDisplay.innerHTML = `
+        <div class="plant-image-container flex-shrink-0">
+          <img src="${import.meta.env.BASE_URL}${this.currentPlant.imagePath}" 
+               alt="${this.currentPlant.commonName}" 
+               class="plant-thumbnail w-40 h-60 object-cover rounded shadow-md" />
+        </div>
+        <div class="plant-info flex-1">
+          <h5 class="plant-common-name text-lg font-secondary text-forest-shadow mb-xs">${this.currentPlant.commonName}</h5>
+          <p class="plant-scientific-name text-sm text-sepia mb-xs italic">${this.currentPlant.name}</p>
+          <p class="plant-element mb-xs">
+            <span class="element-badge inline-block px-sm py-xs rounded-full text-xs font-medium ${this.getElementTheme(this.currentPlant.element)}">${this.getElementIcon(this.currentPlant.element)} ${this.currentPlant.element}</span>
+            <span class="difficulty-badge inline-block px-sm py-xs ml-xs rounded text-xs font-medium ${this.getDifficultyTheme(this.currentPlant.difficulty)}">${this.currentPlant.difficulty}</span>
+          </p>
+          <p class="plant-interpretation text-sm text-forest-shadow italic mb-xs">"${this.currentPlant.botanicalInterpretation}"</p>
+          <p class="plant-personality text-xs text-sepia mt-xs italic">
+            <strong>Personality:</strong> ${this.currentPlant.personality}
+          </p>
+        </div>
+      `;
+      
+      console.log('Plant display populated successfully');
+    }
+    
+    getElementTheme(element) {
+      const themes = {
+        'earth': 'bg-amber-600 text-cream',
+        'water': 'bg-blue-600 text-cream',
+        'fire': 'bg-red-600 text-cream',
+        'air': 'bg-gray-400 text-charcoal'
+      };
+      return themes[element.toLowerCase()] || 'bg-sepia text-cream';
+    }
+    
+    getElementIcon(element) {
+      const icons = {
+        'earth': '🌍',
+        'water': '💧',
+        'fire': '🔥',
+        'air': '🌪️'
+      };
+      return icons[element.toLowerCase()] || '🌿';
+    }
+    
+    getDifficultyTheme(difficulty) {
+      const lower = difficulty.toLowerCase();
+      if (lower === 'easy' || lower === 'very easy') return 'bg-spring text-cream';
+      if (lower === 'intermediate') return 'bg-brass text-cream';
+      return 'bg-rust text-cream';
+    }
+    
+    async handleLogout() {
+      try {
+        await logoutMember();
+        sessionStorage.removeItem('memberData');
+        sessionStorage.removeItem('isLoggedIn');
+        this.showGuestWelcome();
+        
+        // Show logout confirmation
+        const button = document.getElementById('logoutButton');
+        const originalText = button.textContent;
+        button.textContent = 'Departed...';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 1500);
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    }
+    
+  }
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new MemberPortal();
+  });
 </script>
 
 <style>
@@ -135,5 +421,59 @@
   .ritual-checklist li.locked {
     color: theme('colors.sepia');
     opacity: 0.6;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, theme('colors.moss') 0%, theme('colors.forest-shadow') 100%);
+    color: theme('colors.cream');
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, theme('colors.forest-shadow') 0%, theme('colors.moss') 100%);
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    color: theme('colors.sepia');
+    border: 1px solid theme('colors.sepia');
+  }
+  
+  .btn-secondary:hover {
+    background: theme('colors.sepia');
+    color: theme('colors.parchment');
+  }
+  
+  .btn-logout {
+    background: transparent;
+    color: theme('colors.rust');
+    border: 1px solid theme('colors.rust');
+  }
+  
+  .btn-logout:hover {
+    background: theme('colors.rust');
+    color: theme('colors.parchment');
+  }
+  
+  .initiation-card {
+    background: theme('colors.moss' / 10%);
+    border: 1px solid theme('colors.moss' / 30%);
+  }
+  
+  .card-thumbnail {
+    transition: transform 0.3s ease;
+  }
+  
+  .card-thumbnail.rotate-180 {
+    transform: rotate(180deg);
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  .member-profile:not(.hidden) {
+    display: block !important;
   }
 </style>

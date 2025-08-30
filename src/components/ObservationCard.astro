@@ -1,0 +1,152 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  observation: CollectionEntry<'observations'>;
+  size?: 'compact' | 'full';
+}
+
+const { observation, size = 'full' } = Astro.props;
+
+// Category icons mapping
+const categoryIcons = {
+  'propagation': '🌱',
+  'terrarium': '🫙',
+  'field-study': '🔍',
+  'ritual': '🕯️',
+  'specimen-care': '🌿',
+  'mycology': '🍄',
+  'foraging': '🌾'
+};
+
+// Success rate colours
+const successRateColours = {
+  'mystical': 'text-purple-600',
+  'exceptional': 'text-green-600', 
+  'promising': 'text-blue-600',
+  'learning': 'text-yellow-600',
+  'experimental': 'text-orange-600'
+};
+
+const isCompact = size === 'compact';
+---
+
+<article class={`observation-entry bg-parchment border border-decorative rounded p-md`}>
+  <div class="observation-header mb-sm">
+    <div class="flex items-start justify-between mb-xs">
+      <h3 class={isCompact ? "text-xl font-medium text-moss" : "text-3xl font-medium text-moss"}>
+        <a 
+          href={`${import.meta.env.BASE_URL || '/'}observations/${observation.slug}/`}
+          class="hover:text-forest-shadow transition-colors"
+        >
+          {observation.data.title}
+        </a>
+      </h3>
+      <span class="text-2xl">{categoryIcons[observation.data.category]}</span>
+    </div>
+    
+    <div class="flex items-center gap-sm mb-xs">
+      <span class="font-semibold text-forest-shadow">{observation.data.author.name}</span>
+      <span class="text-xs uppercase tracking-wider bg-moss text-cream px-sm py-xs rounded-full font-medium">
+        {observation.data.author.rank}
+      </span>
+    </div>
+    
+    {observation.data.author.specialty && (
+      <p class="text-sm text-sepia italic mb-xs">
+        Specialty: {observation.data.author.specialty}
+      </p>
+    )}
+    
+    <!-- Meta Information (like gathering card) -->
+    <p class="observation-meta text-sepia text-sm mb-sm">
+      📅 {observation.data.date.toLocaleDateString('en-GB', { 
+        day: 'numeric', 
+        month: 'short', 
+        year: 'numeric' 
+      })} • 
+      {observation.data.location && `📍 ${observation.data.location} • `}
+      {observation.data.success_rate && (
+        <>✨ <span class={`font-medium capitalize ${successRateColours[observation.data.success_rate]}`}>{observation.data.success_rate}</span> Results</>
+      )}
+      {observation.data.experimental && ' • 🧪 Experimental'}
+    </p>
+  </div>
+
+  <!-- Specimens Section -->
+  {observation.data.plants_mentioned && observation.data.plants_mentioned.length > 0 && (
+    <div class="specimens-section mb-sm">
+      <h4 class="text-sepia font-secondary mb-xs text-sm">Specimens:</h4>
+      <p class="text-sm text-sepia italic">
+        {observation.data.plants_mentioned.slice(0, 2).join(', ')}
+        {observation.data.plants_mentioned.length > 2 && ` and ${observation.data.plants_mentioned.length - 2} others`}
+      </p>
+    </div>
+  )}
+
+  <!-- Materials Section (like gathering card activities) -->
+  {observation.data.materials && observation.data.materials.length > 0 && (
+    <div class="materials-section mb-sm">
+      <h4 class="text-sepia font-secondary mb-xs text-sm">Sacred Materials:</h4>
+      <ul class="material-list list-none flex flex-wrap gap-xs">
+        {observation.data.materials.slice(0, isCompact ? 4 : 5).map((material) => (
+          <li class="bg-sage/20 px-sm py-xs rounded-full text-xs border border-moss/30">
+            {material}
+          </li>
+        ))}
+        {observation.data.materials.length > (isCompact ? 4 : 5) && (
+          <li class="text-xs text-sepia italic bg-sepia/10 px-sm py-xs rounded-full border border-sepia/20">
+            +{observation.data.materials.length - (isCompact ? 4 : 5)} more
+          </li>
+        )}
+      </ul>
+    </div>
+  )}
+
+  <!-- Research Tags (like gathering card rituals) - only show in full size -->
+  {!isCompact && observation.data.tags && observation.data.tags.length > 0 && (
+    <div class="tags-section mt-md">
+      <h4 class="text-sepia font-secondary mb-xs text-sm">Research Tags:</h4>
+      <ul class="tag-list list-none flex flex-wrap gap-sm">
+        {observation.data.tags.slice(0, 4).map((tag) => (
+          <li class="bg-parchment px-sm py-xs rounded-full text-sm border border-decorative">
+            🔬 {tag}
+          </li>
+        ))}
+        {observation.data.tags.length > 4 && (
+          <li class="text-xs text-sepia italic bg-sepia/10 px-sm py-xs rounded-full border border-sepia/20">
+            +{observation.data.tags.length - 4} more
+          </li>
+        )}
+      </ul>
+    </div>
+  )}
+
+  <!-- Difficulty (like gathering card weather conditions) - only show in full size -->
+  {!isCompact && observation.data.difficulty && (
+    <div class="difficulty-conditions mt-md p-sm bg-autumn/10 border border-autumn/30 rounded">
+      <p class="text-sm">
+        <strong>Difficulty Level:</strong> {observation.data.difficulty}
+      </p>
+    </div>
+  )}
+
+  <!-- Read More (like gathering card) -->
+  <div class="mt-sm">
+    <a 
+      href={`${import.meta.env.BASE_URL || '/'}observations/${observation.slug}/`}
+      class="inline-flex items-center text-moss hover:text-forest-shadow transition-colors font-medium text-sm"
+    >
+      Read Full Observation
+      <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  .moss-light {
+    background-color: rgba(107, 124, 50, 0.15);
+  }
+</style>
